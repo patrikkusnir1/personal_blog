@@ -214,17 +214,17 @@ body {
   padding-inline: 16px;
 }
 
-.hover1,
-.hover2 {
+.hover-1,
+.hover-2 {
   transition: var(--transition-1);
 }
 
-.hover1:is(:hover, :focus-visible) {
+.hover-1:is(:hover, :focus-visible) {
   color: var(--text-wild-blue-yonder);
   transform: translateX(3px);
 }
 
-.hover2:is(:hover, :focus-visible) {
+.hover-2:is(:hover, :focus-visible) {
   color: var(--text-carolina-blue);
   transform: translateX(3px);
 }
@@ -354,7 +354,16 @@ body {
   columns: 2;
 }
 
-.navbar-bottom-link {}
+.navbar-bottom-link {
+  color: var(--text-alice-blue);
+  font-size: var(--fontSize-6);
+  padding-block: 6px;
+}
+
+.copyright-text {
+  color: var(--text-alice-blue);
+  font-size: var(--fontSize-8);
+}
 
 /*-----------------------------------*\
   #HERO
