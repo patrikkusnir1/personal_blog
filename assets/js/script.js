@@ -41,7 +41,7 @@ window.addEventListener("scroll", () => {
         header.classList.remove("active");
         backTopBtn.classList.remove("active");
     }
-})
+});
 
 /**
  * SLIDER
@@ -107,4 +107,4 @@ window.addEventListener("resize", function () {
     totalSlidableItems = sliderContainer.childElementCount - totalSliderVisibleItems;
 
     moveSliderItem();
-})
+});
