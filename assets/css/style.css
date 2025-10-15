@@ -12,7 +12,7 @@
   */
 
   /* Background colors */
-  --bg-wild-blue-yonder: hsla(216, 33%, 68%, 1);
+  --bg-wild-blue-yonder: hsl(216, 33%, 68%);
   --bg-carolina-blue: hsla(199, 89%, 49%, 1);
   --bg-prussian-blue: hsla(216, 33%, 20%, 1);
   --bg-oxford-blue: hsla(222, 44%, 13%, 1);
