@@ -7,7 +7,7 @@ $posts = [
         "badge" => "Working Tips",
         "tags"  => ["Productivity", "Work"],
         "read_time" => "3 mins"
-    ]
+    ],
     [
         "title" => "Self-observation is the first step of inner unfolding",
         "excerpt" => "Read best tips how to understand yourself good",
@@ -15,14 +15,21 @@ $posts = [
         "badge" => "Lifestyle",
         "tags"  => ["Psychology", "Lifestyle"],
         "read_time" => "2 mins"
-    ]
-]
+    ],
+    [
+        "title" => "How to play chess",
+        "excerpt" => "Read best tips how to understand chess game",
+        "image" => "./assets/images/recent-post-3.jpg",
+        "badge" => "Games",
+        "tags"  => ["Psychology", "Fun"],
+        "read_time" => "5 mins"
+    ],
 
+];
 
+require 'includes/header.php';
 ?>
 
-
-<?php require 'includes/header.php' ?>;
 <!-- MAIN -->
     <main>
         <article>
@@ -481,171 +488,45 @@ $posts = [
                             Don't miss the latest trends
                         </p>
                         <ul class="grid-list">
+                            <?php foreach ($posts as $post): ?>
+                            
                             <li class="recent-post-card">
                                 <figure class="card-banner img-holder" style="--width: 271; --height: 258 ;">
-                                    <img src="./assets/images/recent-post-1.jpg"
-                                        alt="Helpful Tips for Working from Home as a Freelancer" width="271"
-                                        height="258" class="img-cover" loading="lazy">
+                                
+                                    <img src="<?= $post["image"] ?>" 
+                                        alt="<?= htmlspecialchars($post["title"]) ?>" 
+                                        width="271" 
+                                        height="258" 
+                                        class="img-cover" 
+                                        loading="lazy">
                                 </figure>
                                 <div class="card-content">
-                                    <a href="#" class="card-badge">Working Tips</a>
+                                    <a href="#" class="card-badge"><?= htmlspecialchars($post["badge"]) ?></a>
 
                                     <h3 class="headline headline-3 card-title">
                                         <a href="#" class="link hover-2">
-                                            Helpful Tips for Working from Home as a
-                                            Freelancer</a>
+                                            <?= htmlspecialchars($post["title"]) ?></a>
                                     </h3>
                                     <p class="card-text">
-                                        Gosh jaguar ostrich quail one excited dear hello and bound and the and bland
-                                        moral misheard roadrunner flapped lynx far
-                                        that and jeepers giggled far and far
+                                        <?= htmlspecialchars($post["excerpt"]) ?>
                                     </p>
 
                                     <div class="card-wrapper">
                                         <div class="card-tag">
-                                            <a href="#" class="span hover-2"># Travel</a>
-                                            <a href="#" class="span hover-2"># Lifestyle</a>
+                                            <?php foreach ($post["tags"] as $tag): ?>
+
+                                            <a href="#" class="span hover-2"><?= htmlspecialchars($tag) ?></a>
+                                            <?php endforeach ?>
                                         </div>
 
                                         <div class="wrapper">
                                             <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-                                            <span class="span">3 mins read</span>
+                                            <span class="span"><?= htmlspecialchars($post["read_time"]) ?></span>
                                         </div>
                                     </div>
                                 </div>
                             </li>
-                            <li class="recent-post-card">
-                                <figure class="card-banner img-holder" style="--width: 271; --height: 258 ;">
-                                    <img src="./assets/images/recent-post-2.jpg"
-                                        alt="Helpful Tips for Working from Home as a Freelancer" width="271"
-                                        height="258" class="img-cover" loading="lazy">
-                                </figure>
-                                <div class="card-content">
-                                    <a href="#" class="card-badge">Working Tips</a>
-
-                                    <h3 class="headline headline-3 card-title">
-                                        <a href="#" class="link hover-2">
-                                            Helpful Tips for Working from Home as a
-                                            Freelancer</a>
-                                    </h3>
-                                    <p class="card-text">
-                                        Gosh jaguar ostrich quail one excited dear hello and bound and the and bland
-                                        moral misheard roadrunner flapped lynx far
-                                        that and jeepers giggled far and far
-                                    </p>
-
-                                    <div class="card-wrapper">
-                                        <div class="card-tag">
-                                            <a href="#" class="span hover-2"># Travel</a>
-                                            <a href="#" class="span hover-2"># Lifestyle</a>
-                                        </div>
-
-                                        <div class="wrapper">
-                                            <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-                                            <span class="span">3 mins read</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="recent-post-card">
-                                <figure class="card-banner img-holder" style="--width: 271; --height: 258 ;">
-                                    <img src="./assets/images/recent-post-3.jpg"
-                                        alt="Helpful Tips for Working from Home as a Freelancer" width="271"
-                                        height="258" class="img-cover" loading="lazy">
-                                </figure>
-                                <div class="card-content">
-                                    <a href="#" class="card-badge">Working Tips</a>
-
-                                    <h3 class="headline headline-3 card-title">
-                                        <a href="#" class="link hover-2">
-                                            Helpful Tips for Working from Home as a
-                                            Freelancer</a>
-                                    </h3>
-                                    <p class="card-text">
-                                        Gosh jaguar ostrich quail one excited dear hello and bound and the and bland
-                                        moral misheard roadrunner flapped lynx far
-                                        that and jeepers giggled far and far
-                                    </p>
-
-                                    <div class="card-wrapper">
-                                        <div class="card-tag">
-                                            <a href="#" class="span hover-2"># Travel</a>
-                                            <a href="#" class="span hover-2"># Lifestyle</a>
-                                        </div>
-
-                                        <div class="wrapper">
-                                            <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-                                            <span class="span">3 mins read</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="recent-post-card">
-                                <figure class="card-banner img-holder" style="--width: 271; --height: 258 ;">
-                                    <img src="./assets/images/recent-post-4.jpg"
-                                        alt="Helpful Tips for Working from Home as a Freelancer" width="271"
-                                        height="258" class="img-cover" loading="lazy">
-                                </figure>
-                                <div class="card-content">
-                                    <a href="#" class="card-badge">Working Tips</a>
-
-                                    <h3 class="headline headline-3 card-title">
-                                        <a href="#" class="link hover-2">
-                                            Helpful Tips for Working from Home as a
-                                            Freelancer</a>
-                                    </h3>
-                                    <p class="card-text">
-                                        Gosh jaguar ostrich quail one excited dear hello and bound and the and bland
-                                        moral misheard roadrunner flapped lynx far
-                                        that and jeepers giggled far and far
-                                    </p>
-
-                                    <div class="card-wrapper">
-                                        <div class="card-tag">
-                                            <a href="#" class="span hover-2"># Travel</a>
-                                            <a href="#" class="span hover-2"># Lifestyle</a>
-                                        </div>
-
-                                        <div class="wrapper">
-                                            <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-                                            <span class="span">3 mins read</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="recent-post-card">
-                                <figure class="card-banner img-holder" style=" --width: 271; --height: 258;">
-                                    <img src=" ./assets/images/recent-post-5.jpg"
-                                        alt="Helpful Tips for Working from Home as a Freelancer" width="271"
-                                        height="258" class="img-cover" loading="lazy">
-                                </figure>
-                                <div class="card-content">
-                                    <a href="#" class="card-badge">Working Tips</a>
-
-                                    <h3 class="headline headline-3 card-title">
-                                        <a href="#" class="link hover-2">
-                                            Helpful Tips for Working from Home as a
-                                            Freelancer</a>
-                                    </h3>
-                                    <p class="card-text">
-                                        Gosh jaguar ostrich quail one excited dear hello and bound and the and bland
-                                        moral misheard roadrunner flapped lynx far
-                                        that and jeepers giggled far and far
-                                    </p>
-
-                                    <div class="card-wrapper">
-                                        <div class="card-tag">
-                                            <a href="#" class="span hover-2"># Travel</a>
-                                            <a href="#" class="span hover-2"># Lifestyle</a>
-                                        </div>
-
-                                        <div class="wrapper">
-                                            <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-                                            <span class="span">3 mins read</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+                            <?php endforeach ?>
                         </ul>
                         <nav aria-label="pagination" class="pagination">
                             <a href="#" class="pagination-btn" aria-label="previous page">
