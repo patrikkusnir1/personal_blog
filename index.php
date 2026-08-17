@@ -1,129 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- 
-        -primary meta tags 
-    -->
-
-    <title>Patrik - Personal Blog Website</title>
-    <meta name="title" content="Patrik - Personal Blog Website">
-    <meta name="description" content="This is a blog about life in Russia made by me">
-
-    <!-- 
-        -favicon 
-    -->
-    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
-
-    <!-- 
-        -google font link 
-    -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-
-    <!-- 
-        -custom css link 
-    -->
-    <link rel="stylesheet" href="assets/css/style.css">
-
-    <!-- preload images -->
-    <link rel="preload" as="image" href="assets/images/hero-banner.png">
-    <link rel="preload" as="image" href="assets/images/pattern-2.svg">
-    <link rel="preload" as="image" href="assets/images/pattern-3.svg">
-
-</head>
-
-<body id="top">
+<?php 
+$posts = [
+    [
+        "title" => "Helpful Tips for Working from Home as a Freelancer",
+        "excerpt" => "Read best tips how to work from home and be more productive",
+        "image" => "./assets/images/recent-post-1.jpg",
+        "badge" => "Working Tips",
+        "tags"  => ["Productivity", "Work"],
+        "read_time" => "3 mins"
+    ]
+    [
+        "title" => "Self-observation is the first step of inner unfolding",
+        "excerpt" => "Read best tips how to understand yourself good",
+        "image" => "./assets/images/recent-post-2.jpg",
+        "badge" => "Lifestyle",
+        "tags"  => ["Psychology", "Lifestyle"],
+        "read_time" => "2 mins"
+    ]
+]
 
 
-    <!-- 
-        -HEADER 
-    -->
+?>
 
-    <header class="header" data-header>
-        <div class="container">
-            <a href="#" class="logo">
-                <img src="./assets/images/patrik-high-resolution-logo-transparent.png" width="119" height="37"
-                    alt="Patrik logo">
-            </a>
 
-            <nav class="navbar" data-navbar>
-                <div class="navbar-top">
-                    <a href="" class="logo">
-                        <img src="./assets/images/patrik-high-resolution-logo-transparent.png" width="119" height="37"
-                            alt="Train travel logo">
-                    </a>
-                    <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
-                        <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
-                    </button>
-                </div>
-                <ul class="navbar-list">
-
-                    <li>
-                        <a href="#home" class="navbar-link hover-1" data-nav-toggler>Home</a>
-                    </li>
-                    <li>
-                        <a href="#topics" class="navbar-link hover-1" data-nav-toggler>Topics</a>
-                    </li>
-                    <li>
-                        <a href="#featured" class="navbar-link hover-1" data-nav-toggler>Featured Post</a>
-                    </li>
-                    <li>
-                        <a href="#recent" class="navbar-link hover-1" data-nav-toggler>Recent Post</a>
-                    </li>
-                    <li>
-                        <a href="#contact" class="navbar-link hover-1" data-nav-toggler>Contact</a>
-                    </li>
-                </ul>
-                <div class="navbar-bottom">
-                    <div class="profile-card">
-                        <img src="./assets/images/author.jpg" alt="Patrik" class="profile-banner" width="48"
-                            height="48">
-                        <div>
-                            <p class="card-title">Hello Patrik!</p>
-                            <p class="card-subtitle">You have 3 new messages</p>
-                        </div>
-                    </div>
-
-                    <div class="link-list">
-                        <li>
-                            <a class="navbar-bottom-link hover-1">Profile</a>
-                        </li>
-                        <li>
-                            <a class="navbar-bottom-link hover-1">Articles Saved</a>
-                        </li>
-                        <li>
-                            <a class="navbar-bottom-link hover-1">Add New Post</a>
-                        </li>
-                        <li>
-                            <a class="navbar-bottom-link hover-1">My likes</a>
-                        </li>
-                        <li>
-                            <a class="navbar-bottom-link hover-1">Account setting</a>
-                        </li>
-                        <li>
-                            <a class="navbar-bottom-link hover-1">Signout</a>
-                        </li>
-                    </div>
-                </div>
-                <p class="copyright-text">
-                    Copyright 2023 © Patrik - Personal Blog.
-                </p>
-            </nav>
-            <a href="" class="btn btn-primary">Subscribe</a>
-            <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
-                <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
-            </button>
-        </div>
-    </header>
-
-    <!-- MAIN -->
+<?php require 'includes/header.php' ?>;
+<!-- MAIN -->
     <main>
         <article>
             <!-- 
@@ -133,6 +33,7 @@
                 <div class="container">
                     <div class="hero-content">
                         <p class="hero-subtitle">Hello Everyone!</p>
+                        <?php echo "<!-- PHP is working -->" ?>
                         <h1 class="headline headline1 section-title">
                             <span class="span">I'm Patrik Kusnir</span>
                         </h1>
@@ -1020,153 +921,5 @@
             </section>
         </article>
     </main>
+    <?php require 'includes/footer.php'?>;
 
-    <!-- 
-      -  #FOOTER
-     -->
-
-    <footer>
-        <div class="card footer">
-            <div class="section footer-top">
-                <div class="footer-brand">
-                    <a href="#" class="logo">
-                        <img src="./assets/images/patrik-high-resolution-logo-transparent.png" width="119" height="37"
-                            loading="lazy" alt="Patrik logo">
-                    </a>
-                    <p class="footer-text">
-                        When an unknown prnoto sans took a galley and scrambled it to make specimen book not only five
-                        When an unknown prnoto
-                        sans took a galley and scrambled it to five centurie.
-                    </p>
-                    <p class="footer-list-title">
-                    <address class="footer-text address">
-                        123 Main Street <br>
-                        New York, NY 10001
-                    </address>
-                    </p>
-                </div>
-                <div class="footer-list">
-                    <p class="footer-list-title">
-                        Categories
-                    </p>
-                    <ul>
-                        <li>
-                            <a href="#" class="footer-link hover-2">Action</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Business</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Adventure</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Canada</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">America</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Curiosity</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Animal</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Dental</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Biology</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Breakfast</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Dessert</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="footer-list">
-                    <p class="footer-list-title">
-                        Newsletter
-                    </p>
-                    <p class="footer-text">
-                        Sign up to be first to receive the latest stories inspiring us, case studies, and industry news.
-                    </p>
-                    <div class="input-wrapper">
-                        <input type="text" name="name" placeholder="Your name" required autocomplete="off"
-                            class="input-field">
-                        <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
-                    </div>
-                    <div class="input-wrapper">
-                        <input type="email" name="email_address" placeholder="Email address" required autocomplete="off"
-                            class="input-field">
-                        <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
-                    </div>
-                    <a href="#" class="btn btn-primary">
-                        <span class="span">Subscribe</span>
-                        <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
-                    </a>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p class="copyright">
-                    &copy; Developed by <a href="#" class="copyright-link">codewithsadee.</a>
-                </p>
-                <ul class="social-list">
-                    <li>
-                        <a href="#" class="social-link">
-                            <ion-icon name="logo-twitter"></ion-icon>
-                            <span class="span">Twitter</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="social-link">
-                            <ion-icon name="logo-linkedin"></ion-icon>
-                            <span class="span">LinkedIn</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="social-link">
-                            <ion-icon name="logo-instagram"></ion-icon>
-                            <span class="span">Instagram</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-
-
-
-    <!-- 
-    - #BACK TO TOP 
-    ------------>
-
-    <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
-        <ion-icon name="arrow-up-outline" aria-hidden="true"></ion-icon>
-    </a>
-
-
-    <!-- custom js link -->
-    <script src="/assets/js/script.js"> </script>
-
-    <!-- ionicon link -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-</body>
-
-</html>
