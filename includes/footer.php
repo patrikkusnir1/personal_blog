@@ -99,7 +99,10 @@
 
             <div class="footer-bottom">
                 <p class="copyright">
-                    &copy; Developed by <a href="#" class="copyright-link">codewithsadee.</a>
+                    &copy;<?= date("Y") ?>
+                    Blog design inspired by <a href="#" class="copyright-link">codewithsadee.
+                    </a><br>
+                    Created by me.
                 </p>
                 <ul class="social-list">
                     <li>

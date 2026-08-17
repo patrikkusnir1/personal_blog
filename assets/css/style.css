@@ -466,6 +466,7 @@ body.nav-active {
 .copyright-text {
   color: var(--text-alice-blue);
   font-size: var(--fontSize-8);
+
 }
 
 /*-----------------------------------*\
@@ -996,7 +997,7 @@ body.nav-active {
 }
 
 .copyright {
-  text-align: center;
+  text-align: start;
   margin-block-end: 15px;
 }
 

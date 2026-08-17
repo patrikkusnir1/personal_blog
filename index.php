@@ -39,10 +39,12 @@ require 'includes/header.php';
             <section class="hero" id="home" aria-label="home">
                 <div class="container">
                     <div class="hero-content">
-                        <p class="hero-subtitle">Hello Everyone!</p>
-                        <?php echo "<!-- PHP is working -->" ?>
+                        <?php if ($user_logged_in) {
+                            echo "<p class='hero-subtitle'>Hello ". $name . "</p>";
+                        } ?>
+                        
                         <h1 class="headline headline1 section-title">
-                            <span class="span">I'm Patrik Kusnir</span>
+                            <span class="span">I'm <?= $full_name ?> </span>
                         </h1>
                         <p class="hero-text">I am graduated pharmacist whose the biggest passion is travelling by train.
                             This blog has been written as my first project during my long self-taught programmer
@@ -802,5 +804,5 @@ require 'includes/header.php';
             </section>
         </article>
     </main>
-    <?php require 'includes/footer.php'?>;
+    <?php require 'includes/footer.php'; ?>
 

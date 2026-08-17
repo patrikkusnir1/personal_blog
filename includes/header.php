@@ -1,3 +1,13 @@
+    <!-- 
+        variables 
+    -->
+    <?php 
+    $name = "Patrik";
+    $full_name = "Patrik Kusnir";
+    $user_logged_in = true;
+    ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,8 +20,8 @@
         -primary meta tags 
     -->
 
-    <title>Patrik - Personal Blog Website</title>
-    <meta name="title" content="Patrik - Personal Blog Website">
+    <title><?= $name ?> - Personal Blog Website</title>
+    <meta name="title" content="<?= $name ?> - Personal Blog Website">
     <meta name="description" content="This is a blog about life in Russia made by me">
 
     <!-- 
@@ -86,7 +96,7 @@
                         <img src="./assets/images/author.jpg" alt="Patrik" class="profile-banner" width="48"
                             height="48">
                         <div>
-                            <p class="card-title">Hello Patrik!</p>
+                            <p class="card-title">Hello <?= $name ?>!</p>
                             <p class="card-subtitle">You have 3 new messages</p>
                         </div>
                     </div>
@@ -113,7 +123,7 @@
                     </div>
                 </div>
                 <p class="copyright-text">
-                    Copyright 2023 © Patrik - Personal Blog.
+                    Copyright <?= date("Y") ?> © <?= $name ?> - Personal Blog.
                 </p>
             </nav>
             <a href="" class="btn btn-primary">Subscribe</a>
