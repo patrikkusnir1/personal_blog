@@ -1,31 +1,135 @@
 <?php 
+
+// to do: refactor longer texts excerpt
+
+$longer_texts = [
+    "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day.",
+    "Learn how self-observation can help you understand your thoughts, emotions, habits, and behavior and become more aware of yourself in everyday life.",
+    "Learn the basic rules and useful tips that can help you understand chess, improve your decision-making, develop a better strategy, and enjoy the game more.",
+    "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day.",
+    "Learn how self-observation can help you understand your thoughts, emotions, habits, and behavior and become more aware of yourself in everyday life.",
+    "Learn the basic rules and useful tips that can help you understand chess, improve your decision-making, develop a better strategy, and enjoy the game more.",
+    "Discover simple and effective ways to improve your daily productivity, stay focused on important tasks, avoid distractions, and make better use of your time throughout the day.",
+    "Traveling can change the way you see the world by introducing you to new cultures, different traditions, interesting places, and people with completely different experiences and perspectives.",
+    "Reading books is a great way to learn something new, improve your knowledge, develop your imagination, and discover interesting ideas that can help you understand the world better.",
+    "Building better habits takes time and consistency, but small positive changes in your daily routine can gradually improve your productivity, motivation, health, and overall quality of life."
+];
 $posts = [
     [
         "title" => "Helpful Tips for Working from Home as a Freelancer",
-        "excerpt" => "Read best tips how to work from home and be more productive",
+        "excerpt" => substr( $longer_texts[0],0,50) . "...",
         "image" => "./assets/images/recent-post-1.jpg",
         "badge" => "Working Tips",
         "tags"  => ["Productivity", "Work"],
-        "read_time" => "3 mins"
+        "word_count" => 100,
+        "read_time" => readtime_count(100)
     ],
     [
         "title" => "Self-observation is the first step of inner unfolding",
-        "excerpt" => "Read best tips how to understand yourself good",
+        "excerpt" => substr( $longer_texts[1],0,50) . "...",
         "image" => "./assets/images/recent-post-2.jpg",
         "badge" => "Lifestyle",
         "tags"  => ["Psychology", "Lifestyle"],
-        "read_time" => "2 mins"
+        "word_count" => 400,
+        "read_time" => readtime_count(400)
     ],
     [
         "title" => "How to play chess",
-        "excerpt" => "Read best tips how to understand chess game",
+        "excerpt" => substr( $longer_texts[2],0,50) . "...",
         "image" => "./assets/images/recent-post-3.jpg",
         "badge" => "Games",
         "tags"  => ["Psychology", "Fun"],
-        "read_time" => "5 mins"
+        "word_count" => 700,
+        "read_time" => readtime_count(700)
+    ],
+    [
+        "title" => "Simple Ways to Improve Your Daily Productivity and Stay Focused",
+        "excerpt" => substr($longer_texts[3], 0, 50) . "...",
+        "image" => "./assets/images/recent-post-3.jpg",
+        "badge" => "Productivity",
+        "tags" => ["Productivity", "Work"],
+        "word_count" => 550,
+        "read_time" => readtime_count(550)
     ],
 
+    [
+        "title" => "How Traveling Can Change the Way You See the World",
+        "excerpt" => substr($longer_texts[4], 0, 50) . "...",
+        "image" => "./assets/images/recent-post-3.jpg",
+        "badge" => "Travel",
+        "tags" => ["Travel", "Lifestyle"],
+        "word_count" => 800,
+        "read_time" => readtime_count(800)
+    ],
+
+    [
+        "title" => "The Benefits of Reading Books and Learning Something New",
+        "excerpt" => substr($longer_texts[5], 0, 50) . "...",
+        "image" => "./assets/images/recent-post-3.jpg",
+        "badge" => "Education",
+        "tags" => ["Books", "Learning"],
+        "word_count" => 650,
+        "read_time" => readtime_count(650)
+    ],
+
+    [
+        "title" => "How to Build Better Habits and Make Positive Changes",
+        "excerpt" => substr($longer_texts[6], 0, 50) . "...",
+        "image" => "./assets/images/recent-post-3.jpg",
+        "badge" => "Lifestyle",
+        "tags" => ["Habits", "Self Improvement"],
+        "word_count" => 500,
+        "read_time" => readtime_count(500)
+    ],
+
+    [
+        "title" => "Interesting Facts About Nature That Everyone Should Know",
+        "excerpt" => substr($longer_texts[7], 0, 50) . "...",
+        "image" => "./assets/images/recent-post-3.jpg",
+        "badge" => "Nature",
+        "tags" => ["Nature", "Science"],
+        "word_count" => 750,
+        "read_time" => readtime_count(750)
+    ],
+
+    [
+        "title" => "Why Learning a New Language Can Be Fun and Useful",
+        "excerpt" => substr($longer_texts[8], 0, 50) . "...",
+        "image" => "./assets/images/recent-post-3.jpg",
+        "badge" => "Learning",
+        "tags" => ["Languages", "Education"],
+        "word_count" => 450,
+        "read_time" => readtime_count(450)
+    ],
+
+    [
+        "title" => "Easy Tips for Creating a More Comfortable Home Office",
+        "excerpt" => substr($longer_texts[9], 0, 50) . "...",
+        "image" => "./assets/images/recent-post-3.jpg",
+        "badge" => "Working Tips",
+        "tags" => ["Work", "Lifestyle"],
+        "word_count" => 600,
+        "read_time" => readtime_count(600)
+    ],
 ];
+function readtime_count($word_count, $words_per_minute = 200) {
+    $read_time = ceil($word_count / $words_per_minute);
+    if ($read_time == 1) {
+        return $read_time . " min";
+    }
+    return $read_time . " mins";
+}
+
+
+$topics = ["Sport", "Travel", "Design", "Movie"];
+
+
+
+$articles_total_count = count($posts);
+$articles_per_page = 3;
+
+$pagination_count = $articles_total_count / $articles_per_page;
+
 
 require 'includes/header.php';
 ?>
@@ -77,7 +181,8 @@ require 'includes/header.php';
                             <h2 class="headline headline-2 section-title card-title" id="topic-label">Hot topics</h2>
                         </div>
                         <p class="card-text">
-                            Don't miss out on the latest news about Train Travel tips and Life in Russia
+                            Don't miss out on the latest news about Train Travel tips and Life in Russia. 
+                            We have <?= $articles_total_count ?> articles published here on website.
                         </p>
                         <div class="btn-group">
                             <button class="btn-icon" aria-label="previous" data-slider-prev>
@@ -487,7 +592,7 @@ require 'includes/header.php';
                             </span>
                         </h2>
                         <p class="section-text">
-                            Don't miss the latest trends
+                            Don't miss the latest trends. We have currently <?= count($posts) ?> recent posts on our website across <?= count($topics) ?> topics.
                         </p>
                         <ul class="grid-list">
                             <?php foreach ($posts as $post): ?>
@@ -534,9 +639,16 @@ require 'includes/header.php';
                             <a href="#" class="pagination-btn" aria-label="previous page">
                                 <ion-icon name="arrow-back" aria-hidden="true"></ion-icon>
                             </a>
-                            <a href="#" class="pagination-btn">1</a>
-                            <a href="#" class="pagination-btn">2</a>
-                            <a href="#" class="pagination-btn">3</a>
+
+                            <!-- create pagination buttons based on articles -->
+                            <?php 
+                            $pagination = 1;
+                            while ($pagination < $pagination_count) {
+                                echo '<a href="#" class="pagination-btn">'.$pagination.'</a>';
+                                $pagination++;
+                            } ?>
+                            
+                        
                             <a href="#" class="pagination-btn" aria-label="more page">...</a>
                             <a href="#" class="pagination-btn" aria-label="next page">
                                 <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>

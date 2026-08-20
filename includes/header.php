@@ -5,6 +5,7 @@
     $name = "Patrik";
     $full_name = "Patrik Kusnir";
     $user_logged_in = true;
+    $new_messages_count = 3;
     ?>
 
 
@@ -97,7 +98,7 @@
                             height="48">
                         <div>
                             <p class="card-title">Hello <?= $name ?>!</p>
-                            <p class="card-subtitle">You have 3 new messages</p>
+                            <p class="card-subtitle">You have <?= $new_messages_count ?> new messages</p>
                         </div>
                     </div>
 
