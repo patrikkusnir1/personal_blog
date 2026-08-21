@@ -17,7 +17,7 @@ $longer_texts = [
 $posts = [
     [
         "title" => "Helpful Tips for Working from Home as a Freelancer",
-        "excerpt" => substr( $longer_texts[0],0,50) . "...",
+        "excerpt" => make_excerpt($longer_texts[0]),
         "image" => "./assets/images/recent-post-1.jpg",
         "badge" => "Working Tips",
         "tags"  => ["Productivity", "Work"],
@@ -26,7 +26,7 @@ $posts = [
     ],
     [
         "title" => "Self-observation is the first step of inner unfolding",
-        "excerpt" => substr( $longer_texts[1],0,50) . "...",
+        "excerpt" => make_excerpt($longer_texts[1]),
         "image" => "./assets/images/recent-post-2.jpg",
         "badge" => "Lifestyle",
         "tags"  => ["Psychology", "Lifestyle"],
@@ -112,6 +112,11 @@ $posts = [
         "read_time" => readtime_count(600)
     ],
 ];
+
+function make_excerpt($text, $limit = 50) {
+    return substr($text,0,strrpos( substr( $text, 0, $limit ), " " ))   . "...";
+}
+
 function readtime_count($word_count, $words_per_minute = 200) {
     $read_time = ceil($word_count / $words_per_minute);
     if ($read_time == 1) {
@@ -120,15 +125,27 @@ function readtime_count($word_count, $words_per_minute = 200) {
     return $read_time . " mins";
 }
 
+function add_excerpts_to_posts($posts, $longer_texts, $limit) 
+{
+    foreach ( $longer_texts as $key => $text ) 
+    { 
+        $posts[$key]["excerpt"] = make_excerpt($text, $limit);
+    }
+    return $posts;
+}
+
+$posts = add_excerpts_to_posts($posts, $longer_texts, 100);
+
+
+
 
 $topics = ["Sport", "Travel", "Design", "Movie"];
-
-
 
 $articles_total_count = count($posts);
 $articles_per_page = 3;
 
-$pagination_count = $articles_total_count / $articles_per_page;
+$pagination_count = ceil($articles_total_count / $articles_per_page);
+$visit_count = 5;
 
 
 require 'includes/header.php';
@@ -145,6 +162,10 @@ require 'includes/header.php';
                     <div class="hero-content">
                         <?php if ($user_logged_in) {
                             echo "<p class='hero-subtitle'>Hello ". $name . "</p>";
+
+                            if ($visit_count % 5 == 0) {
+                                echo "<p class='hero-subtitle'>You are my special guest! Nice to see you</p>";
+                            }
                         } ?>
                         
                         <h1 class="headline headline1 section-title">
@@ -643,7 +664,7 @@ require 'includes/header.php';
                             <!-- create pagination buttons based on articles -->
                             <?php 
                             $pagination = 1;
-                            while ($pagination < $pagination_count) {
+                            while ($pagination < $pagination_count + 1) {
                                 echo '<a href="#" class="pagination-btn">'.$pagination.'</a>';
                                 $pagination++;
                             } ?>
