@@ -607,7 +607,17 @@ require 'includes/header.php';
                             Don't miss the latest trends. We have currently <?= count($posts) ?> recent posts on our website across <?= count($topics) ?> topics.
                         </p>
                         <ul class="grid-list">
-                            <?php foreach ($posts as $post): ?>
+                            <?php
+                            // get number where user clicked
+                            $current_page = $_GET["page"] ?? "1";
+
+                            // show only 3 articles per page
+                            
+                            $posts = array_slice( $posts, ( ($current_page - 1) * $articles_per_page), $articles_per_page  );
+                            
+    
+                            // show posts
+                            foreach ($posts as $post): ?>
                             
                             <li class="recent-post-card">
                                 <figure class="card-banner img-holder" style="--width: 271; --height: 258 ;">
@@ -648,23 +658,36 @@ require 'includes/header.php';
                             <?php endforeach ?>
                         </ul>
                         <nav aria-label="pagination" class="pagination">
-                            <a href="#" class="pagination-btn" aria-label="previous page">
+                            <?php
+                            //  create pagination backward arrow
+                            if ( $current_page > 1)
+                            {
+                            echo '<a href="?page=' .($current_page - 1 ).'" class="pagination-btn" aria-label="previous page">
                                 <ion-icon name="arrow-back" aria-hidden="true"></ion-icon>
-                            </a>
+                            </a>';
+                            };
+                            
+                            ?>
 
-                            <!-- create pagination buttons based on articles -->
+                            <!-- create pagination buttons based on articles count -->
                             <?php 
                             $pagination = 1;
                             while ($pagination < $pagination_count + 1) {
-                                echo '<a href="#" class="pagination-btn">'.$pagination.'</a>';
+                                echo "<a href='?page={$pagination}' class='pagination-btn'>$pagination</a>";
                                 $pagination++;
-                            } ?>
-                            
-                        
-                            <a href="#" class="pagination-btn" aria-label="more page">...</a>
-                            <a href="#" class="pagination-btn" aria-label="next page">
-                                <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+                            } 
+                            ?>
+                            <!-- create pagination forward arrow -->
+                            <a href="#" class="pagination-btn" aria-label="more page">
+                            ...
                             </a>
+                            <?php
+                            echo '<a href="?page=' .($current_page + 1).'" class="pagination-btn" aria-label="next page">
+                                <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+                            </a>'
+                            ?>
+                            
+                           
                         </nav>
                     </div>
                     <div class="post-aside grid-list">
