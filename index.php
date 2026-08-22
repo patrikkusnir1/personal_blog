@@ -17,106 +17,88 @@ $longer_texts = [
 $posts = [
     [
         "title" => "Helpful Tips for Working from Home as a Freelancer",
-        "excerpt" => make_excerpt($longer_texts[0]),
         "image" => "./assets/images/recent-post-1.jpg",
         "badge" => "Working Tips",
         "tags"  => ["Productivity", "Work"],
         "word_count" => 100,
-        "read_time" => readtime_count(100)
     ],
     [
         "title" => "Self-observation is the first step of inner unfolding",
-        "excerpt" => make_excerpt($longer_texts[1]),
         "image" => "./assets/images/recent-post-2.jpg",
         "badge" => "Lifestyle",
         "tags"  => ["Psychology", "Lifestyle"],
         "word_count" => 400,
-        "read_time" => readtime_count(400)
     ],
     [
         "title" => "How to play chess",
-        "excerpt" => substr( $longer_texts[2],0,50) . "...",
         "image" => "./assets/images/recent-post-3.jpg",
         "badge" => "Games",
         "tags"  => ["Psychology", "Fun"],
         "word_count" => 700,
-        "read_time" => readtime_count(700)
     ],
     [
         "title" => "Simple Ways to Improve Your Daily Productivity and Stay Focused",
-        "excerpt" => substr($longer_texts[3], 0, 50) . "...",
         "image" => "./assets/images/recent-post-3.jpg",
         "badge" => "Productivity",
         "tags" => ["Productivity", "Work"],
         "word_count" => 550,
-        "read_time" => readtime_count(550)
     ],
 
     [
         "title" => "How Traveling Can Change the Way You See the World",
-        "excerpt" => substr($longer_texts[4], 0, 50) . "...",
         "image" => "./assets/images/recent-post-3.jpg",
         "badge" => "Travel",
         "tags" => ["Travel", "Lifestyle"],
         "word_count" => 800,
-        "read_time" => readtime_count(800)
+
     ],
 
     [
         "title" => "The Benefits of Reading Books and Learning Something New",
-        "excerpt" => substr($longer_texts[5], 0, 50) . "...",
         "image" => "./assets/images/recent-post-3.jpg",
         "badge" => "Education",
         "tags" => ["Books", "Learning"],
         "word_count" => 650,
-        "read_time" => readtime_count(650)
     ],
 
     [
         "title" => "How to Build Better Habits and Make Positive Changes",
-        "excerpt" => substr($longer_texts[6], 0, 50) . "...",
         "image" => "./assets/images/recent-post-3.jpg",
         "badge" => "Lifestyle",
         "tags" => ["Habits", "Self Improvement"],
         "word_count" => 500,
-        "read_time" => readtime_count(500)
     ],
 
     [
         "title" => "Interesting Facts About Nature That Everyone Should Know",
-        "excerpt" => substr($longer_texts[7], 0, 50) . "...",
         "image" => "./assets/images/recent-post-3.jpg",
         "badge" => "Nature",
         "tags" => ["Nature", "Science"],
         "word_count" => 750,
-        "read_time" => readtime_count(750)
     ],
 
     [
         "title" => "Why Learning a New Language Can Be Fun and Useful",
-        "excerpt" => substr($longer_texts[8], 0, 50) . "...",
         "image" => "./assets/images/recent-post-3.jpg",
         "badge" => "Learning",
         "tags" => ["Languages", "Education"],
         "word_count" => 450,
-        "read_time" => readtime_count(450)
     ],
 
     [
         "title" => "Easy Tips for Creating a More Comfortable Home Office",
-        "excerpt" => substr($longer_texts[9], 0, 50) . "...",
         "image" => "./assets/images/recent-post-3.jpg",
         "badge" => "Working Tips",
         "tags" => ["Work", "Lifestyle"],
         "word_count" => 600,
-        "read_time" => readtime_count(600)
     ],
 ];
-
+// make excerpt from longer text (full blog text)
 function make_excerpt($text, $limit = 50) {
     return substr($text,0,strrpos( substr( $text, 0, $limit ), " " ))   . "...";
 }
 
+// count readtime
 function readtime_count($word_count, $words_per_minute = 200) {
     $read_time = ceil($word_count / $words_per_minute);
     if ($read_time == 1) {
@@ -124,6 +106,7 @@ function readtime_count($word_count, $words_per_minute = 200) {
     }
     return $read_time . " mins";
 }
+
 
 function add_excerpts_to_posts($posts, $longer_texts, $limit) 
 {
@@ -134,9 +117,17 @@ function add_excerpts_to_posts($posts, $longer_texts, $limit)
     return $posts;
 }
 
+
+function add_read_time($posts) {
+    foreach ( $posts as $key => $post) 
+    {
+        $posts[$key]["read_time"] = readtime_count($post["word_count"]);
+    }
+    return $posts;
+}
+// applying function to our posts
 $posts = add_excerpts_to_posts($posts, $longer_texts, 100);
-
-
+$posts = add_read_time($posts);
 
 
 $topics = ["Sport", "Travel", "Design", "Movie"];
