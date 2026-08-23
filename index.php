@@ -380,9 +380,9 @@ require 'includes/header.php';
                                         <div class="card-tag">
                                             <?php foreach($post["tags"] as $tag): ?>
                                                 <a href="#" class="span hover-2">
-                                                    <?php echo $tag; 
-                                                    endforeach?>
+                                                    <?php echo $tag; ?> 
                                                 </a>
+                                            <?php endforeach?>
                                         </div>
                                         <div class="wrapper">
                                             <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
@@ -410,12 +410,19 @@ require 'includes/header.php';
                         </li>
                         <?php endforeach ?>
                     </ul>
-                    <?php $articles_to_show = $articles_to_show + 2 ?>
-                    <a href="<?php echo "./?show={$articles_to_show}" ?>" class="btn btn-secondary">
+                    <?php
+                    // show max articles, don't exceed $articles_total_count
+                    $articles_to_show = min($articles_to_show + 2, $articles_total_count);
+                    
+                    ?>
+                    
+                    <?php if ($articles_to_show <= $articles_total_count):?>
+                        <a href="<?php echo "./?show={$articles_to_show}" ?>" class="btn btn-secondary">
                         
-                        <span class="span">Show more posts</span>
-                        <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
-                    </a>
+                            <span class="span">Show more posts</span>
+                            <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+                        </a>
+                        <?php endif; ?>
                 </div>
                 <img src="./assets/images/shadow-3.svg" width="500" height="1600" loading="lazy" alt=""
                     class="feature-bg">
@@ -520,7 +527,7 @@ require 'includes/header.php';
                             $current_category = $_GET["category"] ?? "";
                                 if ( $current_page > 1)
                                 {
-                                echo '<a href="?category=' .$current_category. '?page=' .($current_page - 1 ).'#recent" class="pagination-btn" aria-label="previous page">
+                                echo '<a href="?category=' .$current_category. '&page=' .($current_page - 1 ).'#recent" class="pagination-btn" aria-label="previous page">
                                     <ion-icon name="arrow-back" aria-hidden="true"></ion-icon>
                                 </a>';
                                 };
@@ -559,8 +566,6 @@ require 'includes/header.php';
                                         </a>';
                                 }
                             ?>
-                            
-                           
                         </nav>
                     </div>
                     <div class="post-aside grid-list">
