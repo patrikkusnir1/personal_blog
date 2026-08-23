@@ -158,13 +158,14 @@ function get_tags($posts)
 };
 
 function show_categories($posts) {
+    $articles_to_show = 2;
     $tags_array = get_tags($posts);
     $img_count = 1;
     foreach ($tags_array as $tag)
     {
         echo
         "<li>
-            <a class='card tag-btn' href='./?category=$tag#recent'>
+            <a class='card tag-btn' href='./?category=$tag&show=$articles_to_show#recent'>
                 <img src='./assets/images/tag$img_count.png' width='32' height='32' loading='lazy' alt='$tag'>
                 <p class='btn-text'>$tag</p>
             </a>
@@ -359,8 +360,12 @@ require 'includes/header.php';
                     </p>
                     <ul class="feature-list">
                         <?php
-                        $posts = array_slice( $posts,0, $articles_per_page = 2 );
-                        foreach ($posts as $post): ?>
+                        // show only 2 articles here
+                        
+                        $articles_to_show = $_GET["show"] ?? "2";
+                        
+                        $feature_posts = array_slice( $posts, 0, $articles_to_show );
+                        foreach ($feature_posts  as $post): ?>
                         
                         <li>
                             <div class="card feature-card">
@@ -373,8 +378,11 @@ require 'includes/header.php';
                                 <div class="card-content">
                                     <div class="card-wrapper">
                                         <div class="card-tag">
-                                            <a href="#" class="span hover-2"><?php $post["tags"] ?></a>
-                                            <a href="#" class="span hover-2"><?php $post["tags"] ?></a>
+                                            <?php foreach($post["tags"] as $tag): ?>
+                                                <a href="#" class="span hover-2">
+                                                    <?php echo $tag; 
+                                                    endforeach?>
+                                                </a>
                                         </div>
                                         <div class="wrapper">
                                             <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
@@ -401,172 +409,10 @@ require 'includes/header.php';
                             </div>
                         </li>
                         <?php endforeach ?>
-                        
-                        
-                        
-                        
-                        
-                        
-
-                        <!-- <li>
-                            <div class="card feature-card">
-                                <figure class="card-banner img-holder" style="--width: 1602; --height: 903;">
-                                    <img src="./assets/images/featured-2.png"
-                                        alt="Self-observation is the first step of inner unfolding" class="img-cover"
-                                        width="1602" loading="lazy" height="903">
-                                </figure>
-                                <div class="card-content">
-                                    <div class="card-wrapper">
-                                        <div class="card-tag">
-                                            <a href="#" class="span hover-2">#Design</a>
-                                            <a href="#" class="span hover-2">#Movie</a>
-                                        </div>
-                                        <div class="wrapper">
-                                            <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-                                            <span class="span">6 mins read</span>
-                                        </div>
-
-                                    </div>
-                                    <h3 class="headline headline-3">
-                                        <a href="#" class="card-title hover-2">
-                                            Self-observation is the first step of inner unfolding
-                                        </a>
-                                    </h3>
-                                    <div class="card-wrapper">
-                                        <div class="profile-card">
-                                            <img src="./assets/images/author-1.png" width="48" height="48"
-                                                loading="lazy" alt="Joseph" class="profile-banner">
-
-                                            <div>
-                                                <p class="card-title">Joseph</p>
-                                                <p class="card-subtitle">25 Nov 2022</p>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="card-btn">Read more</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="card feature-card">
-                                <figure class="card-banner img-holder" style="--width: 1602; --height: 903;">
-                                    <img src="./assets/images/featured-3.png"
-                                        alt="Self-observation is the first step of inner unfolding" class="img-cover"
-                                        width="1602" loading="lazy" height="903">
-                                </figure>
-                                <div class="card-content">
-                                    <div class="card-wrapper">
-                                        <div class="card-tag">
-                                            <a href="#" class="span hover-2">#Design</a>
-                                            <a href="#" class="span hover-2">#Movie</a>
-                                        </div>
-                                        <div class="wrapper">
-                                            <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-                                            <span class="span">6 mins read</span>
-                                        </div>
-
-                                    </div>
-                                    <h3 class="headline headline-3">
-                                        <a href="#" class="card-title hover-2">
-                                            Self-observation is the first step of inner unfolding
-                                        </a>
-                                    </h3>
-                                    <div class="card-wrapper">
-                                        <div class="profile-card">
-                                            <img src="./assets/images/author-1.png" width="48" height="48"
-                                                loading="lazy" alt="Joseph" class="profile-banner">
-
-                                            <div>
-                                                <p class="card-title">Joseph</p>
-                                                <p class="card-subtitle">25 Nov 2022</p>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="card-btn">Read more</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="card feature-card">
-                                <figure class="card-banner img-holder" style="--width: 1602; --height: 903;">
-                                    <img src="./assets/images/featured-4.png"
-                                        alt="Self-observation is the first step of inner unfolding" class="img-cover"
-                                        width="1602" loading="lazy" height="903">
-                                </figure>
-                                <div class="card-content">
-                                    <div class="card-wrapper">
-                                        <div class="card-tag">
-                                            <a href="#" class="span hover-2">#Design</a>
-                                            <a href="#" class="span hover-2">#Movie</a>
-                                        </div>
-                                        <div class="wrapper">
-                                            <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-                                            <span class="span">6 mins read</span>
-                                        </div>
-
-                                    </div>
-                                    <h3 class="headline headline-3">
-                                        <a href="#" class="card-title hover-2">
-                                            Self-observation is the first step of inner unfolding
-                                        </a>
-                                    </h3>
-                                    <div class="card-wrapper">
-                                        <div class="profile-card">
-                                            <img src="./assets/images/author-1.png" width="48" height="48"
-                                                loading="lazy" alt="Joseph" class="profile-banner">
-
-                                            <div>
-                                                <p class="card-title">Joseph</p>
-                                                <p class="card-subtitle">25 Nov 2022</p>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="card-btn">Read more</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="card feature-card">
-                                <figure class="card-banner img-holder" style="--width: 1602; --height: 903;">
-                                    <img src="./assets/images/featured-5.png"
-                                        alt="Self-observation is the first step of inner unfolding" class="img-cover"
-                                        width="1602" loading="lazy" height="903">
-                                </figure>
-                                <div class="card-content">
-                                    <div class="card-wrapper">
-                                        <div class="card-tag">
-                                            <a href="#" class="span hover-2">#Design</a>
-                                            <a href="#" class="span hover-2">#Movie</a>
-                                        </div>
-                                        <div class="wrapper">
-                                            <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-                                            <span class="span">6 mins read</span>
-                                        </div>
-
-                                    </div>
-                                    <h3 class="headline headline-3">
-                                        <a href="#" class="card-title hover-2">
-                                            Self-observation is the first step of inner unfolding
-                                        </a>
-                                    </h3>
-                                    <div class="card-wrapper">
-                                        <div class="profile-card">
-                                            <img src="./assets/images/author-1.png" width="48" height="48"
-                                                loading="lazy" alt="Joseph" class="profile-banner">
-
-                                            <div>
-                                                <p class="card-title">Joseph</p>
-                                                <p class="card-subtitle">25 Nov 2022</p>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="card-btn">Read more</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li> -->
                     </ul>
-
-                    <a href="#" class="btn btn-secondary">
+                    <?php $articles_to_show = $articles_to_show + 2 ?>
+                    <a href="<?php echo "./?show={$articles_to_show}" ?>" class="btn btn-secondary">
+                        
                         <span class="span">Show more posts</span>
                         <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
                     </a>
@@ -671,7 +517,7 @@ require 'includes/header.php';
                         <nav aria-label="pagination" class="pagination">
                             <?php
                             //  create pagination backward arrow
-
+                            $current_category = $_GET["category"] ?? "";
                                 if ( $current_page > 1)
                                 {
                                 echo '<a href="?category=' .$current_category. '?page=' .($current_page - 1 ).'#recent" class="pagination-btn" aria-label="previous page">
@@ -681,7 +527,7 @@ require 'includes/header.php';
                             
                             // create pagination buttons based on articles count 
                             
-                                $current_category = $_GET["category"] ?? "";
+                                
                                 $pagination = 1;
                                 while ( $pagination < $pagination_count + 1 ) 
                                 {
