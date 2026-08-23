@@ -219,7 +219,7 @@ body.nav-active {
   transform: translateX(3px);
 }
 
-.hover-2:is(:hover, :focus-visible) {
+.hover-2:is(:hover, :focus-visible){
   color: var(--text-carolina-blue);
 }
 
@@ -797,7 +797,8 @@ body.nav-active {
 }
 
 .recent-post-card .card-badge:is(:hover, :focus-visible),
-.pagination-btn:is(:hover, :focus-visible) {
+.pagination-btn:is(:hover, :focus-visible)
+{
   transform: translateY(-2px);
   background-color: var(--bg-carolina-blue);
 }
@@ -827,6 +828,10 @@ body.nav-active {
   place-items: center;
   border-radius: var(--radius-circle);
   transition: var(--transition-1);
+}
+
+a.active {
+  background-color: var(--bg-carolina-blue);
 }
 
 .pagination {

@@ -27,49 +27,18 @@
                         Categories
                     </p>
                     <ul>
-                        <li>
-                            <a href="#" class="footer-link hover-2">Action</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Business</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Adventure</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Canada</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">America</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Curiosity</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Animal</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Dental</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Biology</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Breakfast</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link hover-2">Dessert</a>
-                        </li>
+                        <?php
+                            $tags_array = get_tags($posts);
+                            foreach ($tags_array as $tag)
+                            {
+                                echo
+                                "<li>
+                                    <a href='#' class='footer-link hover-2'>
+                                        $tag
+                                    </a>
+                                </li>";
+                            }
+                        ?>
                     </ul>
                 </div>
 

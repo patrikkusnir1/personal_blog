@@ -1,6 +1,5 @@
 <?php 
 
-// to do: refactor longer texts excerpt
 
 $longer_texts = [
     "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day.",
@@ -125,9 +124,118 @@ function add_read_time($posts) {
     }
     return $posts;
 }
+
+function get_tags($posts) 
+{
+    $tags_list = [];
+    foreach ($posts as $post) 
+        {
+            $tags_list[] = $post["tags"];
+        }
+    $tags_list_merged = array_merge(...$tags_list);
+    $tags_list_cleaned = array_values(array_unique($tags_list_merged));
+    return $tags_list_cleaned;
+};
+
+function show_categories($posts) {
+    $tags_array = get_tags($posts);
+    $img_count = 1;
+    foreach ($tags_array as $tag)
+    {
+        echo
+        "<li>
+            <a class='card tag-btn' href='./?category=$tag'>
+                <img src='./assets/images/tag$img_count.png' width='32' height='32' loading='lazy' alt='$tag'>
+                <p class='btn-text'>$tag</p>
+            </a>
+        </li>";
+        $img_count++;
+    }
+}
+
+
+
+
+// check if post has category and get the category
+function post_has_category($post) {
+    // get category
+    $current_category = $_GET["category"] ?? "";
+
+        if ($current_category == "")
+        {
+            return true;
+        }
+
+        if ( in_array($current_category, $post["tags"]) ) 
+        {
+            return true;
+        };
+        return false;
+    };
+
+
+
+
+
+
+// filter posts by category
+function filter_posts_by_category($posts) {
+    $tags = get_tags($posts);
+    foreach ( $tags as $tag) 
+    {
+        foreach ($posts as $post) {
+            // if (array_filter($post["tags"], in_array($current_category, $post["tags"])))
+            { echo '
+                            <li class="recent-post-card">
+                                <figure class="card-banner img-holder" style="--width: 271; --height: 258 ;">
+                                
+                                    <img src=" ' . $post["image"]  .  '  " 
+                                        alt="<' . htmlspecialchars($post["title"]) . '" 
+                                        width="271" 
+                                        height="258" 
+                                        class="img-cover" 
+                                        loading="lazy">
+                                </figure>
+                                <div class="card-content">
+                                    <a href="#" class="card-badge"> '.htmlspecialchars($post["badge"]).' </a>
+
+                                    <h3 class="headline headline-3 card-title">
+                                        <a href="#" class="link hover-2">
+                                            ' .htmlspecialchars($post["title"]). '
+                                        </a>
+                                    </h3>
+                                    <p class="card-text">
+                                        ' .htmlspecialchars($post["excerpt"]). '
+                                    </p>
+
+                                    <div class="card-wrapper">
+                                        <div class="card-tag">';
+                                        // end of first echo
+                                            foreach ($post["tags"] as $tag) 
+                                            {
+                                                echo '<a href="#" class="span hover-2"> '.htmlspecialchars($tag).'</a>';
+                                            };
+                                    // start of second echo
+                            echo '       </div>
+
+                                        <div class="wrapper">
+                                            <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+                                            <span class="span"> ' . htmlspecialchars($post["read_time"])  .  '
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>';
+            }; 
+        };
+    };
+};
+
+
 // applying function to our posts
 $posts = add_excerpts_to_posts($posts, $longer_texts, 100);
 $posts = add_read_time($posts);
+
+
 
 
 $topics = ["Sport", "Travel", "Design", "Movie"];
@@ -509,85 +617,9 @@ require 'includes/header.php';
                     </p>
 
                     <ul class="grid-list">
-                        <li>
-                            <button class="card tag-btn">
-                                <img src="./assets/images/tag1.png" width="32" height="32 " loading="lazy" alt="Travel">
-                                <p class="btn-text">Travel</p>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="card tag-btn">
-                                <img src="./assets/images/tag2.png" width="32" height="32 " loading="lazy"
-                                    alt="Culture">
-                                <p class="btn-text">Culture</p>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="card tag-btn">
-                                <img src="./assets/images/tag3.png" width="32" height="32 " loading="lazy"
-                                    alt="Lifestyle">
-                                <p class="btn-text">Lifestyle</p>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="card tag-btn">
-                                <img src="./assets/images/tag4.png" width="32" height="32 " loading="lazy"
-                                    alt="Fashion">
-                                <p class="btn-text">Fashion</p>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="card tag-btn">
-                                <img src="./assets/images/tag5.png" width="32" height="32 " loading="lazy" alt="Food">
-                                <p class="btn-text">Food</p>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="card tag-btn">
-                                <img src="./assets/images/tag6.png" width="32" height="32 " loading="lazy" alt="Space">
-                                <p class="btn-text">Space</p>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="card tag-btn">
-                                <img src="./assets/images/tag7.png" width="32" height="32 " loading="lazy" alt="Animal">
-                                <p class="btn-text">Animal</p>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="card tag-btn">
-                                <img src="./assets/images/tag8.png" width="32" height="32 " loading="lazy"
-                                    alt="Minimal">
-                                <p class="btn-text">Minimal</p>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="card tag-btn">
-                                <img src="./assets/images/tag9.png" width="32" height="32 " loading="lazy"
-                                    alt="Interior">
-                                <p class="btn-text">Interior</p>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="card tag-btn">
-                                <img src="./assets/images/tag10.png" width="32" height="32 " loading="lazy" alt="Plant">
-                                <p class="btn-text">Plant</p>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="card tag-btn">
-                                <img src="./assets/images/tag11.png" width="32" height="32 " loading="lazy"
-                                    alt="Nature">
-                                <p class="btn-text">Nature</p>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="card tag-btn">
-                                <img src="./assets/images/tag12.png" width="32" height="32 " loading="lazy"
-                                    alt="Business">
-                                <p class="btn-text">Business</p>
-                            </button>
-                        </li>
+                    <?php
+                        show_categories($posts);
+                    ?>
                     </ul>
                 </div>
             </section>
@@ -610,6 +642,11 @@ require 'includes/header.php';
                             <?php
                             // get number where user clicked
                             $current_page = $_GET["page"] ?? "1";
+                            // filter posts
+                            
+                            $posts = array_filter($posts, 'post_has_category');
+                            $articles_total_count = count($posts);
+                            $pagination_count = ceil( $articles_total_count / $articles_per_page );
 
                             // show only 3 articles per page
                             
@@ -667,24 +704,41 @@ require 'includes/header.php';
                             </a>';
                             };
                             
-                            ?>
+                            
 
-                            <!-- create pagination buttons based on articles count -->
-                            <?php 
-                            $pagination = 1;
-                            while ($pagination < $pagination_count + 1) {
-                                echo "<a href='?page={$pagination}' class='pagination-btn'>$pagination</a>";
-                                $pagination++;
-                            } 
-                            ?>
-                            <!-- create pagination forward arrow -->
-                            <a href="#" class="pagination-btn" aria-label="more page">
-                            ...
-                            </a>
-                            <?php
-                            echo '<a href="?page=' .($current_page + 1).'" class="pagination-btn" aria-label="next page">
-                                <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
-                            </a>'
+                            // create pagination buttons based on articles count 
+                            
+                                $current_category = $_GET["category"] ?? "";
+                                $pagination = 1;
+                                while ( $pagination < $pagination_count + 1 ) 
+                                {
+                                    if ( $pagination == $current_page ) 
+                                    {
+                                        echo "<a href='?category={$current_category}&page={$pagination}' class='pagination-btn active'>$pagination</a>";
+                                    } 
+                                    else 
+                                    {
+                                        echo "<a href='?category={$current_category}&page={$pagination}' class='pagination-btn'>$pagination</a>";
+                                    }
+                        
+                                    $pagination++;
+                                } 
+                            
+
+                            //  create pagination forward arrow -->
+                                if ( $current_page <= $pagination_count - 1) 
+                                {
+                                    echo '<a href="?category='.$current_category.'&page=' .($current_page + 1).'" class="pagination-btn" aria-label="next page">
+                                    <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+                                </a>';
+                                }
+
+                                if ( $pagination_count > 5) 
+                                {
+                                    echo '<a href="#" class="pagination-btn" aria-label="more page">
+                                        ...
+                                        </a>';
+                                }
                             ?>
                             
                            
