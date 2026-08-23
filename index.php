@@ -20,6 +20,8 @@ $posts = [
         "badge" => "Working Tips",
         "tags"  => ["Productivity", "Work"],
         "word_count" => 100,
+        "author" => "Elena",
+        "date" => "2024-01-15",
     ],
     [
         "title" => "Self-observation is the first step of inner unfolding",
@@ -27,6 +29,8 @@ $posts = [
         "badge" => "Lifestyle",
         "tags"  => ["Psychology", "Lifestyle"],
         "word_count" => 400,
+        "author" => "Marcus",
+        "date" => "2024-02-03",
     ],
     [
         "title" => "How to play chess",
@@ -34,6 +38,8 @@ $posts = [
         "badge" => "Games",
         "tags"  => ["Psychology", "Fun"],
         "word_count" => 700,
+        "author" => "Nadia",
+        "date" => "2024-02-20",
     ],
     [
         "title" => "Simple Ways to Improve Your Daily Productivity and Stay Focused",
@@ -41,6 +47,8 @@ $posts = [
         "badge" => "Productivity",
         "tags" => ["Productivity", "Work"],
         "word_count" => 550,
+        "author" => "Elena",
+        "date" => "2024-03-05",
     ],
 
     [
@@ -49,7 +57,8 @@ $posts = [
         "badge" => "Travel",
         "tags" => ["Travel", "Lifestyle"],
         "word_count" => 800,
-
+        "author" => "Tomas",
+        "date" => "2024-03-22",
     ],
 
     [
@@ -58,6 +67,8 @@ $posts = [
         "badge" => "Education",
         "tags" => ["Books", "Learning"],
         "word_count" => 650,
+        "author" => "Nadia",
+        "date" => "2024-04-10",
     ],
 
     [
@@ -66,6 +77,8 @@ $posts = [
         "badge" => "Lifestyle",
         "tags" => ["Habits", "Self Improvement"],
         "word_count" => 500,
+        "author" => "Marcus",
+        "date" => "2024-04-28",
     ],
 
     [
@@ -74,6 +87,8 @@ $posts = [
         "badge" => "Nature",
         "tags" => ["Nature", "Science"],
         "word_count" => 750,
+        "author" => "Tomas",
+        "date" => "2024-05-14",
     ],
 
     [
@@ -82,6 +97,8 @@ $posts = [
         "badge" => "Learning",
         "tags" => ["Languages", "Education"],
         "word_count" => 450,
+        "author" => "Elena",
+        "date" => "2024-06-01",
     ],
 
     [
@@ -90,8 +107,11 @@ $posts = [
         "badge" => "Working Tips",
         "tags" => ["Work", "Lifestyle"],
         "word_count" => 600,
+        "author" => "Nadia",
+        "date" => "2024-06-19",
     ],
 ];
+
 // make excerpt from longer text (full blog text)
 function make_excerpt($text, $limit = 50) {
     return substr($text,0,strrpos( substr( $text, 0, $limit ), " " ))   . "...";
@@ -144,7 +164,7 @@ function show_categories($posts) {
     {
         echo
         "<li>
-            <a class='card tag-btn' href='./?category=$tag'>
+            <a class='card tag-btn' href='./?category=$tag#recent'>
                 <img src='./assets/images/tag$img_count.png' width='32' height='32' loading='lazy' alt='$tag'>
                 <p class='btn-text'>$tag</p>
             </a>
@@ -172,64 +192,6 @@ function post_has_category($post) {
         };
         return false;
     };
-
-
-
-
-
-
-// filter posts by category
-function filter_posts_by_category($posts) {
-    $tags = get_tags($posts);
-    foreach ( $tags as $tag) 
-    {
-        foreach ($posts as $post) {
-            // if (array_filter($post["tags"], in_array($current_category, $post["tags"])))
-            { echo '
-                            <li class="recent-post-card">
-                                <figure class="card-banner img-holder" style="--width: 271; --height: 258 ;">
-                                
-                                    <img src=" ' . $post["image"]  .  '  " 
-                                        alt="<' . htmlspecialchars($post["title"]) . '" 
-                                        width="271" 
-                                        height="258" 
-                                        class="img-cover" 
-                                        loading="lazy">
-                                </figure>
-                                <div class="card-content">
-                                    <a href="#" class="card-badge"> '.htmlspecialchars($post["badge"]).' </a>
-
-                                    <h3 class="headline headline-3 card-title">
-                                        <a href="#" class="link hover-2">
-                                            ' .htmlspecialchars($post["title"]). '
-                                        </a>
-                                    </h3>
-                                    <p class="card-text">
-                                        ' .htmlspecialchars($post["excerpt"]). '
-                                    </p>
-
-                                    <div class="card-wrapper">
-                                        <div class="card-tag">';
-                                        // end of first echo
-                                            foreach ($post["tags"] as $tag) 
-                                            {
-                                                echo '<a href="#" class="span hover-2"> '.htmlspecialchars($tag).'</a>';
-                                            };
-                                    // start of second echo
-                            echo '       </div>
-
-                                        <div class="wrapper">
-                                            <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-                                            <span class="span"> ' . htmlspecialchars($post["read_time"])  .  '
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>';
-            }; 
-        };
-    };
-};
-
 
 // applying function to our posts
 $posts = add_excerpts_to_posts($posts, $longer_texts, 100);
@@ -396,6 +358,10 @@ require 'includes/header.php';
                         Featured and highly rated articles
                     </p>
                     <ul class="feature-list">
+                        <?php
+                        $posts = array_slice( $posts,0, $articles_per_page = 2 );
+                        foreach ($posts as $post): ?>
+                        
                         <li>
                             <div class="card feature-card">
                                 <figure class="card-banner img-holder" style="--width: 1602; --height: 903;">
@@ -403,31 +369,30 @@ require 'includes/header.php';
                                         alt="Self-observation is the first step of inner unfolding" class="img-cover"
                                         width="1602" loading="lazy" height="903">
                                 </figure>
+
                                 <div class="card-content">
                                     <div class="card-wrapper">
                                         <div class="card-tag">
-                                            <a href="#" class="span hover-2">#Travel</a>
-                                            <a href="#" class="span hover-2">#Lifestyle</a>
+                                            <a href="#" class="span hover-2"><?php $post["tags"] ?></a>
+                                            <a href="#" class="span hover-2"><?php $post["tags"] ?></a>
                                         </div>
                                         <div class="wrapper">
                                             <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-                                            <span class="span">3 mins read</span>
+                                            <span class="span"><?php echo $post["read_time"] ?></span>
                                         </div>
-
                                     </div>
                                     <h3 class="headline headline-3">
                                         <a href="#" class="card-title hover-2">
-                                            Self-observation is the first step of inner unfolding
+                                            <?php echo $post["title"] ?>
                                         </a>
                                     </h3>
                                     <div class="card-wrapper">
                                         <div class="profile-card">
                                             <img src="./assets/images/author-1.png" width="48" height="48"
                                                 loading="lazy" alt="Joseph" class="profile-banner">
-
                                             <div>
-                                                <p class="card-title">Joseph</p>
-                                                <p class="card-subtitle">25 Nov 2022</p>
+                                                <p class="card-title"><?php echo $post["author"] ?> </p>
+                                                <p class="card-subtitle"><?php echo $post["date"] ?></p>
                                             </div>
                                         </div>
                                         <a href="#" class="card-btn">Read more</a>
@@ -435,7 +400,15 @@ require 'includes/header.php';
                                 </div>
                             </div>
                         </li>
-                        <li>
+                        <?php endforeach ?>
+                        
+                        
+                        
+                        
+                        
+                        
+
+                        <!-- <li>
                             <div class="card feature-card">
                                 <figure class="card-banner img-holder" style="--width: 1602; --height: 903;">
                                     <img src="./assets/images/featured-2.png"
@@ -590,7 +563,7 @@ require 'includes/header.php';
                                     </div>
                                 </div>
                             </div>
-                        </li>
+                        </li> -->
                     </ul>
 
                     <a href="#" class="btn btn-secondary">
@@ -642,7 +615,8 @@ require 'includes/header.php';
                             <?php
                             // get number where user clicked
                             $current_page = $_GET["page"] ?? "1";
-                            // filter posts
+                            
+                            // filter posts by category
                             
                             $posts = array_filter($posts, 'post_has_category');
                             $articles_total_count = count($posts);
@@ -697,15 +671,14 @@ require 'includes/header.php';
                         <nav aria-label="pagination" class="pagination">
                             <?php
                             //  create pagination backward arrow
-                            if ( $current_page > 1)
-                            {
-                            echo '<a href="?page=' .($current_page - 1 ).'" class="pagination-btn" aria-label="previous page">
-                                <ion-icon name="arrow-back" aria-hidden="true"></ion-icon>
-                            </a>';
-                            };
-                            
-                            
 
+                                if ( $current_page > 1)
+                                {
+                                echo '<a href="?category=' .$current_category. '?page=' .($current_page - 1 ).'#recent" class="pagination-btn" aria-label="previous page">
+                                    <ion-icon name="arrow-back" aria-hidden="true"></ion-icon>
+                                </a>';
+                                };
+                            
                             // create pagination buttons based on articles count 
                             
                                 $current_category = $_GET["category"] ?? "";
@@ -714,11 +687,11 @@ require 'includes/header.php';
                                 {
                                     if ( $pagination == $current_page ) 
                                     {
-                                        echo "<a href='?category={$current_category}&page={$pagination}' class='pagination-btn active'>$pagination</a>";
+                                        echo "<a href='?category={$current_category}&page={$pagination}#recent' class='pagination-btn active'>$pagination</a>";
                                     } 
                                     else 
                                     {
-                                        echo "<a href='?category={$current_category}&page={$pagination}' class='pagination-btn'>$pagination</a>";
+                                        echo "<a href='?category={$current_category}&page={$pagination}#recent' class='pagination-btn'>$pagination</a>";
                                     }
                         
                                     $pagination++;
@@ -728,7 +701,7 @@ require 'includes/header.php';
                             //  create pagination forward arrow -->
                                 if ( $current_page <= $pagination_count - 1) 
                                 {
-                                    echo '<a href="?category='.$current_category.'&page=' .($current_page + 1).'" class="pagination-btn" aria-label="next page">
+                                    echo '<a href="?category='.$current_category.'&page=' .($current_page + 1).'#recent" class="pagination-btn" aria-label="next page">
                                     <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
                                 </a>';
                                 }
