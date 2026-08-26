@@ -126,7 +126,6 @@ function readtime_count($word_count, $words_per_minute = 200) {
     return $read_time . " mins";
 }
 
-
 function add_excerpts_to_posts($posts, $longer_texts, $limit) 
 {
     foreach ( $longer_texts as $key => $text ) 
@@ -135,7 +134,6 @@ function add_excerpts_to_posts($posts, $longer_texts, $limit)
     }
     return $posts;
 }
-
 
 function add_read_time($posts) {
     foreach ( $posts as $key => $post) 
@@ -174,9 +172,6 @@ function show_categories($posts) {
     }
 }
 
-
-
-
 // check if post has category and get the category
 function post_has_category($post) {
     // get category
@@ -194,6 +189,57 @@ function post_has_category($post) {
         return false;
     };
 
+// check if post has tags and count them
+function post_has_tags($posts, $tag) {
+    $tag_count = 0; 
+        foreach($posts as $post) 
+            {
+                if ( in_array($tag, $post["tags"]) ) 
+                    {
+                        $tag_count++;
+                    };
+                    
+            }
+        return $tag_count;
+    };
+
+// show topics
+function show_topics($posts) {
+    
+    $tags = get_tags($posts);
+    $img_count = 1;
+    foreach ($tags as $tag):
+        $tag_count = post_has_tags($posts, $tag);?>
+        <li class="slider-item">
+            <a href="./?category=<?= $tag ?>#recent" class='slider-card'>
+                <figure class="slider-banner img-holder" style="--width: ; --height: ;">
+                    <img src="./assets/images/topic-<?= $img_count ?>.png" width="507" height="608"
+                    loading="lazy" alt="<?= $tag ?>" class="img-cover">
+                </figure>
+                <div class="slider-content">
+                    <span class="slider-title"><?= $tag ?></span>
+                    <?php if ($tag_count == 1):?>
+                        <p class="slider-subtitle"><?= $tag_count ?> article</p>
+                    <?php else: ?>
+                        <p class="slider-subtitle"><?= $tag_count ?> articles</p>
+                    <?php endif ?>
+                    
+                </div>
+            </a>
+        </li>
+        <?php if ($img_count % 5 == 0) 
+        {
+            $img_count = 1; 
+        }
+        else {
+            $img_count++;
+        }
+    endforeach;
+};
+
+
+
+
 // applying function to our posts
 $posts = add_excerpts_to_posts($posts, $longer_texts, 100);
 $posts = add_read_time($posts);
@@ -201,7 +247,7 @@ $posts = add_read_time($posts);
 
 
 
-$topics = ["Sport", "Travel", "Design", "Movie"];
+$topics = get_tags($posts);
 
 $articles_total_count = count($posts);
 $articles_per_page = 3;
@@ -209,11 +255,22 @@ $articles_per_page = 3;
 $pagination_count = ceil($articles_total_count / $articles_per_page);
 $visit_count = 5;
 
+// get popular posts
+function get_popular_posts($posts) {
+    usort($posts, function($a, $b) {
+            return $b["word_count"] - $a["word_count"];
+    });
+    
+    return array_slice($posts, 0, 3);
+};
+
+
 
 require 'includes/header.php';
 ?>
 
 <!-- MAIN -->
+
     <main>
         <article>
             <!-- 
@@ -256,6 +313,7 @@ require 'includes/header.php';
                     <img src="./assets/images/shadow-1.svg" width="500" height="800" alt="" class="hero-bg hero-bg-1">
                     <img src="./assets/images/shadow-2.svg" width="500" height="500" alt="" class="hero-bg hero-bg-2">
             </section>
+
             <!-- #TOPICS  -->
             <section class="topics" id="topics" aria-labelledby="topic-label">
                 <div class="container">
@@ -264,7 +322,7 @@ require 'includes/header.php';
                             <h2 class="headline headline-2 section-title card-title" id="topic-label">Hot topics</h2>
                         </div>
                         <p class="card-text">
-                            Don't miss out on the latest news about Train Travel tips and Life in Russia. 
+                            Don't miss out on the latest news about psychology and lifestyle. 
                             We have <?= $articles_total_count ?> articles published here on website.
                         </p>
                         <div class="btn-group">
@@ -277,70 +335,7 @@ require 'includes/header.php';
                         </div>
                         <div class="slider" data-slider>
                             <ul class="slider-list" data-slider-container>
-                                <li class="slider-item">
-                                    <a href="#" class="slider-card">
-                                        <figure class="slider-banner img-holder" style="--width: ; --height: ;">
-                                            <img src="./assets/images/topic-1.png" width="507" height="608"
-                                                loading="lazy" alt="Sport" class="img-cover">
-                                        </figure>
-                                        <div class="slider-content">
-                                            <span class="slider-title">Sport</span>
-                                            <p class="slider-subtitle">38 articles</p>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="slider-item">
-                                    <a href="#" class="slider-card">
-                                        <figure class="slider-banner img-holder" style="--width: 507; --height: 618;">
-                                            <img src="./assets/images/topic-2.png" width="507" height="618"
-                                                loading="lazy" alt="Travel" class="img-cover">
-                                        </figure>
-                                        <div class="slider-content">
-                                            <span class="slider-title">Travel</span>
-                                            <p class="slider-subtitle">38 articles</p>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="slider-item">
-                                    <a href="#" class="slider-card">
-                                        <figure class="slider-banner img-holder" style="--width: 507; --height: 618;">
-                                            <img src="./assets/images/topic-3.png" width="507" height="618"
-                                                loading="lazy" alt="Design" class="img-cover">
-                                        </figure>
-                                        <div class="slider-content">
-                                            <span class="slider-title">Design</span>
-                                            <p class="slider-subtitle">78 articles</p>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="slider-item">
-                                    <a href="#" class="slider-card">
-                                        <figure class="slider-banner img-holder" style="--width: 507; --height: 618;">
-                                            <img src="./assets/images/topic-4.png" width="507" height="618"
-                                                loading="lazy" alt="Movie" class="img-cover">
-                                        </figure>
-                                        <div class="slider-content">
-                                            <span class="slider-title">Movie</span>
-                                            <p class="slider-subtitle">125 articles</p>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="slider-item">
-                                    <a href="#" class="slider-card">
-                                        <figure class="slider-banner img-holder" style="--width: 507; --height: 618;">
-                                            <img src="./assets/images/topic-5.png" width="507" height="618"
-                                                loading="lazy" alt="Movie" class="img-cover">
-                                        </figure>
-                                        <div class="slider-content">
-                                            <span class="slider-title">Lifestyle</span>
-                                            <p class="slider-subtitle">78 articles</p>
-                                        </div>
-                                    </a>
-                                </li>
+                                <?php show_topics($posts) ?>
                             </ul>
                         </div>
                     </div>
@@ -412,12 +407,13 @@ require 'includes/header.php';
                     </ul>
                     <?php
                     // show max articles, don't exceed $articles_total_count
+                    $articles_current_count = $_GET["show"] ?? "2"; 
                     $articles_to_show = min($articles_to_show + 2, $articles_total_count);
                     
                     ?>
                     
-                    <?php if ($articles_to_show <= $articles_total_count):?>
-                        <a href="<?php echo "./?show={$articles_to_show}" ?>" class="btn btn-secondary">
+                    <?php if ($articles_current_count < $articles_total_count):?>
+                        <a href="<?php echo "./?show={$articles_to_show}&#featured" ?>" class="btn btn-secondary">
                         
                             <span class="span">Show more posts</span>
                             <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
@@ -829,5 +825,10 @@ require 'includes/header.php';
             </section>
         </article>
     </main>
-    <?php require 'includes/footer.php'; ?>
+    <?php 
+    echo '<pre>';
+    print_r(get_popular_posts($posts));
+    echo '</pre>'?>;
 
+
+    <?php require 'includes/footer.php'; ?>

@@ -77,16 +77,16 @@
                 <ul class="navbar-list">
 
                     <li>
-                        <a href="#home" class="navbar-link hover-1" data-nav-toggler>Home</a>
+                        <a href="./#home" class="navbar-link hover-1" data-nav-toggler>Home</a>
                     </li>
                     <li>
-                        <a href="#topics" class="navbar-link hover-1" data-nav-toggler>Topics</a>
+                        <a href="./#topics" class="navbar-link hover-1" data-nav-toggler>Topics</a>
                     </li>
                     <li>
-                        <a href="#featured" class="navbar-link hover-1" data-nav-toggler>Featured Post</a>
+                        <a href="./#featured" class="navbar-link hover-1" data-nav-toggler>Featured Post</a>
                     </li>
                     <li>
-                        <a href="#recent" class="navbar-link hover-1" data-nav-toggler>Recent Post</a>
+                        <a href="./#recent" class="navbar-link hover-1" data-nav-toggler>Recent Post</a>
                     </li>
                     <li>
                         <a href="#contact" class="navbar-link hover-1" data-nav-toggler>Contact</a>
