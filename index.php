@@ -246,27 +246,65 @@ $posts = add_read_time($posts);
 
 
 
-
+// get topics and then show them
 $topics = get_tags($posts);
 
+// count articles
 $articles_total_count = count($posts);
 $articles_per_page = 3;
 
 $pagination_count = ceil($articles_total_count / $articles_per_page);
 $visit_count = 5;
 
-// get popular posts
+// get popular posts - try to use it in main section
 function get_popular_posts($posts) {
     usort($posts, function($a, $b) {
             return $b["word_count"] - $a["word_count"];
     });
     
-    return array_slice($posts, 0, 3);
-};
+    $popular_posts = array_slice($posts, 0, 3);
+    foreach($popular_posts as $post):?>
+        <li>
+            <div class="popular-card">
+                <figure class="card-banner img-holder" 
+                    style="--width:64 ; --height:64 ;"
+                    loading="lazy">
+                    <img src="./assets/images/popular-post-1.jpg" width="64" 
+                            height="64" alt="" class="img-cover">
+                </figure>
+                <div class="card-content">
+                    <h4 class="headline headline-4 card-title">
+                        <a href="#" class="link hover-2"><?= $post["title"] ?></a>
+                    </h4>
+                    <div class="wrapper">
+                        <p class="card-subtitle">
+                            <?= $post["read_time"] ?>
+                        </p>
+                        <time class="publish-date" datetime="2022-04-15">
+                            <?= $post["date"] ?>
+                        </time>
+                    </div>
+                </div>
+            </div>
+        </li>
+    <?php endforeach; 
+    }?>
 
 
 
-require 'includes/header.php';
+                                    
+                                        
+                                            
+                                        
+                                        
+                                    
+            
+
+
+
+
+
+<?require 'includes/header.php';
 ?>
 
 <!-- MAIN -->
