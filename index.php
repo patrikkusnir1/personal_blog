@@ -288,7 +288,7 @@ function get_popular_posts($posts) {
             </div>
         </li>
     <?php endforeach; 
-    }?>
+    };?>
 
 
 
@@ -304,8 +304,7 @@ function get_popular_posts($posts) {
 
 
 
-<?require 'includes/header.php';
-?>
+<?php require 'includes/header.php' ?>;
 
 <!-- MAIN -->
 
@@ -317,8 +316,8 @@ function get_popular_posts($posts) {
             <section class="hero" id="home" aria-label="home">
                 <div class="container">
                     <div class="hero-content">
-                        <?php if ($user_logged_in) {
-                            echo "<p class='hero-subtitle'>Hello ". $name . "</p>";
+                        <?php if (true) {
+                            echo "<p class='hero-subtitle'>Hello ". "Patrik". "</p>";
 
                             if ($visit_count % 5 == 0) {
                                 echo "<p class='hero-subtitle'>You are my special guest! Nice to see you</p>";
@@ -326,7 +325,7 @@ function get_popular_posts($posts) {
                         } ?>
                         
                         <h1 class="headline headline1 section-title">
-                            <span class="span">I'm <?= $full_name ?> </span>
+                            <span class="span">I'm Patrik Kusnir </span>
                         </h1>
                         <p class="hero-text">I am graduated pharmacist whose the biggest passion is travelling by train.
                             This blog has been written as my first project during my long self-taught programmer
@@ -505,17 +504,17 @@ function get_popular_posts($posts) {
                             
                             // filter posts by category
                             
-                            $posts = array_filter($posts, 'post_has_category');
+                            $filtered_posts = array_filter($posts, 'post_has_category');
                             $articles_total_count = count($posts);
                             $pagination_count = ceil( $articles_total_count / $articles_per_page );
 
                             // show only 3 articles per page
                             
-                            $posts = array_slice( $posts, ( ($current_page - 1) * $articles_per_page), $articles_per_page  );
+                            $paginated_posts = array_slice( $filtered_posts, ( ($current_page - 1) * $articles_per_page), $articles_per_page  );
                             
     
                             // show posts
-                            foreach ($posts as $post): ?>
+                            foreach ($paginated_posts as $post): ?>
                             
                             <li class="recent-post-card">
                                 <figure class="card-banner img-holder" style="--width: 271; --height: 258 ;">
@@ -608,7 +607,8 @@ function get_popular_posts($posts) {
                                 <span class="span">Popular posts</span>
                             </h3>
                             <ul class="popular-list">
-                                <li>
+                                <?php get_popular_posts($posts); ?>
+                                <!-- <li>
                                     <div class="popular-card">
                                         <figure class="card-banner img-holder" style="--width:64 ; --height:64 ;"
                                             loading="lazy">
@@ -723,7 +723,7 @@ function get_popular_posts($posts) {
                                             </div>
                                         </div>
                                     </div>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                         <div class="card aside-card">
