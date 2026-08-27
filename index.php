@@ -258,7 +258,8 @@ $visit_count = 5;
 
 // get popular posts - try to use it in main section
 function get_popular_posts($posts) {
-    usort($posts, function($a, $b) {
+    $posts_copy = $posts;
+    usort($posts_copy, function($a, $b) {
             return $b["word_count"] - $a["word_count"];
     });
     
