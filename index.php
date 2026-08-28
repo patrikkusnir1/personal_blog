@@ -263,7 +263,7 @@ function get_popular_posts($posts) {
             return $b["word_count"] - $a["word_count"];
     });
     
-    $popular_posts = array_slice($posts, 0, 3);
+    $popular_posts = array_slice($posts_copy, 0, 3);
     foreach($popular_posts as $post):?>
         <li>
             <div class="popular-card">
@@ -317,8 +317,8 @@ function get_popular_posts($posts) {
             <section class="hero" id="home" aria-label="home">
                 <div class="container">
                     <div class="hero-content">
-                        <?php if (true) {
-                            echo "<p class='hero-subtitle'>Hello ". "Patrik". "</p>";
+                        <?php if ($user_logged_in) {
+                            echo "<p class='hero-subtitle'>Hello ". $name. "</p>";
 
                             if ($visit_count % 5 == 0) {
                                 echo "<p class='hero-subtitle'>You are my special guest! Nice to see you</p>";
@@ -506,7 +506,7 @@ function get_popular_posts($posts) {
                             // filter posts by category
                             
                             $filtered_posts = array_filter($posts, 'post_has_category');
-                            $articles_total_count = count($posts);
+                            $articles_total_count = count($filtered_posts);
                             $pagination_count = ceil( $articles_total_count / $articles_per_page );
 
                             // show only 3 articles per page
@@ -864,10 +864,5 @@ function get_popular_posts($posts) {
             </section>
         </article>
     </main>
-    <?php 
-    echo '<pre>';
-    print_r(get_popular_posts($posts));
-    echo '</pre>'?>;
-
 
     <?php require 'includes/footer.php'; ?>
