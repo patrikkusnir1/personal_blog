@@ -146,14 +146,19 @@ function add_read_time($posts) {
 function get_tags($posts) 
 {
     $tags_list = [];
-    foreach ($posts as $post) 
-        {
+
+    foreach ($posts as $post) {
             $tags_list[] = $post["tags"];
-        }
-    $tags_list_merged = array_merge(...$tags_list);
-    $tags_list_cleaned = array_values(array_unique($tags_list_merged));
-    return $tags_list_cleaned;
-};
+    }
+
+    $tags_list = array_values(
+        array_unique(
+            array_merge(...$tags_list)
+        )
+    );
+
+    return $tags_list;
+}
 
 function show_categories($posts) {
     $articles_to_show = 2;
