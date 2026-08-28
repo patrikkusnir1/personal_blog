@@ -480,8 +480,11 @@ function get_popular_posts($posts) {
                         </p>
                         <ul class="grid-list">
                             <?php
-                            // get number where user clicked
-                            $current_page = $_GET["page"] ?? "1";
+                            // get number where user clicked and validate it - add min range and max range
+
+                            $current_page = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT) ?: 1;
+                            
+                            var_dump($current_page);
                             
                             // filter posts by category
                             
