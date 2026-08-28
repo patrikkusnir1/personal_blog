@@ -260,35 +260,10 @@ $visit_count = 5;
 function get_popular_posts($posts) {
     $posts_copy = $posts;
     usort($posts_copy, function($a, $b) {
-            return $b["word_count"] - $a["word_count"];
+        return $b["word_count"] - $a["word_count"];
     });
-    
     $popular_posts = array_slice($posts_copy, 0, 3);
-    foreach($popular_posts as $post):?>
-        <li>
-            <div class="popular-card">
-                <figure class="card-banner img-holder" 
-                    style="--width:64 ; --height:64 ;"
-                    loading="lazy">
-                    <img src="./assets/images/popular-post-1.jpg" width="64" 
-                            height="64" alt="" class="img-cover">
-                </figure>
-                <div class="card-content">
-                    <h4 class="headline headline-4 card-title">
-                        <a href="#" class="link hover-2"><?= $post["title"] ?></a>
-                    </h4>
-                    <div class="wrapper">
-                        <p class="card-subtitle">
-                            <?= $post["read_time"] ?>
-                        </p>
-                        <time class="publish-date" datetime="2022-04-15">
-                            <?= $post["date"] ?>
-                        </time>
-                    </div>
-                </div>
-            </div>
-        </li>
-    <?php endforeach; 
+    return $popular_posts;
     };?>
 
 
@@ -608,123 +583,33 @@ function get_popular_posts($posts) {
                                 <span class="span">Popular posts</span>
                             </h3>
                             <ul class="popular-list">
-                                <?php get_popular_posts($posts); ?>
-                                <!-- <li>
-                                    <div class="popular-card">
-                                        <figure class="card-banner img-holder" style="--width:64 ; --height:64 ;"
-                                            loading="lazy">
-                                            <img src="./assets/images/popular-post-1.jpg" width="64" height="64" alt=""
-                                                class="img-cover">
-                                        </figure>
-                                        <div class="card-content">
-                                            <h4 class="headline headline-4 card-title">
-                                                <a href="#" class="link hover-2">Creating is a privilege but it’s also a
-                                                    gift</a>
-                                            </h4>
-                                            <div class="wrapper">
-                                                <p class="card-subtitle">
-                                                    15 mins read
-                                                </p>
-                                                <time class="publish-date" datetime="2022-04-15">
-                                                    15 April 2022
-                                                </time>
+                                <?php ;
+                                    $popular_posts = get_popular_posts(($posts));
+                                    foreach ($popular_posts as $post):?>
+                                        <li>
+                                            <div class="popular-card">
+                                                <figure class="card-banner img-holder" 
+                                                    style="--width:64 ; --height:64 ;"
+                                                    loading="lazy">
+                                                    <img src="./assets/images/popular-post-1.jpg" width="64" 
+                                                            height="64" alt="" class="img-cover">
+                                                </figure>
+                                                <div class="card-content">
+                                                    <h4 class="headline headline-4 card-title">
+                                                        <a href="#" class="link hover-2"><?= $post["title"] ?></a>
+                                                    </h4>
+                                                    <div class="wrapper">
+                                                        <p class="card-subtitle">
+                                                            <?= $post["read_time"] ?>
+                                                        </p>
+                                                        <time class="publish-date" datetime="2022-04-15">
+                                                            <?= $post["date"] ?>
+                                                        </time>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="popular-card">
-                                        <figure class="card-banner img-holder" style="--width:64 ; --height:64 ;"
-                                            loading="lazy">
-                                            <img src="./assets/images/popular-post-2.jpg" width="64" height="64" alt=""
-                                                class="img-cover">
-                                        </figure>
-                                        <div class="card-content">
-                                            <h4 class="headline headline-4 card-title">
-                                                <a href="#" class="link hover-2">Being unique is better than being
-                                                    perfect</a>
-                                            </h4>
-                                            <div class="wrapper">
-                                                <p class="card-subtitle">
-                                                    15 mins read
-                                                </p>
-                                                <time class="publish-date" datetime="2022-04-15">
-                                                    15 April 2022
-                                                </time>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="popular-card">
-                                        <figure class="card-banner img-holder" style="--width:64 ; --height:64 ;"
-                                            loading="lazy">
-                                            <img src="./assets/images/popular-post-3.jpg" width="64" height="64" alt=""
-                                                class="img-cover">
-                                        </figure>
-                                        <div class="card-content">
-                                            <h4 class="headline headline-4 card-title">
-                                                <a href="#" class="link hover-2">Every day, in every city and town
-                                                    across
-                                                    the country</a>
-                                            </h4>
-                                            <div class="wrapper">
-                                                <p class="card-subtitle">
-                                                    15 mins read
-                                                </p>
-                                                <time class="publish-date" datetime="2022-04-15">
-                                                    15 April 2022
-                                                </time>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="popular-card">
-                                        <figure class="card-banner img-holder" style="--width:64 ; --height:64 ;"
-                                            loading="lazy">
-                                            <img src="./assets/images/popular-post-4.jpg" width="64" height="64" alt=""
-                                                class="img-cover">
-                                        </figure>
-                                        <div class="card-content">
-                                            <h4 class="headline headline-4 card-title">
-                                                <a href="#" class="link hover-2">Your voice, your mind, your story, your
-                                                    vision</a>
-                                            </h4>
-                                            <div class="wrapper">
-                                                <p class="card-subtitle">
-                                                    15 mins read
-                                                </p>
-                                                <time class="publish-date" datetime="2022-04-15">
-                                                    15 April 2022
-                                                </time>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="popular-card">
-                                        <figure class="card-banner img-holder" style="--width:64 ; --height:64 ;"
-                                            loading="lazy">
-                                            <img src="./assets/images/popular-post-2.jpg" width="64" height="64" alt=""
-                                                class="img-cover">
-                                        </figure>
-                                        <div class="card-content">
-                                            <h4 class="headline headline-4 card-title">
-                                                <a href="#" class="link hover-2">Being unique is better than being
-                                                    perfect</a>
-                                            </h4>
-                                            <div class="wrapper">
-                                                <p class="card-subtitle">
-                                                    15 mins read
-                                                </p>
-                                                <time class="publish-date" datetime="2022-04-15">
-                                                    15 April 2022
-                                                </time>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li> -->
+                                        </li>
+                                    <?php endforeach ?>
                             </ul>
                         </div>
                         <div class="card aside-card">
