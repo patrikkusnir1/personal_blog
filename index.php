@@ -163,12 +163,25 @@ function get_tags($posts)
 function show_categories($posts) {
     $articles_to_show = 2;
     $tags_array = get_tags($posts);
+    // $tags_array = http_build_query($tags_array);
+    // echo '<pre>';
+    // print_r($tags_array);
+    // echo '</pre>';
+
     $img_count = 1;
     foreach ($tags_array as $tag)
+
     {
-        echo
+        $a_url = http_build_query(
+            [ "category"=>$tag,
+               "show"   => $articles_to_show,
+               
+           ]
+       );
+        // echo $a_url;
+        echo 
         "<li>
-            <a class='card tag-btn' href='./?category=$tag&show=$articles_to_show#recent'>
+            <a class='card tag-btn' href='?$a_url#recent'>
                 <img src='./assets/images/tag$img_count.png' width='32' height='32' loading='lazy' alt='$tag'>
                 <p class='btn-text'>$tag</p>
             </a>
@@ -261,7 +274,7 @@ $articles_per_page = 3;
 $pagination_count = ceil($articles_total_count / $articles_per_page);
 $visit_count = 5;
 
-// get popular posts - try to use it in main section
+// get popular posts
 function get_popular_posts($posts) {
     $posts_copy = $posts;
     usort($posts_copy, function($a, $b) {
@@ -469,8 +482,8 @@ function get_popular_posts($posts) {
                         </p>
                         <ul class="grid-list">
                             <?php
-                            // get number where user clicked and validate it - add min range and max range - DONE 
-                            // commit to github
+                            // get number where user clicked and validate it
+
                             $options = array('options' => array(
                                 "min_range" => 1, 
                                 "max_range" => $pagination_count,
