@@ -273,18 +273,7 @@ function get_popular_posts($posts) {
 
 
 
-                                    
-                                        
-                                            
-                                        
-                                        
-                                    
-            
-
-
-
-
-
+                            
 <?php require 'includes/header.php' ?>;
 
 <!-- MAIN -->
@@ -480,9 +469,15 @@ function get_popular_posts($posts) {
                         </p>
                         <ul class="grid-list">
                             <?php
-                            // get number where user clicked and validate it - add min range and max range
+                            // get number where user clicked and validate it - add min range and max range - DONE 
+                            // commit to github
+                            $options = array('options' => array(
+                                "min_range" => 1, 
+                                "max_range" => $pagination_count,
+                                )
+                            );
 
-                            $current_page = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT) ?: 1;
+                            $current_page = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT, $options) ?: 1;
                             
                             var_dump($current_page);
                             
