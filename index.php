@@ -271,7 +271,8 @@ $topics = get_tags($posts);
 $articles_total_count = count($posts);
 $articles_per_page = 3;
 
-$pagination_count = ceil($articles_total_count / $articles_per_page);
+// I don't need to count pages now - first filter
+// $pagination_count = ceil($articles_total_count / $articles_per_page);
 $visit_count = 5;
 
 // get popular posts
@@ -415,8 +416,10 @@ function get_popular_posts($posts) {
                                                 loading="lazy" alt="Joseph" class="profile-banner">
                                             <div>
                                                 <p class="card-title"><?= 
-                                                $post["author"] ?> </p>
-                                                <p class="card-subtitle"><?= $post["date"] ?></p>
+                                                htmlspecialchars($post["author"]) ?> 
+                                                </p>
+                                                <p class="card-subtitle"><?= htmlspecialchars($post["date"] )?>
+                                                </p>
                                             </div>
                                         </div>
                                         <a href="#" class="card-btn">Read more</a>
@@ -483,29 +486,26 @@ function get_popular_posts($posts) {
                         </p>
                         <ul class="grid-list">
                             <?php
-                            // get number where user clicked and validate it
+                            // filter posts by category
+                            $filtered_posts = array_filter($posts, 'post_has_category');
 
+                            // count filtered posts
+                            $articles_total_count = count($filtered_posts);
+                            $pagination_count = ceil( 
+                                $articles_total_count / $articles_per_page );
+
+                            // validate page
                             $options = array('options' => array(
                                 "min_range" => 1, 
                                 "max_range" => $pagination_count,
                                 )
                             );
-
                             $current_page = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT, $options) ?: 1;
-                            
-                            var_dump($current_page);
-                            
-                            // filter posts by category
-                            
-                            $filtered_posts = array_filter($posts, 'post_has_category');
-                            $articles_total_count = count($filtered_posts);
-                            $pagination_count = ceil( $articles_total_count / $articles_per_page );
 
-                            // show only 3 articles per page
+                            // array slice
                             
                             $paginated_posts = array_slice( $filtered_posts, ( ($current_page - 1) * $articles_per_page), $articles_per_page  );
                             
-    
                             // show posts
                             foreach ($paginated_posts as $post): ?>
                             
@@ -600,7 +600,7 @@ function get_popular_posts($posts) {
                                 <span class="span">Popular posts</span>
                             </h3>
                             <ul class="popular-list">
-                                <?php ;
+                                <?php 
                                     $popular_posts = get_popular_posts(($posts));
                                     foreach ($popular_posts as $post):?>
                                         <li>
@@ -619,8 +619,11 @@ function get_popular_posts($posts) {
                                                         <p class="card-subtitle">
                                                             <?= $post["read_time"] ?>
                                                         </p>
-                                                        <time class="publish-date" datetime="2022-04-15">
-                                                            <?= $post["date"] ?>
+                                                        <time 
+                                                            class="publish-date" datetime="
+                                                            <?= $post["date"] ?>"
+                                                        >
+                                                        <?= $post["date"] ?>
                                                         </time>
                                                     </div>
                                                 </div>
