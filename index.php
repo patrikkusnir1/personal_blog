@@ -229,7 +229,7 @@ function show_topics($posts) {
     foreach ($tags as $tag):
         $tag_count = post_has_tags($posts, $tag);?>
         <li class="slider-item">
-            <a href="./?category=<?= $tag ?>#recent" class='slider-card'>
+            <a href="./?category=<?= htmlspecialchars( $tag )?>#recent" class='slider-card'>
                 <figure class="slider-banner img-holder" style="--width: ; --height: ;">
                     <img src="./assets/images/topic-<?= $img_count ?>.png" width="507" height="608"
                     loading="lazy" alt="<?= $tag ?>" class="img-cover">
@@ -406,7 +406,7 @@ function get_popular_posts($posts) {
                                     </div>
                                     <h3 class="headline headline-3">
                                         <a href="#" class="card-title hover-2">
-                                            <?php echo $post["title"] ?>
+                                            <?php echo htmlspecialchars($post["title"]) ?>
                                         </a>
                                     </h3>
                                     <div class="card-wrapper">
@@ -414,8 +414,9 @@ function get_popular_posts($posts) {
                                             <img src="./assets/images/author-1.png" width="48" height="48"
                                                 loading="lazy" alt="Joseph" class="profile-banner">
                                             <div>
-                                                <p class="card-title"><?php echo $post["author"] ?> </p>
-                                                <p class="card-subtitle"><?php echo $post["date"] ?></p>
+                                                <p class="card-title"><?= 
+                                                $post["author"] ?> </p>
+                                                <p class="card-subtitle"><?= $post["date"] ?></p>
                                             </div>
                                         </div>
                                         <a href="#" class="card-btn">Read more</a>
@@ -612,7 +613,7 @@ function get_popular_posts($posts) {
                                                 </figure>
                                                 <div class="card-content">
                                                     <h4 class="headline headline-4 card-title">
-                                                        <a href="#" class="link hover-2"><?= $post["title"] ?></a>
+                                                        <a href="#" class="link hover-2"><?= htmlspecialchars($post["title"]) ?></a>
                                                     </h4>
                                                     <div class="wrapper">
                                                         <p class="card-subtitle">
