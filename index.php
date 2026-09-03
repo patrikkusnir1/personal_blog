@@ -229,21 +229,27 @@ function show_topics($posts) {
     foreach ($tags as $tag):
         $tag_count = post_has_tags($posts, $tag);?>
         <li class="slider-item">
-            <a href="./?category=<?= htmlspecialchars( $tag )?>#recent" class='slider-card'>
-                <figure class="slider-banner img-holder" style="--width: ; --height: ;">
-                    <img src="./assets/images/topic-<?= $img_count ?>.png" width="507" height="608"
-                    loading="lazy" alt="<?= $tag ?>" class="img-cover">
-                </figure>
-                <div class="slider-content">
-                    <span class="slider-title"><?= $tag ?></span>
-                    <?php if ($tag_count == 1):?>
-                        <p class="slider-subtitle"><?= $tag_count ?> article</p>
-                    <?php else: ?>
-                        <p class="slider-subtitle"><?= $tag_count ?> articles</p>
-                    <?php endif ?>
-                    
-                </div>
-            </a>
+
+            <?php 
+            $category_only_array = ["category" => $tag];
+            $category_url = http_build_query($category_only_array);
+            ?>
+
+
+                <a href="?<?= $category_url?>#recent" class='slider-card'>
+                    <figure class="slider-banner img-holder" style="--width: ; --height: ;">
+                        <img src="./assets/images/topic-<?= $img_count ?>.png" width="507" height="608"
+                        loading="lazy" alt="<?= $tag ?>" class="img-cover">
+                    </figure>
+                    <div class="slider-content">
+                        <span class="slider-title"><?= $tag ?></span>
+                        <?php if ($tag_count == 1):?>
+                            <p class="slider-subtitle"><?= $tag_count ?> article</p>
+                        <?php else: ?>
+                            <p class="slider-subtitle"><?= $tag_count ?> articles</p>
+                        <?php endif ?>
+                    </div>
+                </a>
         </li>
         <?php if ($img_count % 5 == 0) 
         {
@@ -271,8 +277,7 @@ $topics = get_tags($posts);
 $articles_total_count = count($posts);
 $articles_per_page = 3;
 
-// I don't need to count pages now - first filter
-// $pagination_count = ceil($articles_total_count / $articles_per_page);
+// TODO: add in the future guest count
 $visit_count = 5;
 
 // get popular posts
@@ -283,7 +288,56 @@ function get_popular_posts($posts) {
     });
     $popular_posts = array_slice($posts_copy, 0, 3);
     return $popular_posts;
-    };?>
+    }
+
+
+// manually created URLs
+
+$urls = [
+1 => '<a href="?category=' .$current_category. 
+          '&page=' .($current_page - 1 ).
+          '#recent" 
+          class="pagination-btn" 
+          aria-label="previous page">
+          <ion-icon name="arrow-back" 
+            aria-hidden="true">
+          </ion-icon>
+</a>',
+
+3 => "<a href='?category={$current_category}&page={$pagination}#recent' class='pagination-btn active'>$pagination</a>",
+4 => "<a href='?category={$current_category}&page={$pagination}#recent' class='pagination-btn'>$pagination</a>",
+5 => "<a href='?category='.$current_category.'&page=' .($current_page + 1).'#recent class='pagination-btn' aria-label='next page'>
+                                    <ion-icon name='arrow-forward' aria-hidden='true'></ion-icon>
+                                </a>'",
+];
+
+ $category_and_page_array = ["category" => $current_category, 
+                             "page"      => $pagination];
+
+$category_and_page_url = http_build_query($category_and_page_array);
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+?>
+
 
 
 
@@ -558,23 +612,30 @@ function get_popular_posts($posts) {
                                 </a>';
                                 };
                             
-                            // create pagination buttons based on articles count 
-                            
+                            // create pagination buttons based on articles count
+                            $pagination = 1;
+
+                            while ( $pagination < $pagination_count + 1 ) {
+                                $category_and_page_array = [
+                                "category" => $current_category, 
+                                "page"      => $pagination
+                            ];
+
+                            $category_and_page_url = 
+                             http_build_query($category_and_page_array); 
+
                                 
-                                $pagination = 1;
-                                while ( $pagination < $pagination_count + 1 ) 
+                                if ( $pagination == $current_page ) 
                                 {
-                                    if ( $pagination == $current_page ) 
-                                    {
-                                        echo "<a href='?category={$current_category}&page={$pagination}#recent' class='pagination-btn active'>$pagination</a>";
-                                    } 
-                                    else 
-                                    {
-                                        echo "<a href='?category={$current_category}&page={$pagination}#recent' class='pagination-btn'>$pagination</a>";
-                                    }
-                        
-                                    $pagination++;
+                                    echo "<a href='?$category_and_page_url#recent' class='pagination-btn active'>$pagination</a>";
                                 } 
+                                else 
+                                {
+                                    echo "<a href='?$category_and_page_url#recent' class='pagination-btn'>$pagination</a>";
+                                }
+                    
+                                $pagination++;
+                            } 
                             
 
                             //  create pagination forward arrow -->
