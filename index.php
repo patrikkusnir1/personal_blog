@@ -114,13 +114,20 @@ $posts = [
 
 // make excerpt from longer text (full blog text)
 function make_excerpt($text, $limit = 50) {
-    return substr($text,0,strrpos( substr( $text, 0, $limit ), " " ))   . "...";
+    // if longer text with spaces
+
+    if ( str_contains($text, " "  ) && strlen( $text ) > $limit) {
+        return substr
+        ($text, 0, strrpos( substr( $text, 0, $limit ), " " ))   . "...";
+    } else {
+        return $text;
+    }
 }
 
 // count readtime
 function readtime_count($word_count, $words_per_minute = 200) {
     $read_time = ceil($word_count / $words_per_minute);
-    if ($read_time == 1) {
+    if ( $read_time == 1 ) {
         return $read_time . " min";
     }
     return $read_time . " mins";
@@ -236,7 +243,7 @@ function show_topics($posts) {
             ?>
 
 
-                <a href="?<?= $category_url?>#recent" class='slider-card'>
+                <a href="?<?= $category_url ?>#recent" class='slider-card'>
                     <figure class="slider-banner img-holder" style="--width: ; --height: ;">
                         <img src="./assets/images/topic-<?= $img_count ?>.png" width="507" height="608"
                         loading="lazy" alt="<?= $tag ?>" class="img-cover">
@@ -464,7 +471,13 @@ function get_popular_posts($posts) {
                     
                     ?>
                     
-                    <?php if ($articles_current_count < $articles_total_count):?>
+                    <?php 
+
+                    // refactor the link
+                    $articles_to_show_array = ["show" => $articles_to_show]
+                    
+
+                    if ($articles_current_count < $articles_total_count):?>
                         <a href="<?php echo "./?show={$articles_to_show}&#featured" ?>" class="btn btn-secondary">
                         
                             <span class="span">Show more posts</span>
