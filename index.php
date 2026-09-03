@@ -173,7 +173,7 @@ function show_categories($posts) {
 
     {
         $a_url = http_build_query(
-            [ "category"=>$tag,
+            [ "category"=> $tag,
                "show"   => $articles_to_show,
                
            ]
@@ -289,32 +289,6 @@ function get_popular_posts($posts) {
     $popular_posts = array_slice($posts_copy, 0, 3);
     return $popular_posts;
     }
-
-
-// manually created URLs
-
-$urls = [
-1 => '<a href="?category=' .$current_category. 
-          '&page=' .($current_page - 1 ).
-          '#recent" 
-          class="pagination-btn" 
-          aria-label="previous page">
-          <ion-icon name="arrow-back" 
-            aria-hidden="true">
-          </ion-icon>
-</a>',
-
-3 => "<a href='?category={$current_category}&page={$pagination}#recent' class='pagination-btn active'>$pagination</a>",
-4 => "<a href='?category={$current_category}&page={$pagination}#recent' class='pagination-btn'>$pagination</a>",
-5 => "<a href='?category='.$current_category.'&page=' .($current_page + 1).'#recent class='pagination-btn' aria-label='next page'>
-                                    <ion-icon name='arrow-forward' aria-hidden='true'></ion-icon>
-                                </a>'",
-];
-
- $category_and_page_array = ["category" => $current_category, 
-                             "page"      => $pagination];
-
-$category_and_page_url = http_build_query($category_and_page_array);
 
 ?>
 
@@ -603,11 +577,23 @@ $category_and_page_url = http_build_query($category_and_page_array);
                         </ul>
                         <nav aria-label="pagination" class="pagination">
                             <?php
-                            //  create pagination backward arrow
+                            
+
+
                             $current_category = $_GET["category"] ?? "";
+
+                            //  create pagination backward arrow
+
+                            $category_and_page_backward_array= http_build_query(  
+                                ["category" => $current_category,
+                                 "page" => $current_page - 1,
+                                ]
+                            ); 
+
+
                                 if ( $current_page > 1)
                                 {
-                                echo '<a href="?category=' .$current_category. '&page=' .($current_page - 1 ).'#recent" class="pagination-btn" aria-label="previous page">
+                                echo '<a href="?'.$category_and_page_backward_array.'#recent" class="pagination-btn" aria-label="previous page">
                                     <ion-icon name="arrow-back" aria-hidden="true"></ion-icon>
                                 </a>';
                                 };
@@ -639,9 +625,15 @@ $category_and_page_url = http_build_query($category_and_page_array);
                             
 
                             //  create pagination forward arrow -->
+                            $category_and_page_forward_array= http_build_query(  
+                                ["category" => $current_category,
+                                 "page" => $current_page + 1
+                                ]
+                            ); 
+
                                 if ( $current_page <= $pagination_count - 1) 
                                 {
-                                    echo '<a href="?category='.$current_category.'&page=' .($current_page + 1).'#recent" class="pagination-btn" aria-label="next page">
+                                    echo '<a href="?'.$category_and_page_forward_array.'#recent" class="pagination-btn" aria-label="next page">
                                     <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
                                 </a>';
                                 }
