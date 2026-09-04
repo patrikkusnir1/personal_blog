@@ -114,15 +114,25 @@ $posts = [
 
 // make excerpt from longer text (full blog text)
 function make_excerpt($text, $limit = 50) {
-    // if longer text with spaces
-
-    if ( str_contains($text, " "  ) && strlen( $text ) > $limit) {
-        return substr
-        ($text, 0, strrpos( substr( $text, 0, $limit ), " " ))   . "...";
-    } else {
+// Case 1: text is already short enough - return it untouched
+    if ( strlen($text) <= $limit ) {
         return $text;
     }
+
+// here the text is too long
+
+// find a space within $limit
+$space_pos = strrpos( substr( $text, 0, $limit ), " " );
+
+
+// Case 2: a space was found: cut cleanly at that space
+if ( $space_pos !== false ) {
+    return substr( $text, 0, $space_pos). "...";
 }
+
+// Case 3: a space wasn't found, cut at limit with ...
+return substr($text, 0, $limit). "...";
+} 
 
 // count readtime
 function readtime_count($word_count, $words_per_minute = 200) {
@@ -272,7 +282,7 @@ function show_topics($posts) {
 
 
 // applying function to our posts
-$posts = add_excerpts_to_posts($posts, $longer_texts, 100);
+$posts = add_excerpts_to_posts($posts, $longer_texts, 50);
 $posts = add_read_time($posts);
 
 
@@ -474,7 +484,7 @@ function get_popular_posts($posts) {
                     <?php 
 
                     // refactor the link
-                    $articles_to_show_array = ["show" => $articles_to_show]
+                    $articles_to_show_array = ["show" => $articles_to_show];
                     
 
                     if ($articles_current_count < $articles_total_count):?>
