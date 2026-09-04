@@ -180,32 +180,29 @@ function get_tags($posts)
 function show_categories($posts) {
     $articles_to_show = 2;
     $tags_array = get_tags($posts);
-    // $tags_array = http_build_query($tags_array);
-    // echo '<pre>';
-    // print_r($tags_array);
-    // echo '</pre>';
 
-    $img_count = 1;
-    foreach ($tags_array as $tag)
 
+    // define placeholder images - repeating list - TODO
+    $placeholder_images = [
+    ]
+    $key = 0;
+    foreach ($tags_array as $key % 5 => $tag)
     {
         $a_url = http_build_query(
-            [ "category"=> $tag,
-               "show"   => $articles_to_show,
-               
-           ]
-       );
-        // echo $a_url;
+        [ "category"=> $tag,
+           "show"   => $articles_to_show,
+        ]);
+
         echo 
         "<li>
-            <a class='card tag-btn' href='?$a_url#recent'>
-                <img src='./assets/images/tag$img_count.png' width='32' height='32' loading='lazy' alt='$tag'>
+            <a class='card tag-btn' href='?$a_url #recent'>
+                <img src='./assets/images/tag$key.png' width='32' height='32' loading='lazy' alt='$tag'>
                 <p class='btn-text'>$tag</p>
             </a>
         </li>";
-        $img_count++;
+        }
     }
-}
+
 
 // check if post has category and get the category
 function post_has_category($post) {
