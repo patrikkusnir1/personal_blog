@@ -367,7 +367,7 @@ $visit_count = 5;
                                         </div>
                                     </div>
                                     <h3 class="headline headline-3">
-                                        <a href="?<?= $category_url.'#recent' ?>" class="card-title hover-2">
+                                        <a href="#" class="card-title hover-2">
                                             <?php echo htmlspecialchars($post["title"]); ?>
                                         </a>
                                     </h3>
