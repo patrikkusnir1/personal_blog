@@ -21,7 +21,7 @@ $posts = [
         "tags"  => ["Productivity", "Work"],
         "word_count" => 100,
         "author" => "Elena",
-        "date" => "2024-01-15",
+        "date" => "2024-01-15"
     ],
     [
         "title" => "Self-observation is the first step of inner unfolding",
@@ -160,6 +160,7 @@ function add_read_time($posts) {
     return $posts;
 }
 
+// get tags from all the posts
 function get_tags($posts) 
 {
     $tags_list = [];
@@ -177,9 +178,9 @@ function get_tags($posts)
     return $tags_list;
 }
 
-function show_categories($posts) {
+function show_categories($posts, $topics) {
     $articles_to_show = 2;
-    $tags_array = get_tags($posts);
+    $tags_array = $topics;
 
 
     // define placeholder images - repeating list
@@ -252,9 +253,9 @@ function post_has_tags($posts, $tag) {
     };
 
 // show topics
-function show_topics($posts) {
+function show_topics($posts, $topics) {
     
-    $tags_array = get_tags($posts);
+    $tags_array = $topics;
 
     // define placeholder images - repeating list
     $placeholder_images = [
@@ -357,12 +358,15 @@ function get_popular_posts($posts) {
                             This blog has been written as my first project during my long self-taught programmer
                             learning path.</p>
                         <div class="input-wrapper">
-                            <input type="email" name="email_address" placeholder="Type your email address" required
-                                class="input-field">
-                            <button class="btn btn-primary">
-                                <span class="primary">Subscribe</span>
-                                <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
-                            </button>
+                            <!-- TODO: add form here and style it -->
+                            <form>
+                                <input type="email" name="email_address" placeholder="Type your email address" required
+                                    class="input-field">
+                                <button class="btn btn-primary" type="submit">
+                                    <span class="primary">Subscribe</span>
+                                    <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+                                </button>
+                            </form>
                         </div>
                     </div>
                     <div class="hero-banner">
@@ -398,7 +402,7 @@ function get_popular_posts($posts) {
                         </div>
                         <div class="slider" data-slider>
                             <ul class="slider-list" data-slider-container>
-                                <?php show_topics($posts) ?>
+                                <?php show_topics($posts, $topics) ?>
                             </ul>
                         </div>
                     </div>
@@ -423,13 +427,18 @@ function get_popular_posts($posts) {
                         $articles_to_show = $_GET["show"] ?? "2";
                         
                         $feature_posts = array_slice( $posts, 0, $articles_to_show );
-                        foreach ($feature_posts  as $post): ?>
+
+
+                        foreach ($feature_posts  as $post): 
+                            $date = new DateTime($post["date"]);
+                        ?>
                         
                         <li>
                             <div class="card feature-card">
                                 <figure class="card-banner img-holder" style="--width: 1602; --height: 903;">
                                     <img src="./assets/images/featured-1.png"
-                                        alt="Self-observation is the first step of inner unfolding" class="img-cover"
+                                        alt="<?= htmlspecialchars($post["title"])?>" 
+                                        class="img-cover"
                                         width="1602" loading="lazy" height="903">
                                 </figure>
 
@@ -449,7 +458,7 @@ function get_popular_posts($posts) {
                                     </div>
                                     <h3 class="headline headline-3">
                                         <a href="#" class="card-title hover-2">
-                                            <?php echo htmlspecialchars($post["title"]) ?>
+                                            <?php echo htmlspecialchars($date->format("d F Y")) ?>
                                         </a>
                                     </h3>
                                     <div class="card-wrapper">
@@ -460,7 +469,7 @@ function get_popular_posts($posts) {
                                                 <p class="card-title"><?= 
                                                 htmlspecialchars($post["author"]) ?> 
                                                 </p>
-                                                <p class="card-subtitle"><?= htmlspecialchars($post["date"] )?>
+                                                <p class="card-subtitle"><?= htmlspecialchars($date->format("d F Y"))?>
                                                 </p>
                                             </div>
                                         </div>
@@ -512,7 +521,7 @@ function get_popular_posts($posts) {
 
                     <ul class="grid-list">
                     <?php
-                        show_categories($posts);
+                        show_categories($posts, $topics);
                     ?>
                     </ul>
                 </div>

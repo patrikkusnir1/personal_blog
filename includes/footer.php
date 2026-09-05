@@ -15,11 +15,9 @@
                         When an unknown prnoto
                         sans took a galley and scrambled it to five centurie.
                     </p>
-                    <p class="footer-list-title">
-                    <address class="footer-text address">
-                        123 Main Street <br>
-                        New York, NY 10001
-                    </address>
+                    <p class="footer-list-title footer-text address">
+                        Eastern Slovakia, in the middle <br>
+                        of nowhere
                     </p>
                 </div>
                 <div class="footer-list">
@@ -47,15 +45,15 @@
                         Newsletter
                     </p>
                     <p class="footer-text">
-                        Sign up to be first to receive the latest stories inspiring us, case studies, and industry news.
+                        Sign up to be first to receive the latest articles.
                     </p>
                     <div class="input-wrapper">
-                        <input type="text" name="name" placeholder="Your name" required autocomplete="off"
+                        <input type="text" name="name" placeholder="Your name" required autocomplete="name"
                             class="input-field">
                         <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
                     </div>
                     <div class="input-wrapper">
-                        <input type="email" name="email_address" placeholder="Email address" required autocomplete="off"
+                        <input type="email" name="email_address" placeholder="Email address" required autocomplete="email"
                             class="input-field">
                         <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
                     </div>

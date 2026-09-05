@@ -103,24 +103,26 @@
                     </div>
 
                     <div class="link-list">
-                        <li>
-                            <a class="navbar-bottom-link hover-1">Profile</a>
-                        </li>
-                        <li>
-                            <a class="navbar-bottom-link hover-1">Articles Saved</a>
-                        </li>
-                        <li>
-                            <a class="navbar-bottom-link hover-1">Add New Post</a>
-                        </li>
-                        <li>
-                            <a class="navbar-bottom-link hover-1">My likes</a>
-                        </li>
-                        <li>
-                            <a class="navbar-bottom-link hover-1">Account setting</a>
-                        </li>
-                        <li>
-                            <a class="navbar-bottom-link hover-1">Signout</a>
-                        </li>
+                        <ul>
+                            <li>
+                                <a class="navbar-bottom-link hover-1">Profile</a>
+                            </li>
+                            <li>
+                                <a class="navbar-bottom-link hover-1">Articles Saved</a>
+                            </li>
+                            <li>
+                                <a class="navbar-bottom-link hover-1">Add New Post</a>
+                            </li>
+                            <li>
+                                <a class="navbar-bottom-link hover-1">My likes</a>
+                            </li>
+                            <li>
+                                <a class="navbar-bottom-link hover-1">Account setting</a>
+                            </li>
+                            <li>
+                                <a class="navbar-bottom-link hover-1">Signout</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <p class="copyright-text">
