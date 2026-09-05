@@ -743,6 +743,7 @@ body.nav-active {
   gap: 8px;
   padding: 18px;
   border-radius: var(--radius-16);
+  min-width: 0;
 }
 
 .tag-btn:is(:hover, :focus-visible) {
@@ -757,6 +758,12 @@ body.nav-active {
 .tag-btn img {
   width: 100%;
   max-width: 32px;
+  flex-shrink: 0;
+}
+
+.btn-text {
+  min-width: 0;
+  padding-right: 40px;
 }
 
 
