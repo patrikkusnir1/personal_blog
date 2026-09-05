@@ -119,7 +119,7 @@ function make_excerpt($text, $limit = 50) {
         return $text;
     }
 
-// here the text is too long
+// Case 2 and 3: here the text is too long
 
 // find a space within $limit
 $space_pos = strrpos( substr( $text, 0, $limit ), " " );

@@ -43,28 +43,47 @@
 
 <?php 
 
-function make_excerpt($text, $limit = 50) {
+function make_excerpt($input, $limit = 50) {
 // Case 1: text is already short enough - return it untouched
-    if ( strlen($text) <= $limit ) {
-        return $text;
+        if ( strlen($input) <= $limit ) {
+        return $input;
     }
 
 // Case 2 and 3: here the text is too long
 
 // find a space within $limit
-$space_pos = strrpos( substr( $text, 0, $limit ), " " );
+$space_pos = strrpos( substr( $input, 0, $limit ), " " );
 
 
 // Case 2: a space was found: cut cleanly at that space
 if ( $space_pos !== false ) {
-    return substr( $text, 0, $space_pos). "...";
+    return substr( $input, 0, $space_pos). "...";
 }
 
 // Case 3: a space wasn't found, cut at limit with ...
-return substr($text, 0, $limit). "...";
+return substr($input, 0, $limit). "...";
 } 
 
-$text = "Di scov er useful tips and practical strategies for";
+
+
+
+
+
+
+function test_make_excerpt($test_name, $input, $expected, $limit = 50)  {
+
+    $actual = make_excerpt($input, $limit);
+
+    if ($actual === $expected) {
+        echo "PASS: $test_name<br>";
+    } else {
+        echo "FAIL: $test_name<br>";
+        echo "EXPECTED: $expected<br>";
+        echo "ACTUAL: $actual<br>";
+    }
+}
+
+// test_make_excerpt()
 
 /****
  * Test: Text shorter than limit
@@ -74,8 +93,7 @@ Expected result: Discover useful tips
 Actual result: Discover useful tips
 Pass/Fail: Pass
 */
-echo make_excerpt($text, 20).'<br>';
-echo strlen(make_excerpt($text, 20));
+test_make_excerpt("shorter_than_limit","Discover useful tips", "Discover useful tips", 50);
 
 
 /****
@@ -86,9 +104,21 @@ Expected result: Discover useful tips Discover useful tips ffffffff
 Actual result: Discover useful tips Discover useful tips ffffffff
 Pass/Fail: Pass
 */
+$input = "Discover useful tips Discover useful tips ffffffff";
+$limit = 20;
+if ( strlen($input) === $limit) {
+    echo "Input length test: PASS";
+} else {
+    echo "Input length test: FAIL";
+    echo "Input length: ".strlen($input)."";
+    echo "Expected length: $limit";
+}
+
+
+test_make_excerpt("exact limit",$input, $input, $limit );
 
 /****
- * Test: Text exactly $limit
+ * Test: Normal long test
 Input: Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day.
 Limit: 50
 Expected result: Discover useful tips and practical strategies for...
@@ -96,15 +126,8 @@ Actual result: Discover useful tips and practical strategies for...
 Pass/Fail: Pass
 */
 
+test_make_excerpt("normal long text", "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day.","Discover useful tips and practical strategies for...", 50 );
 
-/****
- * Test: Normal long test
-Input: Discover useful tips Discover useful tips ffffffff
-Limit: 50
-Expected result: Discover useful tips Discover useful tips ffffffff
-Actual result: Discover useful tips Discover useful tips ffffffff
-Pass/Fail: Pass
-*/
 
 /****
  * Test: Long text where the last space occurs before the limit
@@ -113,13 +136,22 @@ Limit: 50
 Expected result: Discover useful tips and practical strategies...
 Actual result: Discover useful tips and practical strategies...
 Pass/Fail: Pass
+*/
 
+test_make_excerpt("long test where last space occurs before the limit","Discover useful tips and practical strategies for...", "Discover useful tips and practical strategies...", 50 );
+
+/***
 Test: A long string containing no spaces
 Input: Discoverusefultipsandpracticalstrategiesforadshdahjdkjsajasshja
 Limit: 50
 Excepted result Discoverusefultipsandpracticalstrategiesforadshdah...
 Actual result: Discoverusefultipsandpracticalstrategiesforadshdah...
 Pass/Fail: Pass
+*/
+
+test_make_excerpt("long string without spaces","Discoverusefultipsandpracticalstrategiesforadshdahjdkjsajasshja", "Discoverusefultipsandpracticalstrategiesforadshdah...", 50 );
+
+/**
 
 Test: Empty string
 Input: ""
@@ -127,7 +159,11 @@ Limit: 50
 Excepted result "" (empty string)
 Actual result: ""  (empty string)
 Pass/Fail: Pass
+*/
 
+test_make_excerpt( "empty string","","", 50 );
+
+/*
 
 Test: Very small limit
 Input: Discover useful tips and practical strategies for
@@ -135,7 +171,12 @@ Limit: 5
 Excepted result "Disco..." 
 Actual result: "Disco..." 
 Pass/Fail: Pass
+*/
 
+
+test_make_excerpt("very small limit","Discover useful tips and practical strategies for","Disco...", 5 );
+
+/*
 
 Test: Multiple spaces
 Input: Di scov er useful tips and practical strategies for
@@ -145,16 +186,7 @@ Actual result: "Di scov er useful..."
 Pass/Fail: Pass
 */
 
-
-
-
-
-
-
-
-
-
-
+test_make_excerpt("multiple spaces", "Di scov er useful tips and practical strategies for","Di scov er useful...", 20);
 ?>
 
 
