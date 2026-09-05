@@ -182,21 +182,37 @@ function show_categories($posts) {
     $tags_array = get_tags($posts);
 
 
-    // define placeholder images - repeating list - TODO
+    // define placeholder images - repeating list
     $placeholder_images = [
-    ]
-    $key = 0;
-    foreach ($tags_array as $key % 5 => $tag)
-    {
-        $a_url = http_build_query(
-        [ "category"=> $tag,
-           "show"   => $articles_to_show,
+        "/assets/images/tag1.png",
+        "/assets/images/tag2.png",
+        "/assets/images/tag3.png",
+        "/assets/images/tag4.png",
+        "/assets/images/tag5.png",
+        "/assets/images/tag6.png",
+        "/assets/images/tag7.png",
+        "/assets/images/tag8.png",
+        "/assets/images/tag9.png",
+        "/assets/images/tag10.png",
+        "/assets/images/tag11.png",
+        "/assets/images/tag12.png",
+
+    ];
+    foreach ($tags_array as $index => $tag) {
+        // get the image based on index - repeating every 5
+        $image_index = $index % count($placeholder_images);
+        $image_path = $placeholder_images[$image_index];
+
+    
+        $a_url = http_build_query([ 
+           "category" => $tag,
+           "show"     => $articles_to_show,
         ]);
 
-        echo 
-        "<li>
+        echo "
+        <li>
             <a class='card tag-btn' href='?$a_url #recent'>
-                <img src='./assets/images/tag$key.png' width='32' height='32' loading='lazy' alt='$tag'>
+                <img src='$image_path' width='32' height='32' loading='lazy' alt='$tag'>
                 <p class='btn-text'>$tag</p>
             </a>
         </li>";
@@ -238,42 +254,50 @@ function post_has_tags($posts, $tag) {
 // show topics
 function show_topics($posts) {
     
-    $tags = get_tags($posts);
-    $img_count = 1;
-    foreach ($tags as $tag):
-        $tag_count = post_has_tags($posts, $tag);?>
-        <li class="slider-item">
+    $tags_array = get_tags($posts);
 
-            <?php 
+    // define placeholder images - repeating list
+    $placeholder_images = [
+        "./assets/images/topic-1.png",
+        "./assets/images/topic-2.png",
+        "./assets/images/topic-3.png",
+        "./assets/images/topic-4.png",
+        "./assets/images/topic-5.png",
+    ];
+
+    foreach ($tags_array as $index => $tag):
+        $tag_count = post_has_tags($posts, $tag);
+        $image_index = $index % count($placeholder_images);
+        $image_path = $placeholder_images[$image_index];
+
+?>
+        <li class="slider-item">
+            <?php
             $category_only_array = ["category" => $tag];
             $category_url = http_build_query($category_only_array);
             ?>
-
-
-                <a href="?<?= $category_url ?>#recent" class='slider-card'>
-                    <figure class="slider-banner img-holder" style="--width: ; --height: ;">
-                        <img src="./assets/images/topic-<?= $img_count ?>.png" width="507" height="608"
+            <a href="?<?= $category_url ?>#recent" class='slider-card'>
+                <figure class="slider-banner img-holder" style="--width: ; --height: ;">
+                    <img src="<?= $image_path ?>" width="507" height="608"
                         loading="lazy" alt="<?= $tag ?>" class="img-cover">
-                    </figure>
-                    <div class="slider-content">
-                        <span class="slider-title"><?= $tag ?></span>
-                        <?php if ($tag_count == 1):?>
-                            <p class="slider-subtitle"><?= $tag_count ?> article</p>
-                        <?php else: ?>
-                            <p class="slider-subtitle"><?= $tag_count ?> articles</p>
-                        <?php endif ?>
-                    </div>
-                </a>
+                </figure>
+                <div class="slider-content">
+                    <span class="slider-title"><?= $tag ?></span>
+                    <?php if ($tag_count == 1):?>
+                        <p class="slider-subtitle">
+                            <?= $tag_count ?> article
+                        </p>
+                    <?php else: ?>
+                        <p class="slider-subtitle">
+                            <?= $tag_count ?> articles
+                        </p>
+                    <?php endif ?>
+                </div>
+            </a>
         </li>
-        <?php if ($img_count % 5 == 0) 
-        {
-            $img_count = 1; 
-        }
-        else {
-            $img_count++;
-        }
-    endforeach;
-};
+    <?php 
+        endforeach;
+    }
 
 
 
@@ -306,30 +330,6 @@ function get_popular_posts($posts) {
 
 ?>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-?>
-
-
-
-
-                            
 <?php require 'includes/header.php' ?>;
 
 <!-- MAIN -->
