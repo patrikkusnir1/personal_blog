@@ -328,6 +328,10 @@ $visit_count = 5;
                         
                         $feature_posts = array_slice( $posts, 0, $articles_to_show );
 
+                        
+
+
+
 
                         foreach ($feature_posts  as $post): 
                             $date = new DateTime($post["date"]);
@@ -345,8 +349,14 @@ $visit_count = 5;
                                 <div class="card-content">
                                     <div class="card-wrapper">
                                         <div class="card-tag">
-                                            <?php foreach($post["tags"] as $tag): ?>
-                                                <a href="#" class="span hover-2">
+                                            <?php foreach($post["tags"] as $tag):
+                                                $category_only_array = 
+                                                    ["category" => $tag];
+                                                $category_url = 
+                                                http_build_query($category_only_array);                    
+                                             ?>
+
+                                                <a href="?<?= $category_url.'#recent' ?>" class="span hover-2">
                                                     <?php echo $tag; ?> 
                                                 </a>
                                             <?php endforeach?>
@@ -357,7 +367,7 @@ $visit_count = 5;
                                         </div>
                                     </div>
                                     <h3 class="headline headline-3">
-                                        <a href="#" class="card-title hover-2">
+                                        <a href="?<?= $category_url.'#recent' ?>" class="card-title hover-2">
                                             <?php echo htmlspecialchars($post["title"]); ?>
                                         </a>
                                     </h3>
