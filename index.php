@@ -353,10 +353,10 @@ $visit_count = 5;
                                                 $category_only_array = 
                                                     ["category" => $tag];
                                                 $category_url = 
-                                                http_build_query($category_only_array);                    
+                                                http_build_query($category_only_array);      
                                              ?>
 
-                                                <a href="?<?= $category_url.'#recent' ?>" class="span hover-2">
+                                                <a href="?<?= $category_url.'#recent'?>" class="span hover-2">
                                                     <?php echo $tag; ?> 
                                                 </a>
                                             <?php endforeach?>
@@ -404,7 +404,7 @@ $visit_count = 5;
                     
 
                     if ($articles_current_count < $articles_total_count):?>
-                        <a href="<?php echo "./?show={$articles_to_show}&#featured" ?>" class="btn btn-secondary">
+                        <a href="<?php echo "./?show={$articles_to_show}#featured" ?>" class="btn btn-secondary">
                         
                             <span class="span">Show more posts</span>
                             <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
@@ -453,6 +453,7 @@ $visit_count = 5;
                         </p>
                         <ul class="grid-list">
                             <?php
+                            $current_category = $_GET["category"] ?? "";
 
                             // get category and filter posts by category
                             $filtered_posts = array_filter($posts, 'post_has_category');
@@ -477,11 +478,7 @@ $visit_count = 5;
                             $paginated_posts = array_slice( $filtered_posts, ( ($current_page - 1) * $articles_per_page), $articles_per_page  );
                             
                             // show posts
-                            foreach ($paginated_posts as $post): 
-
-                            $category_only_array = ["category" => $tag];
-                            $category_url = http_build_query($category_only_array);
-                            
+                            foreach ($paginated_posts as $post):             
                             ?>
                             
                             <li class="recent-post-card">
@@ -495,7 +492,10 @@ $visit_count = 5;
                                         loading="lazy">
                                 </figure>
                                 <div class="card-content">
-                                    <a href="<?= $category_url.'#recent' ?>" class="card-badge"><?= htmlspecialchars($post["badge"]) ?></a>
+                                    <a href="<?= $post["tags"].'#recent' ?>" class="card-badge">
+                                        <?= htmlspecialchars($post["badge"]) ?>
+                                        
+                                    </a>
 
                                     <h3 class="headline headline-3 card-title">
                                         <a href="#" class="link hover-2">
@@ -507,10 +507,16 @@ $visit_count = 5;
 
                                     <div class="card-wrapper">
                                         <div class="card-tag">
-                                            <?php foreach ($post["tags"] as $tag): ?>
+                                    <?php foreach ($post["tags"] as $tag): 
+                                    $category_only_array = ["category" => $tag];
+                                    $category_url = 
+                                    http_build_query($category_only_array)
+                                    ?>
 
-                                            <a href="#" class="span hover-2"><?= htmlspecialchars($tag) ?></a>
-                                            <?php endforeach ?>
+                                            <a href="?<?= $category_url?>#recent"   class="span hover-2">
+                                                <?= htmlspecialchars($tag) ?>
+                                            </a>
+                                    <?php endforeach ?>
                                         </div>
 
                                         <div class="wrapper">
@@ -527,7 +533,7 @@ $visit_count = 5;
                             
 
 
-                            $current_category = $_GET["category"] ?? "";
+
 
                             //  create pagination backward arrow
 
