@@ -114,7 +114,7 @@ $posts = [
 
 require 'includes/functions.php';
 
-function show_categories($posts,$topics) {
+function show_categories($posts, $topics) {
     $articles_to_show = 2;
     $tags_array = $topics;
 
