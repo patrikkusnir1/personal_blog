@@ -477,7 +477,12 @@ $visit_count = 5;
                             $paginated_posts = array_slice( $filtered_posts, ( ($current_page - 1) * $articles_per_page), $articles_per_page  );
                             
                             // show posts
-                            foreach ($paginated_posts as $post): ?>
+                            foreach ($paginated_posts as $post): 
+
+                            $category_only_array = ["category" => $tag];
+                            $category_url = http_build_query($category_only_array);
+                            
+                            ?>
                             
                             <li class="recent-post-card">
                                 <figure class="card-banner img-holder" style="--width: 271; --height: 258 ;">
@@ -490,7 +495,7 @@ $visit_count = 5;
                                         loading="lazy">
                                 </figure>
                                 <div class="card-content">
-                                    <a href="#" class="card-badge"><?= htmlspecialchars($post["badge"]) ?></a>
+                                    <a href="<?= $category_url.'#recent' ?>" class="card-badge"><?= htmlspecialchars($post["badge"]) ?></a>
 
                                     <h3 class="headline headline-3 card-title">
                                         <a href="#" class="link hover-2">
