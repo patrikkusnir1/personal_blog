@@ -178,7 +178,7 @@ function get_tags($posts)
     return $tags_list;
 }
 
-function show_categories($posts, $topics) {
+function show_categories($posts,$topics) {
     $articles_to_show = 2;
     $tags_array = $topics;
 
@@ -458,7 +458,7 @@ function get_popular_posts($posts) {
                                     </div>
                                     <h3 class="headline headline-3">
                                         <a href="#" class="card-title hover-2">
-                                            <?php echo htmlspecialchars($date->format("d F Y")) ?>
+                                            <?php echo htmlspecialchars($post["title"]); ?>
                                         </a>
                                     </h3>
                                     <div class="card-wrapper">
@@ -543,11 +543,14 @@ function get_popular_posts($posts) {
                         </p>
                         <ul class="grid-list">
                             <?php
-                            // filter posts by category
+
+                            // get category and filter posts by category
                             $filtered_posts = array_filter($posts, 'post_has_category');
 
                             // count filtered posts
                             $articles_total_count = count($filtered_posts);
+
+                            // calculate pagination count
                             $pagination_count = ceil( 
                                 $articles_total_count / $articles_per_page );
 
@@ -559,7 +562,7 @@ function get_popular_posts($posts) {
                             );
                             $current_page = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT, $options) ?: 1;
 
-                            // array slice
+                            // slice posts
                             
                             $paginated_posts = array_slice( $filtered_posts, ( ($current_page - 1) * $articles_per_page), $articles_per_page  );
                             
