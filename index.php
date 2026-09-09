@@ -1,5 +1,46 @@
 <?php 
 
+class Article {
+    public string $longer_text;
+    public string $title;
+    public string $image;
+    public string $badge;
+    public array $tags;
+    public int $word_count;
+    public string $author;
+    public string $date;
+
+    public function make_excerpt(string $text, int $limit = 50) 
+    {
+    // Case 1: text is already short enough - return it untouched
+        if ( strlen($text) <= $limit ) {
+            return $text;
+        }
+
+        // Case 2 and 3: here the text is too long
+
+        // find a space within $limit
+        $space_pos = strrpos( substr( $text, 0, $limit ), " " );
+
+
+        // Case 2: a space was found: cut cleanly at that space
+        if ( $space_pos !== false ) {
+            return substr( $text, 0, $space_pos). "...";
+        }
+
+        // Case 3: a space wasn't found, cut at limit with ...
+        return substr($text, 0, $limit). "...";
+    } 
+    public function readtime_count(int this->$word_count, int $words_per_minute = 200) 
+    {
+        $read_time = ceil($word_count / $words_per_minute);
+        if ( $read_time == 1 ) {
+            return $read_time . " min";
+        }
+        return $read_time . " mins";
+    }
+};
+
 
 $longer_texts = [
     "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day.",
