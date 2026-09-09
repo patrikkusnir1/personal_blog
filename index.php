@@ -10,36 +10,36 @@ class Article {
     public string $author;
     public string $date;
 
-    public function make_excerpt(string $text, int $limit = 50) 
+    public function make_excerpt(int $limit = 50) 
     {
     // Case 1: text is already short enough - return it untouched
-        if ( strlen($text) <= $limit ) {
-            return $text;
+        if ( strlen($this->longer_text) <= $limit ) {
+            return $this->longer_text;
         }
 
         // Case 2 and 3: here the text is too long
 
         // find a space within $limit
-        $space_pos = strrpos( substr( $text, 0, $limit ), " " );
+        $space_pos = strrpos( substr( $this->longer_text, 0, $limit ), " " );
 
 
         // Case 2: a space was found: cut cleanly at that space
         if ( $space_pos !== false ) {
-            return substr( $text, 0, $space_pos). "...";
+            return substr( $this->longer_text, 0, $space_pos). "...";
         }
 
         // Case 3: a space wasn't found, cut at limit with ...
-        return substr($text, 0, $limit). "...";
+        return substr($this->longer_text, 0, $limit). "...";
     } 
-    public function readtime_count(int this->$word_count, int $words_per_minute = 200) 
+    public function readtime_count( int $words_per_minute = 200 ) 
     {
-        $read_time = ceil($word_count / $words_per_minute);
+        $read_time = ceil($this->word_count / $words_per_minute);
         if ( $read_time == 1 ) {
             return $read_time . " min";
         }
         return $read_time . " mins";
     }
-};
+}
 
 
 $longer_texts = [
@@ -54,6 +54,9 @@ $longer_texts = [
     "Reading books is a great way to learn something new, improve your knowledge, develop your imagination, and discover interesting ideas that can help you understand the world better.",
     "Building better habits takes time and consistency, but small positive changes in your daily routine can gradually improve your productivity, motivation, health, and overall quality of life."
 ];
+
+
+
 $posts = [
     [
         "title" => "Helpful Tips for Working from Home as a Freelancer",
@@ -272,11 +275,14 @@ $visit_count = 5;
 
 ?>
 
-<?php require 'includes/header.php' ?>;
+<?php require 'includes/header.php'?>; 
+
+
 
 <!-- MAIN -->
 
     <main>
+
         <article>
             <!-- 
             -#HERO
@@ -321,7 +327,17 @@ $visit_count = 5;
                     <img src="./assets/images/shadow-1.svg" width="500" height="800" alt="" class="hero-bg hero-bg-1">
                     <img src="./assets/images/shadow-2.svg" width="500" height="500" alt="" class="hero-bg hero-bg-2">
             </section>
+        <?php 
 
+        $new_article = new Article();
+
+        $new_article -> longer_text = "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day";
+            echo "<div style='margin: 0 auto; width: 100%'>";
+                echo "<pre style='white-space: pre-wrap;'>";
+                print_r($new_article->title);
+                echo '</pre>';
+            echo '</div>'
+        ?>
             <!-- #TOPICS  -->
             <section class="topics" id="topics" aria-labelledby="topic-label">
                 <div class="container">
@@ -533,9 +549,8 @@ $visit_count = 5;
                                         loading="lazy">
                                 </figure>
                                 <div class="card-content">
-                                    <a href="<?= $post["tags"].'#recent' ?>" class="card-badge">
-                                        <?= htmlspecialchars($post["badge"]) ?>
-                                        
+                                    <a href="" class="card-badge">
+                                        <?= $post["badge"] ?>
                                     </a>
 
                                     <h3 class="headline headline-3 card-title">
