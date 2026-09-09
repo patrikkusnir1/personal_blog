@@ -1,6 +1,7 @@
 <?php 
-
-class Article {
+declare(strict_types=1);
+class Article 
+{
     public string $longer_text;
     public string $title;
     public string $image;
@@ -9,6 +10,19 @@ class Article {
     public int $word_count;
     public string $author;
     public string $date;
+
+    public function __construct(string $longer_text, string $title, string $image, string $badge, array $tags, int $word_count, string $author, string $date)
+    {
+        $this->longer_text = $longer_text;
+        $this->title       = $title;
+        $this->image       = $image;
+        $this->badge       = $badge;
+        $this->tags        = $tags;
+        $this->word_count  = $word_count;
+        $this->author      = $author;
+        $this->date        = $date;
+    }
+
 
     public function make_excerpt(int $limit = 50) 
     {
@@ -329,11 +343,14 @@ $visit_count = 5;
             </section>
         <?php 
 
-        $new_article = new Article();
+        $new_article = new Article (
+            // TODO: add parameters to the new instance, check claude
 
-        $new_article -> longer_text = "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day";
+            "Working Tips", "Helpful Tips for Working from Home as a Freelancer", "./assets/images/recent-post-1.jpg","Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day" ,["Productivity", "Work"], 100, "Elena", "28-02-2026");
+
             echo "<div style='margin: 0 auto; width: 100%'>";
                 echo "<pre style='white-space: pre-wrap;'>";
+                print_r($new_article->longer_text);
                 print_r($new_article->title);
                 echo '</pre>';
             echo '</div>'
