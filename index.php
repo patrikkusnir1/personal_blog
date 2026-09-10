@@ -56,22 +56,140 @@ class Article
 }
 
 
+
+
+$article1 = new Article(
+    longer_text: "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day",
+    title: "Working Tips", 
+    image: "./assets/images/recent-post-1.jpg", 
+    badge: "Helpful Tips for Working from Home as a Freelancer",
+    tags: ["Productivity", "Work"], 
+    word_count: 100, 
+    author: "Elena", 
+    date: "28-02-2026");
+
+
+
+$article2 = new Article(
+    longer_text: "Learn how self-observation can help you understand your thoughts, emotions, habits, and behavior and become more aware of yourself in everyday life.",
+    title: "Self-observation is the first step of inner unfolding", 
+    image: "./assets/images/recent-post-2.jpg", 
+    badge: "Lifestyle",
+    tags: ["Psychology", "Lifestyle"], 
+    word_count: 400, 
+    author: "Marcus", 
+    date: "2024-02-03");
+
+$article3 = new Article(
+    longer_text: "Learn the basic rules and useful tips that can help you understand chess, improve your decision-making, develop a better strategy, and enjoy the game more.",
+    title: "How to play chess", 
+    image: "./assets/images/recent-post-3.jpg", 
+    badge: "Games",
+    tags: ["Psychology", "Fun"], 
+    word_count: 700, 
+    author: "Nadia", 
+    date: "2024-02-20");
+
+$article4 = new Article(
+    longer_text: "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day.",
+    title: "Simple Ways to Improve Your Daily Productivity and Stay Focused", 
+    image: "./assets/images/recent-post-4.jpg", 
+    badge: "Productivity",
+    tags: ["Psychology", "Work"], 
+    word_count: 550, 
+    author: "Elena", 
+    date: "2024-03-05");
+
+$article5 = new Article(
+    longer_text: "Learn how self-observation can help you understand your thoughts, emotions, habits, and behavior and become more aware of yourself in everyday life.",
+    title: "How Traveling Can Change the Way You See the World", 
+    image: "./assets/images/recent-post-5.jpg", 
+    badge: "Travel",
+    tags: ["Travel", "Lifestyle"],
+    word_count: 800, 
+    author: "Tomas", 
+    date: "2024-03-22");
+
+
+
+$article6 = new Article(
+    longer_text: "Learn the basic rules and useful tips that can help you understand chess, improve your decision-making, develop a better strategy, and enjoy the game more.",
+    title: "The Benefits of Reading Books and Learning Something New", 
+    image: "./assets/images/recent-post-6.jpg", 
+    badge: "Travel",
+    tags: ["Travel", "Lifestyle"], 
+    word_count: 800, 
+    author: "Tomas", 
+    date: "2024-03-22"
+);
+
+
+$article7 = new Article(
+    longer_text: "Discover simple and effective ways to improve your daily productivity, stay focused on important tasks, avoid distractions, and make better use of your time throughout the day.",
+    title: "How to Build Better Habits and Make Positive Changes", 
+    image: "./assets/images/recent-post-7.jpg", 
+    badge: "Lifestyle",
+    tags: ["Habits", "Self Improvement"], 
+    word_count: 500, 
+    author: "Marcus", 
+    date: "2024-04-28"
+);
+
+
+
+$article8 = new Article(
+    longer_text: "Traveling can change the way you see the world by introducing you to new cultures, different traditions, interesting places, and people with completely different experiences and perspectives.",
+    title: "Interesting Facts About Nature That Everyone Should Know", 
+    image: "./assets/images/recent-post-8.jpg", 
+    badge: "Nature",
+    tags: ["Nature", "Science"], 
+    word_count: 750, 
+    author: "Tomas", 
+    date: "2024-05-14"
+);
+
+
+
+$article9 = new Article(
+    longer_text: "Reading books is a great way to learn something new, improve your knowledge, develop your imagination, and discover interesting ideas that can help you understand the world better.",
+    title: "Why Learning a New Language Can Be Fun and Useful", 
+    image: "./assets/images/recent-post-9.jpg", 
+    badge: "Learning",
+    tags: ["Languages", "Education"], 
+    word_count: 450, 
+    author: "Elena", 
+    date: "2024-06-01"
+);
+
+$article10 = new Article(
+    longer_text: "Building better habits takes time and consistency, but small positive changes in your daily routine can gradually improve your productivity, motivation, health, and overall quality of life.",
+    title: "Easy Tips for Creating a More Comfortable Home Office", 
+    image: "./assets/images/recent-post-10.jpg", 
+    badge: "Working Tips",
+    tags: ["Work", "Lifestyle"], 
+    word_count: 600, 
+    author: "Nadia", 
+    date: "2024-06-19"
+);
+
+
 $longer_texts = [
-    "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day.",
-    "Learn how self-observation can help you understand your thoughts, emotions, habits, and behavior and become more aware of yourself in everyday life.",
-    "Learn the basic rules and useful tips that can help you understand chess, improve your decision-making, develop a better strategy, and enjoy the game more.",
-    "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day.",
-    "Learn how self-observation can help you understand your thoughts, emotions, habits, and behavior and become more aware of yourself in everyday life.",
-    "Learn the basic rules and useful tips that can help you understand chess, improve your decision-making, develop a better strategy, and enjoy the game more.",
-    "Discover simple and effective ways to improve your daily productivity, stay focused on important tasks, avoid distractions, and make better use of your time throughout the day.",
-    "Traveling can change the way you see the world by introducing you to new cultures, different traditions, interesting places, and people with completely different experiences and perspectives.",
-    "Reading books is a great way to learn something new, improve your knowledge, develop your imagination, and discover interesting ideas that can help you understand the world better.",
-    "Building better habits takes time and consistency, but small positive changes in your daily routine can gradually improve your productivity, motivation, health, and overall quality of life."
+    "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day.", // done
+    "Learn how self-observation can help you understand your thoughts, emotions, habits, and behavior and become more aware of yourself in everyday life.", // done
+    "Learn the basic rules and useful tips that can help you understand chess, improve your decision-making, develop a better strategy, and enjoy the game more.", // done
+    "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day.", // done
+    "Learn how self-observation can help you understand your thoughts, emotions, habits, and behavior and become more aware of yourself in everyday life.",//done
+    "Learn the basic rules and useful tips that can help you understand chess, improve your decision-making, develop a better strategy, and enjoy the game more.", // done
+    "Discover simple and effective ways to improve your daily productivity, stay focused on important tasks, avoid distractions, and make better use of your time throughout the day." , // done
+    "Traveling can change the way you see the world by introducing you to new cultures, different traditions, interesting places, and people with completely different experiences and perspectives.", // done
+    "Reading books is a great way to learn something new, improve your knowledge, develop your imagination, and discover interesting ideas that can help you understand the world better.", // done
+    "Building better habits takes time and consistency, but small positive changes in your daily routine can gradually improve your productivity, motivation, health, and overall quality of life." // done
 ];
 
 
 
 $posts = [
+    // done
     [
         "title" => "Helpful Tips for Working from Home as a Freelancer",
         "image" => "./assets/images/recent-post-1.jpg",
@@ -81,6 +199,7 @@ $posts = [
         "author" => "Elena",
         "date" => "2024-01-15"
     ],
+    //done
     [
         "title" => "Self-observation is the first step of inner unfolding",
         "image" => "./assets/images/recent-post-2.jpg",
@@ -90,6 +209,7 @@ $posts = [
         "author" => "Marcus",
         "date" => "2024-02-03",
     ],
+    // done
     [
         "title" => "How to play chess",
         "image" => "./assets/images/recent-post-3.jpg",
@@ -99,16 +219,17 @@ $posts = [
         "author" => "Nadia",
         "date" => "2024-02-20",
     ],
+    // done
     [
         "title" => "Simple Ways to Improve Your Daily Productivity and Stay Focused",
-        "image" => "./assets/images/recent-post-3.jpg",
+        "image" => "./assets/images/recent-post-4.jpg",
         "badge" => "Productivity",
         "tags" => ["Productivity", "Work"],
         "word_count" => 550,
         "author" => "Elena",
         "date" => "2024-03-05",
     ],
-
+    // done
     [
         "title" => "How Traveling Can Change the Way You See the World",
         "image" => "./assets/images/recent-post-3.jpg",
@@ -118,7 +239,7 @@ $posts = [
         "author" => "Tomas",
         "date" => "2024-03-22",
     ],
-
+    // done
     [
         "title" => "The Benefits of Reading Books and Learning Something New",
         "image" => "./assets/images/recent-post-3.jpg",
@@ -128,7 +249,7 @@ $posts = [
         "author" => "Nadia",
         "date" => "2024-04-10",
     ],
-
+    // done
     [
         "title" => "How to Build Better Habits and Make Positive Changes",
         "image" => "./assets/images/recent-post-3.jpg",
@@ -138,7 +259,7 @@ $posts = [
         "author" => "Marcus",
         "date" => "2024-04-28",
     ],
-
+    // done
     [
         "title" => "Interesting Facts About Nature That Everyone Should Know",
         "image" => "./assets/images/recent-post-3.jpg",
@@ -148,7 +269,7 @@ $posts = [
         "author" => "Tomas",
         "date" => "2024-05-14",
     ],
-
+    // done
     [
         "title" => "Why Learning a New Language Can Be Fun and Useful",
         "image" => "./assets/images/recent-post-3.jpg",
@@ -169,6 +290,42 @@ $posts = [
         "date" => "2024-06-19",
     ],
 ];
+
+
+/*
+
+Start with an empty array — what would you call it? ($articles, maybe.)
+*/
+$articles = [];
+/*
+TODO:
+Loop through $longer_texts with $key => $text, same as before.
+*/
+foreach ($longer_texts as $key => $text) {
+    /*
+Inside the loop, you now have $text (the long version) and $posts[$key] (title, image, badge, tags, word_count, author, date) — everything needed to build one Article.
+*/
+    $posts[]
+
+
+
+    $article = new Article(
+        longer_text: $text,
+        key: $posts[$key]
+    )
+
+
+}
+/*
+
+Create new Article(...) using those values, and push it onto $articles.
+
+After the loop, return $articles;
+
+
+
+*/
+
 
 require 'includes/functions.php';
 
@@ -263,9 +420,9 @@ function show_topics($posts, $topics) {
                 </div>
             </a>
         </li>
-    <?php 
-        endforeach;
+       <?php endforeach;
     }
+
 
 
 
@@ -287,9 +444,9 @@ $articles_per_page = 3;
 $visit_count = 5;
 
 
-?>
+require 'includes/header.php';
 
-<?php require 'includes/header.php'?>; 
+?> 
 
 
 
@@ -319,7 +476,6 @@ $visit_count = 5;
                             This blog has been written as my first project during my long self-taught programmer
                             learning path.</p>
                         <div class="input-wrapper">
-                            <!-- TODO: add form here and style it -->
                             <form>
                                 <input type="email" name="email_address" placeholder="Type your email address" required
                                     class="input-field">
@@ -341,20 +497,15 @@ $visit_count = 5;
                     <img src="./assets/images/shadow-1.svg" width="500" height="800" alt="" class="hero-bg hero-bg-1">
                     <img src="./assets/images/shadow-2.svg" width="500" height="500" alt="" class="hero-bg hero-bg-2">
             </section>
-        <?php 
-
-        $new_article = new Article (
-            // TODO: add parameters to the new instance, check claude
-
-            "Working Tips", "Helpful Tips for Working from Home as a Freelancer", "./assets/images/recent-post-1.jpg","Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day" ,["Productivity", "Work"], 100, "Elena", "28-02-2026");
-
-            echo "<div style='margin: 0 auto; width: 100%'>";
-                echo "<pre style='white-space: pre-wrap;'>";
-                print_r($new_article->longer_text);
-                print_r($new_article->title);
-                echo '</pre>';
-            echo '</div>'
-        ?>
+            <!-- DEBUGGING SECTION -->
+            <?php 
+                 echo "<div style='margin: 0 auto; width: 100%'>";
+                     echo "<pre style='white-space: pre-wrap;'>";
+                     print_r($article8->longer_text);
+                     print_r($article8->title);
+                     echo '</pre>';
+                 echo '</div>'
+            ?>
             <!-- #TOPICS  -->
             <section class="topics" id="topics" aria-labelledby="topic-label">
                 <div class="container">
@@ -398,7 +549,7 @@ $visit_count = 5;
                         <?php
                         // show only 2 articles here
                         
-                        $articles_to_show = $_GET["show"] ?? "2";
+                        $articles_to_show = (int) ($_GET["show"] ?? "2");
                         
                         $feature_posts = array_slice( $posts, 0, $articles_to_show );
 
