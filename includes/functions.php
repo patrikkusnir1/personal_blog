@@ -49,17 +49,17 @@ function add_excerpts_to_posts($posts, $longer_texts, $limit)
 
 // get tags from all the posts
 
-function get_tags($posts) 
+function get_tags(array $articles) 
 {
     $tags_list = [];
 
-    foreach ($posts as $post) {
-            $tags_list[] = $post["tags"];
+    foreach ($articles as $article) {
+            $tags_list[] = $article->tags;
     }
 
     $tags_list = array_values(
-        array_unique(
-            array_merge(...$tags_list)
+                array_unique(
+                array_merge(...$tags_list)
         )
     );
 
@@ -83,20 +83,20 @@ function post_has_category($post) {
     };
 
 
-// check if post has tags and count them
+// check if article has tags and count them
 
-function post_has_tags($posts, $tag) {
+function post_has_tags($articles, $tag) {
     $tag_count = 0; 
-        foreach($posts as $post) 
+        foreach($articles as $article) 
             {
-                if ( in_array($tag, $post["tags"]) ) 
+                if ( in_array($tag, $article->tags) ) 
                     {
                         $tag_count++;
                     };
                     
             }
         return $tag_count;
-    };
+    }
 
 // add read time to every post on the website
 
@@ -112,13 +112,13 @@ function add_read_time($posts)
 
 // get popular posts
 
-function get_popular_posts($posts) 
+function get_popular_posts($articles) 
 {
-    $posts_copy = $posts;
-    usort($posts_copy, function($a, $b) {
-        return $b["word_count"] - $a["word_count"];
+    $articles_copy = $articles;
+    usort($articles_copy, function($a, $b) {
+        return $b->word_count - $a->word_count;
     });
-    $popular_posts = array_slice($posts_copy, 0, 3);
+    $popular_posts = array_slice($articles_copy, 0, 3);
     
     return $popular_posts;
 }

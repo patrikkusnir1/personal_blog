@@ -10,8 +10,9 @@ class Article
     public int $word_count;
     public string $author;
     public string $date;
+    public string $read_time;
 
-    public function __construct(string $longer_text, string $title, string $image, string $badge, array $tags, int $word_count, string $author, string $date)
+    public function __construct(string $longer_text, string $title, string $image, string $badge, array $tags, int $word_count, string $author, string $date, $read_time)
     {
         $this->longer_text = $longer_text;
         $this->title       = $title;
@@ -21,6 +22,7 @@ class Article
         $this->word_count  = $word_count;
         $this->author      = $author;
         $this->date        = $date;
+        $this->read_time   = readtime_count($this->word_count);
     }
 
 
@@ -199,6 +201,7 @@ foreach ($longer_texts as $key => $text) {
         word_count: $posts[$key]["word_count"],
         author: $posts[$key]["author"],
         date: $posts[$key]["date"],
+        read_time: readtime_count(this->word_count)
     );
     // and push it onto $articles.
     $articles[] = $article;
@@ -270,7 +273,7 @@ function show_categories($posts, $topics) {
 
 
 // show topics
-function show_topics($posts, $topics) {
+function show_topics($articles, $topics) {
     
     $tags_array = $topics;
 
@@ -284,7 +287,7 @@ function show_topics($posts, $topics) {
     ];
 
     foreach ($tags_array as $index => $tag):
-        $tag_count = post_has_tags($posts, $tag);
+        $tag_count = post_has_tags($articles, $tag);
         $image_index = $index % count($placeholder_images);
         $image_path = $placeholder_images[$image_index];
 
@@ -326,8 +329,8 @@ $posts = add_read_time($posts);
 
 
 
-// get topics and then show them
-$topics = get_tags($posts);
+// get topics and then show them from articles array of objects
+$topics = get_tags($articles);
 
 // count articles
 $articles_total_count = count($posts);
@@ -419,7 +422,7 @@ require 'includes/header.php';
                         </div>
                         <div class="slider" data-slider>
                             <ul class="slider-list" data-slider-container>
-                                <?php show_topics($posts, $topics) ?>
+                                <?php show_topics($articles, $topics) ?>
                             </ul>
                         </div>
                     </div>
@@ -723,8 +726,8 @@ require 'includes/header.php';
                             </h3>
                             <ul class="popular-list">
                                 <?php 
-                                    $popular_posts = get_popular_posts(($posts));
-                                    foreach ($popular_posts as $post):?>
+                                    $popular_articles = get_popular_posts(($articles));
+                                    foreach ($popular_articles as $article):?>
                                         <li>
                                             <div class="popular-card">
                                                 <figure class="card-banner img-holder" 
@@ -735,17 +738,18 @@ require 'includes/header.php';
                                                 </figure>
                                                 <div class="card-content">
                                                     <h4 class="headline headline-4 card-title">
-                                                        <a href="#" class="link hover-2"><?= htmlspecialchars($post["title"]) ?></a>
+                                                        <a href="#" class="link hover-2"><?= htmlspecialchars($article->title) ?></a>
                                                     </h4>
                                                     <div class="wrapper">
                                                         <p class="card-subtitle">
-                                                            <?= $post["read_time"] ?>
+                                                            <?= $article->read_time 
+                                                            ?>
                                                         </p>
                                                         <time 
                                                             class="publish-date" datetime="
-                                                            <?= $post["date"] ?>"
+                                                            <?= $article->date ?>"
                                                         >
-                                                        <?= $post["date"] ?>
+                                                        <?= $article->date ?>
                                                         </time>
                                                     </div>
                                                 </div>
