@@ -57,122 +57,6 @@ class Article
 
 
 
-
-$article1 = new Article(
-    longer_text: "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day",
-    title: "Working Tips", 
-    image: "./assets/images/recent-post-1.jpg", 
-    badge: "Helpful Tips for Working from Home as a Freelancer",
-    tags: ["Productivity", "Work"], 
-    word_count: 100, 
-    author: "Elena", 
-    date: "28-02-2026");
-
-
-
-$article2 = new Article(
-    longer_text: "Learn how self-observation can help you understand your thoughts, emotions, habits, and behavior and become more aware of yourself in everyday life.",
-    title: "Self-observation is the first step of inner unfolding", 
-    image: "./assets/images/recent-post-2.jpg", 
-    badge: "Lifestyle",
-    tags: ["Psychology", "Lifestyle"], 
-    word_count: 400, 
-    author: "Marcus", 
-    date: "2024-02-03");
-
-$article3 = new Article(
-    longer_text: "Learn the basic rules and useful tips that can help you understand chess, improve your decision-making, develop a better strategy, and enjoy the game more.",
-    title: "How to play chess", 
-    image: "./assets/images/recent-post-3.jpg", 
-    badge: "Games",
-    tags: ["Psychology", "Fun"], 
-    word_count: 700, 
-    author: "Nadia", 
-    date: "2024-02-20");
-
-$article4 = new Article(
-    longer_text: "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day.",
-    title: "Simple Ways to Improve Your Daily Productivity and Stay Focused", 
-    image: "./assets/images/recent-post-4.jpg", 
-    badge: "Productivity",
-    tags: ["Psychology", "Work"], 
-    word_count: 550, 
-    author: "Elena", 
-    date: "2024-03-05");
-
-$article5 = new Article(
-    longer_text: "Learn how self-observation can help you understand your thoughts, emotions, habits, and behavior and become more aware of yourself in everyday life.",
-    title: "How Traveling Can Change the Way You See the World", 
-    image: "./assets/images/recent-post-5.jpg", 
-    badge: "Travel",
-    tags: ["Travel", "Lifestyle"],
-    word_count: 800, 
-    author: "Tomas", 
-    date: "2024-03-22");
-
-
-
-$article6 = new Article(
-    longer_text: "Learn the basic rules and useful tips that can help you understand chess, improve your decision-making, develop a better strategy, and enjoy the game more.",
-    title: "The Benefits of Reading Books and Learning Something New", 
-    image: "./assets/images/recent-post-6.jpg", 
-    badge: "Travel",
-    tags: ["Travel", "Lifestyle"], 
-    word_count: 800, 
-    author: "Tomas", 
-    date: "2024-03-22"
-);
-
-
-$article7 = new Article(
-    longer_text: "Discover simple and effective ways to improve your daily productivity, stay focused on important tasks, avoid distractions, and make better use of your time throughout the day.",
-    title: "How to Build Better Habits and Make Positive Changes", 
-    image: "./assets/images/recent-post-7.jpg", 
-    badge: "Lifestyle",
-    tags: ["Habits", "Self Improvement"], 
-    word_count: 500, 
-    author: "Marcus", 
-    date: "2024-04-28"
-);
-
-
-
-$article8 = new Article(
-    longer_text: "Traveling can change the way you see the world by introducing you to new cultures, different traditions, interesting places, and people with completely different experiences and perspectives.",
-    title: "Interesting Facts About Nature That Everyone Should Know", 
-    image: "./assets/images/recent-post-8.jpg", 
-    badge: "Nature",
-    tags: ["Nature", "Science"], 
-    word_count: 750, 
-    author: "Tomas", 
-    date: "2024-05-14"
-);
-
-
-
-$article9 = new Article(
-    longer_text: "Reading books is a great way to learn something new, improve your knowledge, develop your imagination, and discover interesting ideas that can help you understand the world better.",
-    title: "Why Learning a New Language Can Be Fun and Useful", 
-    image: "./assets/images/recent-post-9.jpg", 
-    badge: "Learning",
-    tags: ["Languages", "Education"], 
-    word_count: 450, 
-    author: "Elena", 
-    date: "2024-06-01"
-);
-
-$article10 = new Article(
-    longer_text: "Building better habits takes time and consistency, but small positive changes in your daily routine can gradually improve your productivity, motivation, health, and overall quality of life.",
-    title: "Easy Tips for Creating a More Comfortable Home Office", 
-    image: "./assets/images/recent-post-10.jpg", 
-    badge: "Working Tips",
-    tags: ["Work", "Lifestyle"], 
-    word_count: 600, 
-    author: "Nadia", 
-    date: "2024-06-19"
-);
-
-
 $longer_texts = [
     "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day.", // done
     "Learn how self-observation can help you understand your thoughts, emotions, habits, and behavior and become more aware of yourself in everyday life.", // done
@@ -292,35 +176,44 @@ $posts = [
 ];
 
 
-/*
 
+
+
+function create_articles($posts, $longer_texts) {
+    /*
 Start with an empty array — what would you call it? ($articles, maybe.)
 */
-$articles = [];
+    $articles = [];
 /*
-TODO:
-Loop through $longer_texts with $key => $text, same as before.
+    Loop through $longer_texts with $key => $text, same as before.
 */
 foreach ($longer_texts as $key => $text) {
-    /*
-Inside the loop, you now have $text (the long version) and $posts[$key] (title, image, badge, tags, word_count, author, date) — everything needed to build one Article.
-*/
-    $posts[]
 
-
-
+ // Create new Article(...) using properties, 
     $article = new Article(
         longer_text: $text,
-        key: $posts[$key]
-    )
-
-
+        title: $posts[$key]["title"],
+        image: $posts[$key]["image"],
+        badge: $posts[$key]["badge"],
+        tags:  $posts[$key]["tags"],
+        word_count: $posts[$key]["word_count"],
+        author: $posts[$key]["author"],
+        date: $posts[$key]["date"],
+    );
+    // and push it onto $articles.
+    $articles[] = $article;
 }
+// After the loop, return $articles;
+return $articles;
+}
+
+$articles = create_articles($posts, $longer_texts);
+
 /*
 
-Create new Article(...) using those values, and push it onto $articles.
 
-After the loop, return $articles;
+pre
+
 
 
 
@@ -501,8 +394,7 @@ require 'includes/header.php';
             <?php 
                  echo "<div style='margin: 0 auto; width: 100%'>";
                      echo "<pre style='white-space: pre-wrap;'>";
-                     print_r($article8->longer_text);
-                     print_r($article8->title);
+                     // print_r(create_articles($posts, $longer_texts));
                      echo '</pre>';
                  echo '</div>'
             ?>
