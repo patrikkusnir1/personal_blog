@@ -19,7 +19,7 @@ function get_tags(array $articles)
     return $tags_list;
 }
 
-function post_has_category($post) {
+function post_has_category(object $article) {
     // check if post has category and get the category
     $current_category = $_GET["category"] ?? "";
 
@@ -28,7 +28,7 @@ function post_has_category($post) {
             return true;
         }
 
-        if ( in_array($current_category, $post["tags"]) ) 
+        if ( in_array($current_category, $article->tags) ) 
         {
             return true;
         };
@@ -50,11 +50,6 @@ function post_has_tags($articles, $tag) {
             }
         return $tag_count;
     }
-
-// add read time to every post on the website
-
-
-
 
 // get popular posts
 

@@ -227,7 +227,7 @@ pre
 
 require 'includes/functions.php';
 
-function show_categories($posts, $topics) {
+function show_categories($articles, $topics) {
     $articles_to_show = 2;
     $tags_array = $topics;
 
@@ -544,7 +544,7 @@ require 'includes/header.php';
 
                     <ul class="grid-list">
                     <?php
-                        show_categories($posts, $topics);
+                        show_categories($articles, $topics);
                     ?>
                     </ul>
                 </div>
@@ -614,7 +614,7 @@ require 'includes/header.php';
                                             <?= htmlspecialchars($article->title) ?></a>
                                     </h3>
                                     <p class="card-text">
-                                        <?= htmlspecialchars($article->make_excerpt()) ?>
+                                        <?= htmlspecialchars($article->excerpt) ?>
                                     </p>
 
                                     <div class="card-wrapper">
