@@ -60,6 +60,58 @@ class Article
     }
 }
 
+class ArticleCollection {
+    public array $articles;
+    public function __construct(array $articles)
+    {
+        $this->articles = $articles;
+    }
+
+    public function get_tags() 
+{
+    $tags_list = [];
+
+    foreach ($this->articles as $article) {
+            $tags_list[] = $article->tags;
+    }
+
+    $tags_list = array_values(
+                array_unique(
+                array_merge(...$tags_list)
+        )
+    );
+
+    return $tags_list;
+}
+    function post_has_tags(string $tag) {
+    $tag_count = 0; 
+        foreach($this->articles as $article) 
+            {
+                if ( in_array($tag, $article->tags) ) 
+                    {
+                        $tag_count++;
+                    };
+                    
+            }
+        return $tag_count;
+    }
+
+    function get_popular_posts() 
+    {
+        $articles_copy = $this->articles;
+        usort($articles_copy, function($a, $b) {
+            return $b->word_count - $a->word_count;
+        });
+        $popular_posts = array_slice($articles_copy, 0, 3);
+        
+        return $popular_posts;
+    }
+
+}
+
+
+
+
 
 
 $longer_texts = [
@@ -214,6 +266,8 @@ return $articles;
 
 $articles = create_articles($posts, $longer_texts);
 
+$collection = new ArticleCollection($articles);
+
 /*
 
 
@@ -325,7 +379,7 @@ function show_topics($articles, $topics) {
 $topics = get_tags($articles);
 
 // count articles
-$articles_total_count = count($posts);
+$articles_total_count = count($articles);
 $articles_per_page = 3;
 
 // TODO: add in the future guest count
@@ -385,14 +439,7 @@ require 'includes/header.php';
                     <img src="./assets/images/shadow-1.svg" width="500" height="800" alt="" class="hero-bg hero-bg-1">
                     <img src="./assets/images/shadow-2.svg" width="500" height="500" alt="" class="hero-bg hero-bg-2">
             </section>
-            <!-- DEBUGGING SECTION -->
-            <?php 
-                 echo "<div style='margin: 0 auto; width: 100%'>";
-                     echo "<pre style='white-space: pre-wrap;'>";
-                     // print_r(create_articles($posts, $longer_texts));
-                     echo '</pre>';
-                 echo '</div>'
-            ?>
+
             <!-- #TOPICS  -->
             <section class="topics" id="topics" aria-labelledby="topic-label">
                 <div class="container">
@@ -562,7 +609,7 @@ require 'includes/header.php';
                             </span>
                         </h2>
                         <p class="section-text">
-                            Don't miss the latest trends. We have currently <?= count($posts) ?> recent posts on our website across <?= count($topics) ?> topics.
+                            Don't miss the latest trends. We have currently <?= count($articles) ?> recent posts on our website across <?= count($topics) ?> topics.
                         </p>
                         <ul class="grid-list">
                             <?php

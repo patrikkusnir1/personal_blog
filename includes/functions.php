@@ -38,7 +38,7 @@ function post_has_category(object $article) {
 
 // check if article has tags and count them
 
-function post_has_tags($articles, $tag) {
+function post_has_tags(array $articles, string $tag) {
     $tag_count = 0; 
         foreach($articles as $article) 
             {
