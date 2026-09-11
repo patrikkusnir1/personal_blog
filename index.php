@@ -11,8 +11,9 @@ class Article
     public string $author;
     public string $date;
     public string $read_time;
+    public string $excerpt;
 
-    public function __construct(string $longer_text, string $title, string $image, string $badge, array $tags, int $word_count, string $author, string $date, $read_time)
+    public function __construct(string $longer_text, string $title, string $image, string $badge, array $tags, int $word_count, string $author, string $date)
     {
         $this->longer_text = $longer_text;
         $this->title       = $title;
@@ -22,7 +23,8 @@ class Article
         $this->word_count  = $word_count;
         $this->author      = $author;
         $this->date        = $date;
-        $this->read_time   = readtime_count($this->word_count);
+        $this->read_time   = $this->readtime_count();
+        $this->excerpt     = $this->make_excerpt();
     }
 
 
@@ -46,7 +48,8 @@ class Article
 
         // Case 3: a space wasn't found, cut at limit with ...
         return substr($this->longer_text, 0, $limit). "...";
-    } 
+    }
+
     public function readtime_count( int $words_per_minute = 200 ) 
     {
         $read_time = ceil($this->word_count / $words_per_minute);
@@ -201,7 +204,6 @@ foreach ($longer_texts as $key => $text) {
         word_count: $posts[$key]["word_count"],
         author: $posts[$key]["author"],
         date: $posts[$key]["date"],
-        read_time: readtime_count(this->word_count)
     );
     // and push it onto $articles.
     $articles[] = $article;
@@ -318,16 +320,6 @@ function show_topics($articles, $topics) {
         </li>
        <?php endforeach;
     }
-
-
-
-
-
-// applying function to our posts
-$posts = add_excerpts_to_posts($posts, $longer_texts, 50);
-$posts = add_read_time($posts);
-
-
 
 // get topics and then show them from articles array of objects
 $topics = get_tags($articles);
@@ -446,22 +438,22 @@ require 'includes/header.php';
                         
                         $articles_to_show = (int) ($_GET["show"] ?? "2");
                         
-                        $feature_posts = array_slice( $posts, 0, $articles_to_show );
+                        $feature_posts = array_slice( $articles, 0, $articles_to_show );
 
                         
 
 
 
 
-                        foreach ($feature_posts  as $post): 
-                            $date = new DateTime($post["date"]);
+                        foreach ($feature_posts as $article): 
+                            $date = new DateTime($article->date);
                         ?>
                         
                         <li>
                             <div class="card feature-card">
                                 <figure class="card-banner img-holder" style="--width: 1602; --height: 903;">
                                     <img src="./assets/images/featured-1.png"
-                                        alt="<?= htmlspecialchars($post["title"])?>" 
+                                        alt="<?= htmlspecialchars($article->title)?>" 
                                         class="img-cover"
                                         width="1602" loading="lazy" height="903">
                                 </figure>
@@ -469,7 +461,7 @@ require 'includes/header.php';
                                 <div class="card-content">
                                     <div class="card-wrapper">
                                         <div class="card-tag">
-                                            <?php foreach($post["tags"] as $tag):
+                                            <?php foreach($article->tags as $tag):
                                                 $category_only_array = 
                                                     ["category" => $tag];
                                                 $category_url = 
@@ -477,18 +469,18 @@ require 'includes/header.php';
                                              ?>
 
                                                 <a href="?<?= $category_url.'#recent'?>" class="span hover-2">
-                                                    <?php echo $tag; ?> 
+                                                    <?= $tag ?> 
                                                 </a>
                                             <?php endforeach?>
                                         </div>
                                         <div class="wrapper">
                                             <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-                                            <span class="span"><?php echo $post["read_time"] ?></span>
+                                            <span class="span"><?= $article->readtime_count() ?></span>
                                         </div>
                                     </div>
                                     <h3 class="headline headline-3">
                                         <a href="#" class="card-title hover-2">
-                                            <?php echo htmlspecialchars($post["title"]); ?>
+                                            <?php echo htmlspecialchars($article->title); ?>
                                         </a>
                                     </h3>
                                     <div class="card-wrapper">
@@ -497,7 +489,7 @@ require 'includes/header.php';
                                                 loading="lazy" alt="Joseph" class="profile-banner">
                                             <div>
                                                 <p class="card-title"><?= 
-                                                htmlspecialchars($post["author"]) ?> 
+                                                htmlspecialchars($article->author) ?> 
                                                 </p>
                                                 <p class="card-subtitle"><?= htmlspecialchars($date->format("d F Y"))?>
                                                 </p>
@@ -511,6 +503,7 @@ require 'includes/header.php';
                         <?php endforeach ?>
                     </ul>
                     <?php
+
                     // show max articles, don't exceed $articles_total_count
                     $articles_current_count = $_GET["show"] ?? "2"; 
                     $articles_to_show = min($articles_to_show + 2, $articles_total_count);
@@ -519,7 +512,7 @@ require 'includes/header.php';
                     
                     <?php 
 
-                    // refactor the link
+                    // TODO: refactor the link
                     $articles_to_show_array = ["show" => $articles_to_show];
                     
 
@@ -576,7 +569,7 @@ require 'includes/header.php';
                             $current_category = $_GET["category"] ?? "";
 
                             // get category and filter posts by category
-                            $filtered_posts = array_filter($posts, 'post_has_category');
+                            $filtered_posts = array_filter($articles, 'post_has_category');
 
                             // count filtered posts
                             $articles_total_count = count($filtered_posts);
@@ -598,14 +591,14 @@ require 'includes/header.php';
                             $paginated_posts = array_slice( $filtered_posts, ( ($current_page - 1) * $articles_per_page), $articles_per_page  );
                             
                             // show posts
-                            foreach ($paginated_posts as $post):             
+                            foreach ($paginated_posts as $article):             
                             ?>
                             
                             <li class="recent-post-card">
                                 <figure class="card-banner img-holder" style="--width: 271; --height: 258 ;">
                                 
-                                    <img src="<?= $post["image"] ?>" 
-                                        alt="<?= htmlspecialchars($post["title"]) ?>" 
+                                    <img src="<?= $article->image ?>" 
+                                        alt="<?= htmlspecialchars($article->title) ?>" 
                                         width="271" 
                                         height="258" 
                                         class="img-cover" 
@@ -613,20 +606,20 @@ require 'includes/header.php';
                                 </figure>
                                 <div class="card-content">
                                     <a href="" class="card-badge">
-                                        <?= $post["badge"] ?>
+                                        <?= $article->badge ?>
                                     </a>
 
                                     <h3 class="headline headline-3 card-title">
                                         <a href="#" class="link hover-2">
-                                            <?= htmlspecialchars($post["title"]) ?></a>
+                                            <?= htmlspecialchars($article->title) ?></a>
                                     </h3>
                                     <p class="card-text">
-                                        <?= htmlspecialchars($post["excerpt"]) ?>
+                                        <?= htmlspecialchars($article->make_excerpt()) ?>
                                     </p>
 
                                     <div class="card-wrapper">
                                         <div class="card-tag">
-                                    <?php foreach ($post["tags"] as $tag): 
+                                    <?php foreach ($article->tags as $tag): 
                                     $category_only_array = ["category" => $tag];
                                     $category_url = 
                                     http_build_query($category_only_array)
@@ -640,7 +633,7 @@ require 'includes/header.php';
 
                                         <div class="wrapper">
                                             <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-                                            <span class="span"><?= htmlspecialchars($post["read_time"]) ?></span>
+                                            <span class="span"><?= htmlspecialchars($article->readtime_count()) ?></span>
                                         </div>
                                     </div>
                                 </div>

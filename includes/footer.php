@@ -26,7 +26,7 @@
                     </p>
                     <ul>
                         <?php
-                            $tags_array = get_tags($posts);
+                            $tags_array = get_tags($articles);
                             foreach ($tags_array as $tag)
                             {
                                 echo
