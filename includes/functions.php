@@ -1,23 +1,5 @@
 <?php 
 
-// get tags from all the posts
-
-function get_tags(array $articles) 
-{
-    $tags_list = [];
-
-    foreach ($articles as $article) {
-            $tags_list[] = $article->tags;
-    }
-
-    $tags_list = array_values(
-                array_unique(
-                array_merge(...$tags_list)
-        )
-    );
-
-    return $tags_list;
-}
 
 function post_has_category(object $article) {
     // check if post has category and get the category

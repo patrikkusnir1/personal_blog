@@ -268,15 +268,6 @@ $articles = create_articles($posts, $longer_texts);
 
 $collection = new ArticleCollection($articles);
 
-/*
-
-
-pre
-
-
-
-
-*/
 
 
 require 'includes/functions.php';
@@ -322,11 +313,6 @@ function show_categories($articles, $topics) {
         </li>";
         }
     }
-
-
-
-
-
 
 // show topics
 function show_topics($articles, $topics) {
@@ -375,8 +361,8 @@ function show_topics($articles, $topics) {
        <?php endforeach;
     }
 
-// get topics and then show them from articles array of objects
-$topics = get_tags($articles);
+// get topics from collection and show them
+$topics = $collection->get_tags();
 
 // count articles
 $articles_total_count = count($articles);
