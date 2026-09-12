@@ -58,6 +58,22 @@ class Article
         }
         return $read_time . " mins";
     }
+
+    public function post_has_category() {
+    // check if post has category and get the category
+    $current_category = $_GET["category"] ?? "";
+
+        if ($current_category == "")
+        {
+            return true;
+        }
+
+        if ( in_array($current_category, $this->tags) ) 
+        {
+            return true;
+        };
+        return false;
+    }
 }
 
 class ArticleCollection {
@@ -273,7 +289,7 @@ $collection = new ArticleCollection($articles);
 
 require 'includes/functions.php';
 
-function show_categories($collection, $topics) {
+function show_categories( $topics ) {
     $articles_to_show = 2;
     $tags_array = $topics;
 
@@ -547,8 +563,6 @@ require 'includes/header.php';
                     <?php 
 
                     // TODO: refactor the link
-                    $articles_to_show_array = ["show" => $articles_to_show];
-                    
 
                     if ($articles_current_count < $articles_total_count):?>
                         <a href="<?php echo "./?show={$articles_to_show}#featured" ?>" class="btn btn-secondary">
@@ -578,7 +592,7 @@ require 'includes/header.php';
 
                     <ul class="grid-list">
                     <?php
-                        show_categories($articles, $topics);
+                        show_categories( $topics );
                     ?>
                     </ul>
                 </div>
@@ -603,7 +617,9 @@ require 'includes/header.php';
                             $current_category = $_GET["category"] ?? "";
 
                             // get category and filter posts by category
-                            $filtered_posts = array_filter($articles, 'post_has_category');
+                            $filtered_posts = array_filter($articles,function($article) {
+                                return $article->post_has_category();
+                            });
 
                             // count filtered posts
                             $articles_total_count = count($filtered_posts);
