@@ -16,36 +16,4 @@ function post_has_category(object $article) {
         };
         return false;
     };
-
-
-// check if article has tags and count them
-
-function post_has_tags(array $articles, string $tag) {
-    $tag_count = 0; 
-        foreach($articles as $article) 
-            {
-                if ( in_array($tag, $article->tags) ) 
-                    {
-                        $tag_count++;
-                    };
-                    
-            }
-        return $tag_count;
-    }
-
-// get popular posts
-
-function get_popular_posts($articles) 
-{
-    $articles_copy = $articles;
-    usort($articles_copy, function($a, $b) {
-        return $b->word_count - $a->word_count;
-    });
-    $popular_posts = array_slice($articles_copy, 0, 3);
-    
-    return $popular_posts;
-}
-
-
-
 ?>

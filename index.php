@@ -83,20 +83,21 @@ class ArticleCollection {
 
     return $tags_list;
 }
-    function post_has_tags(string $tag) {
-    $tag_count = 0; 
-        foreach($this->articles as $article) 
-            {
-                if ( in_array($tag, $article->tags) ) 
-                    {
-                        $tag_count++;
-                    };
-                    
-            }
-        return $tag_count;
+    public function post_has_tags(string $tag) 
+    {
+        $tag_count = 0; 
+            foreach($this->articles as $article) 
+                {
+                    if ( in_array($tag, $article->tags) ) 
+                        {
+                            $tag_count++;
+                        };
+                        
+                }
+            return $tag_count;
     }
 
-    function get_popular_posts() 
+    public function get_popular_posts() 
     {
         $articles_copy = $this->articles;
         usort($articles_copy, function($a, $b) {
@@ -272,7 +273,7 @@ $collection = new ArticleCollection($articles);
 
 require 'includes/functions.php';
 
-function show_categories($articles, $topics) {
+function show_categories($collection, $topics) {
     $articles_to_show = 2;
     $tags_array = $topics;
 
@@ -315,7 +316,7 @@ function show_categories($articles, $topics) {
     }
 
 // show topics
-function show_topics($articles, $topics) {
+function show_topics($collection, $topics) {
     
     $tags_array = $topics;
 
@@ -329,7 +330,7 @@ function show_topics($articles, $topics) {
     ];
 
     foreach ($tags_array as $index => $tag):
-        $tag_count = post_has_tags($articles, $tag);
+        $tag_count = $collection->post_has_tags($tag);
         $image_index = $index % count($placeholder_images);
         $image_path = $placeholder_images[$image_index];
 
@@ -447,7 +448,7 @@ require 'includes/header.php';
                         </div>
                         <div class="slider" data-slider>
                             <ul class="slider-list" data-slider-container>
-                                <?php show_topics($articles, $topics) ?>
+                                <?php show_topics($collection, $topics) ?>
                             </ul>
                         </div>
                     </div>
@@ -752,7 +753,7 @@ require 'includes/header.php';
                             </h3>
                             <ul class="popular-list">
                                 <?php 
-                                    $popular_articles = get_popular_posts(($articles));
+                                    $popular_articles = $collection->get_popular_posts();
                                     foreach ($popular_articles as $article):?>
                                         <li>
                                             <div class="popular-card">
