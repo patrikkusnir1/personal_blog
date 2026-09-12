@@ -7,11 +7,11 @@ class Article
     public string $image;
     public string $badge;
     public array $tags;
-    public int $word_count;
+    private int $word_count;
     public string $author;
     public string $date;
-    public string $read_time;
-    public string $excerpt;
+    private string $read_time;
+    private string $excerpt;
 
     public function __construct(string $longer_text, string $title, string $image, string $badge, array $tags, int $word_count, string $author, string $date)
     {
@@ -25,6 +25,26 @@ class Article
         $this->date        = $date;
         $this->read_time   = $this->readtime_count();
         $this->excerpt     = $this->make_excerpt();
+    }
+
+    public function getReadTime():string {
+        return $this->read_time;
+    }
+
+    public function getExcerpt():string {
+        return $this->excerpt;
+    }
+
+    public function getWordCount():int {
+        return $this->word_count;
+    }
+
+    public function setWordCount(int $count):void 
+    {
+        if ($count < 0) {
+            throw new InvalidArgumentException("word count cannot be negative");
+        }
+        $this->word_count = $count;
     }
 
 
@@ -77,10 +97,14 @@ class Article
 }
 
 class ArticleCollection {
-    public array $articles;
+    private array $articles;
     public function __construct(array $articles)
     {
         $this->articles = $articles;
+    }
+
+    public function getArticles() {
+        return $this->articles;
     }
 
     public function get_tags() 
@@ -117,13 +141,12 @@ class ArticleCollection {
     {
         $articles_copy = $this->articles;
         usort($articles_copy, function($a, $b) {
-            return $b->word_count - $a->word_count;
+            return $b->getWordCount() - $a->getWordCount() ;
         });
         $popular_posts = array_slice($articles_copy, 0, 3);
         
         return $popular_posts;
     }
-
 }
 
 
@@ -664,7 +687,7 @@ require 'includes/header.php';
                                             <?= htmlspecialchars($article->title) ?></a>
                                     </h3>
                                     <p class="card-text">
-                                        <?= htmlspecialchars($article->excerpt) ?>
+                                        <?= htmlspecialchars($article->getExcerpt()) ?>
                                     </p>
 
                                     <div class="card-wrapper">
@@ -785,8 +808,7 @@ require 'includes/header.php';
                                                     </h4>
                                                     <div class="wrapper">
                                                         <p class="card-subtitle">
-                                                            <?= $article->read_time 
-                                                            ?>
+                                                    <?= $article->getReadTime()?>
                                                         </p>
                                                         <time 
                                                             class="publish-date" datetime="
