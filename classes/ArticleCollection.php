@@ -51,6 +51,29 @@ class ArticleCollection {
         
         return $popular_posts;
     }
+
+    public static function fromPostsData(
+        array $posts, array $longerTexts
+    ): self 
+
+    {
+        
+    // Start with an empty array 
+
+        $articles = [];
+
+    // Loop through $longer_texts with $key => $text
+        foreach ($longerTexts as $key => $text) {
+
+            // Create new Article using factory static function 
+            $article = Article::fromPostData($text, $posts[$key]);
+            
+            // and push it onto $articles.
+            $articles[] = $article;
+        }
+        // After the loop, return $articles;
+        return new self($articles);
+    }
 }
 
 ?>

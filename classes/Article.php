@@ -93,8 +93,23 @@ class Article
         };
         return false;
     }
-}
 
+    // factory function
+    public static function fromPostData
+    (string $longerText, array $postData ): self
+    {
+        return new self(
+            longer_text: $longerText,
+            title: $postData["title"],
+            image: $postData["image"],
+            badge: $postData["badge"],
+            tags:  $postData["tags"],
+            word_count: $postData["word_count"],
+            author: $postData["author"],
+            date: $postData["date"],
+        );
+    }
+}
 
 
 ?>

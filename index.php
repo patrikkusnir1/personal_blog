@@ -3,13 +3,6 @@ declare(strict_types=1);
 require 'classes/Article.php';
 require 'classes/ArticleCollection.php';
 
-
-
-
-
-
-
-
 $longer_texts = [
     "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day.", // done
     "Learn how self-observation can help you understand your thoughts, emotions, habits, and behavior and become more aware of yourself in everyday life.", // done
@@ -128,45 +121,10 @@ $posts = [
     ],
 ];
 
+// create articles
+$collection = ArticleCollection::fromPostsData($posts, $longer_texts);
 
-
-
-
-function create_articles($posts, $longer_texts) {
-    /*
-Start with an empty array — what would you call it? ($articles, maybe.)
-*/
-    $articles = [];
-/*
-    Loop through $longer_texts with $key => $text, same as before.
-*/
-foreach ($longer_texts as $key => $text) {
-
- // Create new Article(...) using properties, 
-    $article = new Article(
-        longer_text: $text,
-        title: $posts[$key]["title"],
-        image: $posts[$key]["image"],
-        badge: $posts[$key]["badge"],
-        tags:  $posts[$key]["tags"],
-        word_count: $posts[$key]["word_count"],
-        author: $posts[$key]["author"],
-        date: $posts[$key]["date"],
-    );
-    // and push it onto $articles.
-    $articles[] = $article;
-}
-// After the loop, return $articles;
-return $articles;
-}
-
-$articles = create_articles($posts, $longer_texts);
-
-$collection = new ArticleCollection($articles);
-
-
-
-require 'includes/functions.php';
+// require 'includes/functions.php';
 
 function show_categories( $topics ) {
     $articles_to_show = 2;
@@ -261,7 +219,7 @@ function show_topics($collection, $topics) {
 $topics = $collection->get_tags();
 
 // count articles
-$articles_total_count = count($articles);
+$articles_total_count = count($collection->getArticles());
 $articles_per_page = 3;
 
 // TODO: add in the future guest count
@@ -367,7 +325,7 @@ require 'includes/header.php';
                         
                         $articles_to_show = (int) ($_GET["show"] ?? "2");
                         
-                        $feature_posts = array_slice( $articles, 0, $articles_to_show );
+                        $feature_posts = array_slice( $collection->getArticles(), 0, $articles_to_show );
 
                         
 
@@ -489,14 +447,14 @@ require 'includes/header.php';
                             </span>
                         </h2>
                         <p class="section-text">
-                            Don't miss the latest trends. We have currently <?= count($articles) ?> recent posts on our website across <?= count($topics) ?> topics.
+                            Don't miss the latest trends. We have currently <?= count($collection->getArticles()) ?> recent posts on our website across <?= count($collection->get_tags()) ?> topics.
                         </p>
                         <ul class="grid-list">
                             <?php
                             $current_category = $_GET["category"] ?? "";
 
                             // get category and filter posts by category
-                            $filtered_posts = array_filter($articles,function($article) {
+                            $filtered_posts = array_filter($collection->getArticles(),function($article) {
                                 return $article->post_has_category();
                             });
 
@@ -562,7 +520,9 @@ require 'includes/header.php';
 
                                         <div class="wrapper">
                                             <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-                                            <span class="span"><?= htmlspecialchars($article->readtime_count()) ?></span>
+                                            <span class="span">
+                                            <?= htmlspecialchars
+                                            ($article->getReadTime()) ?></span>
                                         </div>
                                     </div>
                                 </div>
