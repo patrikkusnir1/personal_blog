@@ -124,7 +124,7 @@ $posts = [
 // create articles
 $collection = ArticleCollection::fromPostsData($posts, $longer_texts);
 
-// require 'includes/functions.php';
+require 'includes/functions.php';
 
 function show_categories( $topics ) {
     $articles_to_show = 2;
@@ -149,8 +149,7 @@ function show_categories( $topics ) {
     ];
     foreach ($tags_array as $index => $tag) {
         // get the image based on index - repeating every 5
-        $image_index = $index % count($placeholder_images);
-        $image_path = $placeholder_images[$image_index];
+        $image_path = pick_image($placeholder_images, $index);
 
         // DRY to fix
         $a_url = http_build_query([ 
@@ -184,8 +183,7 @@ function show_topics($collection, $topics) {
 
     foreach ($tags_array as $index => $tag):
         $tag_count = $collection->post_has_tags($tag);
-        $image_index = $index % count($placeholder_images);
-        $image_path = $placeholder_images[$image_index];
+        $image_path = pick_image($placeholder_images, $index);
 
 ?>
         <li class="slider-item">
