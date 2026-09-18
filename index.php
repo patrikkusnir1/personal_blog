@@ -355,7 +355,7 @@ require 'includes/header.php';
                                              ?>
 
                                                 <a href=
-                                                "?<?= $article->build_category_url($tag).'#recent'?>" 
+                                                "?<?= Article::build_category_url($tag).'#recent'?>" 
                                                 class="span hover-2">
                                                 <?= $tag ?> 
                                                 </a>
@@ -508,11 +508,11 @@ require 'includes/header.php';
                                     <div class="card-wrapper">
                                         <div class="card-tag">
                                     <?php foreach ($article->tags as $tag): 
-                                        $article->build_category_url($tag);
+                                        Article::build_category_url($tag);
                                     ?>
 
                                             <a href="?
-                                            <?= $article->build_category_url($tag)?>#recent"   
+                                            <?= Article::build_category_url($tag)?>#recent"   
                                             class="span hover-2">
                                                 <?= htmlspecialchars($tag) ?>
                                             </a>
