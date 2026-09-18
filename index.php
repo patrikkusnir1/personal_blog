@@ -349,17 +349,7 @@ require 'includes/header.php';
                                 <div class="card-content">
                                     <div class="card-wrapper">
                                         <div class="card-tag">
-
-                                            <?php foreach($article->tags as $tag):
-                                                $article->build_category_url($tag);
-                                             ?>
-
-                                                <a href=
-                                                "?<?= Article::build_category_url($tag).'#recent'?>" 
-                                                class="span hover-2">
-                                                <?= $tag ?> 
-                                                </a>
-                                            <?php endforeach?>
+                                            <?= $article->renderTagLinks() ?>
                                         </div>
                                         <div class="wrapper">
                                             <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
@@ -507,16 +497,7 @@ require 'includes/header.php';
 
                                     <div class="card-wrapper">
                                         <div class="card-tag">
-                                    <?php foreach ($article->tags as $tag): 
-                                        Article::build_category_url($tag);
-                                    ?>
-
-                                            <a href="?
-                                            <?= Article::build_category_url($tag)?>#recent"   
-                                            class="span hover-2">
-                                                <?= htmlspecialchars($tag) ?>
-                                            </a>
-                                    <?php endforeach ?>
+                                            <?= $article->renderTagLinks() ?>
                                         </div>
 
                                         <div class="wrapper">

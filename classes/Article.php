@@ -114,7 +114,18 @@ class Article
     {
         return http_build_query(["category" => $tag]);
     }
-}
 
+    public function renderTagLinks():string {
+        $html = "";
+        foreach ($this->tags as $tag) { 
+
+            $category_url = Article::build_category_url($tag);
+       
+            $html .= '<a href="?' . $category_url . '#recent" class="span hover-2">'.htmlspecialchars($tag) . '</a>';
+        }
+
+        return $html;
+    }
+}
 
 ?>
