@@ -192,7 +192,7 @@ function show_topics($collection, $topics) {
             <?php
             // DRY to fix
             $category_only_array = ["category" => $tag];
-            $category_url = http_build_query($category_only_array);
+            $category_url = Article::build_category_url($tag)
             ?>
             <a href="?<?= $category_url ?>#recent" class='slider-card'>
                 <figure class="slider-banner img-holder" style="--width: ; --height: ;">
