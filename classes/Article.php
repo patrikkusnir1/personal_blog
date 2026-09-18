@@ -109,6 +109,11 @@ class Article
             date: $postData["date"],
         );
     }
+
+    public static function build_category_url(string $tag): string 
+    {
+        return http_build_query(["category" => $tag]);
+    }
 }
 
 

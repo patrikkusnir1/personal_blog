@@ -152,7 +152,7 @@ function show_categories( $topics ) {
         $image_index = $index % count($placeholder_images);
         $image_path = $placeholder_images[$image_index];
 
-    
+        // DRY to fix
         $a_url = http_build_query([ 
            "category" => $tag,
            "show"     => $articles_to_show,
@@ -190,6 +190,7 @@ function show_topics($collection, $topics) {
 ?>
         <li class="slider-item">
             <?php
+            // DRY to fix
             $category_only_array = ["category" => $tag];
             $category_url = http_build_query($category_only_array);
             ?>
@@ -348,15 +349,15 @@ require 'includes/header.php';
                                 <div class="card-content">
                                     <div class="card-wrapper">
                                         <div class="card-tag">
+
                                             <?php foreach($article->tags as $tag):
-                                                $category_only_array = 
-                                                    ["category" => $tag];
-                                                $category_url = 
-                                                http_build_query($category_only_array);      
+                                                $article->build_category_url($tag);
                                              ?>
 
-                                                <a href="?<?= $category_url.'#recent'?>" class="span hover-2">
-                                                    <?= $tag ?> 
+                                                <a href=
+                                                "?<?= $article->build_category_url($tag).'#recent'?>" 
+                                                class="span hover-2">
+                                                <?= $tag ?> 
                                                 </a>
                                             <?php endforeach?>
                                         </div>
@@ -507,12 +508,12 @@ require 'includes/header.php';
                                     <div class="card-wrapper">
                                         <div class="card-tag">
                                     <?php foreach ($article->tags as $tag): 
-                                    $category_only_array = ["category" => $tag];
-                                    $category_url = 
-                                    http_build_query($category_only_array)
+                                        $article->build_category_url($tag);
                                     ?>
 
-                                            <a href="?<?= $category_url?>#recent"   class="span hover-2">
+                                            <a href="?
+                                            <?= $article->build_category_url($tag)?>#recent"   
+                                            class="span hover-2">
                                                 <?= htmlspecialchars($tag) ?>
                                             </a>
                                     <?php endforeach ?>
