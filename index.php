@@ -151,7 +151,6 @@ function show_categories( $topics ) {
         // get the image based on index - repeating every 5
         $image_path = pick_image($placeholder_images, $index);
 
-        // DRY to fix
         $a_url = http_build_query([ 
            "category" => $tag,
            "show"     => $articles_to_show,
@@ -187,11 +186,7 @@ function show_topics($collection, $topics) {
 
 ?>
         <li class="slider-item">
-            <?php
-            // DRY to fix
-            $category_only_array = ["category" => $tag];
-            $category_url = Article::build_category_url($tag)
-            ?>
+            <?php $category_url = Article::build_category_url($tag) ?>
             <a href="?<?= $category_url ?>#recent" class='slider-card'>
                 <figure class="slider-banner img-holder" style="--width: ; --height: ;">
                     <img src="<?= $image_path ?>" width="507" height="608"
@@ -518,58 +513,43 @@ require 'includes/header.php';
 
                             //  create pagination backward arrow
 
-                            $category_and_page_backward_array= http_build_query(  
-                                ["category" => $current_category,
-                                 "page" => $current_page - 1,
-                                ]
-                            ); 
-
-
                                 if ( $current_page > 1)
                                 {
-                                echo '<a href="?'.$category_and_page_backward_array.'#recent" class="pagination-btn" aria-label="previous page">
-                                    <ion-icon name="arrow-back" aria-hidden="true"></ion-icon>
-                                </a>';
+                                    render_arrow_link(
+                                        $current_category, 
+                                        $current_page - 1, 
+                                        "previous page", 
+                                        "arrow-back"
+                                    ); 
                                 };
                             
                             // create pagination buttons based on articles count
                             $pagination = 1;
 
                             while ( $pagination < $pagination_count + 1 ) {
-                                $category_and_page_array = [
-                                "category" => $current_category, 
-                                "page"      => $pagination
-                            ];
 
-                            $category_and_page_url = 
-                             http_build_query($category_and_page_array); 
 
-                                
                                 if ( $pagination == $current_page ) 
-                                {
-                                    echo "<a href='?$category_and_page_url#recent' class='pagination-btn active'>$pagination</a>";
-                                } 
+                                    {
+                                    render_number_link($current_category, $pagination, true);
+                                    }
                                 else 
                                 {
-                                    echo "<a href='?$category_and_page_url#recent' class='pagination-btn'>$pagination</a>";
+                                    render_number_link($current_category, $pagination);
                                 }
-                    
                                 $pagination++;
                             } 
-                            
-
+                                
                             //  create pagination forward arrow -->
-                            $category_and_page_forward_array= http_build_query(  
-                                ["category" => $current_category,
-                                 "page" => $current_page + 1
-                                ]
-                            ); 
 
                                 if ( $current_page <= $pagination_count - 1) 
                                 {
-                                    echo '<a href="?'.$category_and_page_forward_array.'#recent" class="pagination-btn" aria-label="next page">
-                                    <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
-                                </a>';
+                                    render_arrow_link(
+                                        $current_category, 
+                                        $current_page + 1, 
+                                        "next page", 
+                                        "arrow-forward"
+                                    ); 
                                 }
 
                                 if ( $pagination_count > 5) 
