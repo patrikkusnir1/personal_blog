@@ -140,5 +140,6 @@
                 ?>
             </nav>
         </div>
+        <?php require 'includes/sidebar.php' ?>
     </div>
 </section>

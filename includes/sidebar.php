@@ -13,11 +13,18 @@
                 foreach ($popular_articles as $article):?>
                     <li>
                         <div class="popular-card">
-                            <figure class="card-banner img-holder" 
+                            <figure 
+                                class="card-banner img-holder" 
                                 style="--width:64 ; --height:64 ;"
-                                loading="lazy">
-                                <img src="./assets/images/popular-post-1.jpg" width="64" 
-                                        height="64" alt="" class="img-cover">
+                            >
+                                <img 
+                                    src="./assets/images/popular-post-1.jpg" 
+                                    width="64" 
+                                    height="64" 
+                                    alt="" 
+                                    class="img-cover" 
+                                    loading="lazy"
+                                >
                             </figure>
                             <div class="card-content">
                                 <h4 class="headline headline-4 card-title">

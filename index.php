@@ -158,7 +158,7 @@ function show_categories( $topics ) {
 
         echo "
         <li>
-            <a class='card tag-btn' href='?$a_url #recent'>
+            <a class='card tag-btn' href='?$a_url#recent'>
                 <img src='$image_path' width='32' height='32' loading='lazy' alt='$tag'>
                 <p class='btn-text'>$tag</p>
             </a>
@@ -230,12 +230,11 @@ require 'includes/header.php';
     <main>
         <article>
             <?php 
-                include 'includes/hero.php'; 
-                include 'includes/topics-slider.php';
-                include 'includes/feature-posts.php';
-                include 'includes/popular-tags.php';
-                include 'includes/recent-posts.php';
-                include 'includes/sidebar.php'
+                require 'includes/hero.php'; 
+                require 'includes/topics-slider.php';
+                require 'includes/feature-posts.php';
+                require 'includes/popular-tags.php';
+                require 'includes/recent-posts.php';
             ?>
         </article>
     </main>
