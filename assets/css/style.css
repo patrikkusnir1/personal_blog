@@ -477,7 +477,7 @@ body.nav-active {
 }
 
 .hero {
-  padding-block-start: calc(var(--section-padding + 160px));
+  padding-block-start: calc(var(--section-padding) + 160px);
 }
 
 .hero .container {
@@ -1385,7 +1385,7 @@ a.active {
   }
 
   body.nav-active {
-    overflow-y: overlay;
+    overflow-y: auto;
   }
 
   /**

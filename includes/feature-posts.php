@@ -23,7 +23,7 @@
             ?>
             
             <li>
-                <div class="card feature-card">
+                <article class="card feature-card">
                     <figure class="card-banner img-holder" style="--width: 1602; --height: 903;">
                         <img src="./assets/images/featured-1.png"
                             alt="<?= htmlspecialchars($article->title)?>" 
@@ -61,7 +61,7 @@
                             <a href="#" class="card-btn">Read more</a>
                         </div>
                     </div>
-                </div>
+                </article>
             </li>
             <?php endforeach ?>
         </ul>

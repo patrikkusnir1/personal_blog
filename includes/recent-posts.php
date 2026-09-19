@@ -44,42 +44,44 @@
                 foreach ($paginated_posts as $article):             
                 ?>
                 
-                <li class="recent-post-card">
-                    <figure class="card-banner img-holder" style="--width: 271; --height: 258 ;">
-                    
-                        <img src="<?= $article->image ?>" 
-                            alt="<?= htmlspecialchars($article->title) ?>" 
-                            width="271" 
-                            height="258" 
-                            class="img-cover" 
-                            loading="lazy">
-                    </figure>
-                    <div class="card-content">
-                        <a href="" class="card-badge">
-                            <?= $article->badge ?>
-                        </a>
+                <li>
+                    <article class="recent-post-card">
+                        <figure class="card-banner img-holder" style="--width: 271; --height: 258 ;">
+                        
+                            <img src="<?= $article->image ?>" 
+                                alt="<?= htmlspecialchars($article->title) ?>" 
+                                width="271" 
+                                height="258" 
+                                class="img-cover" 
+                                loading="lazy">
+                        </figure>
+                        <div class="card-content">
+                            <a href="" class="card-badge">
+                                <?= $article->badge ?>
+                            </a>
 
-                        <h3 class="headline headline-3 card-title">
-                            <a href="#" class="link hover-2">
-                                <?= htmlspecialchars($article->title) ?></a>
-                        </h3>
-                        <p class="card-text">
-                            <?= htmlspecialchars($article->getExcerpt()) ?>
-                        </p>
+                            <h3 class="headline headline-3 card-title">
+                                <a href="#" class="link hover-2">
+                                    <?= htmlspecialchars($article->title) ?></a>
+                            </h3>
+                            <p class="card-text">
+                                <?= htmlspecialchars($article->getExcerpt()) ?>
+                            </p>
 
-                        <div class="card-wrapper">
-                            <div class="card-tag">
-                                <?= $article->renderTagLinks() ?>
-                            </div>
+                            <div class="card-wrapper">
+                                <div class="card-tag">
+                                    <?= $article->renderTagLinks() ?>
+                                </div>
 
-                            <div class="wrapper">
-                                <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-                                <span class="span">
-                                <?= htmlspecialchars
-                                ($article->getReadTime()) ?></span>
+                                <div class="wrapper">
+                                    <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+                                    <span class="span">
+                                    <?= htmlspecialchars
+                                    ($article->getReadTime()) ?></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </article>
                 </li>
                 <?php endforeach ?>
             </ul>
