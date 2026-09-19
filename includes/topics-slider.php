@@ -1,4 +1,6 @@
-<!-- #TOPICS  -->
+<!-- 
+	#TOPICS SLIDER
+-->
 <section class="topics" id="topics" aria-labelledby="topic-label">
     <div class="container">
         <div class="card topic-card">

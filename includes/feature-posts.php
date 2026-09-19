@@ -1,5 +1,5 @@
 <!-- 
-    #FEATURED POST
+    #FEATURED POSTS
 -->
 <section class="section feature" aria-label="feature" id="featured">
     <div class="container">

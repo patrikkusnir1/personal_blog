@@ -228,16 +228,14 @@ require 'includes/header.php';
 <!-- MAIN -->
 
     <main>
-
         <article>
             <?php 
-
                 include 'includes/hero.php'; 
                 include 'includes/topics-slider.php';
                 include 'includes/feature-posts.php';
                 include 'includes/popular-tags.php';
                 include 'includes/recent-posts.php';
-                include 'includes/side-bar.php'
+                include 'includes/sidebar.php'
             ?>
         </article>
     </main>
