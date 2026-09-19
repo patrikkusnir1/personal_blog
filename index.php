@@ -228,7 +228,6 @@ require 'includes/header.php';
 <!-- MAIN -->
 
     <main>
-        <article>
             <?php 
                 require 'includes/hero.php'; 
                 require 'includes/topics-slider.php';
@@ -236,7 +235,6 @@ require 'includes/header.php';
                 require 'includes/popular-tags.php';
                 require 'includes/recent-posts.php';
             ?>
-        </article>
     </main>
 
     <?php require 'includes/footer.php'; ?>
