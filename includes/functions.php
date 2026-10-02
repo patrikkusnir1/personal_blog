@@ -45,4 +45,6 @@ function render_number_link($category, $page, $isActive = false)
         }
 }
 
+
+
 ?>

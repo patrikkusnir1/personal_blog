@@ -12,7 +12,7 @@ class Article
     private string $read_time;
     private string $excerpt;
 
-    public function __construct(string $longer_text, string $title, string $image, string $badge, array $tags, int $word_count, string $author, string $date)
+    public function __construct(string $longer_text, string $title, ?string $image, ?string $badge, array $tags, int $word_count, ?string $author, string $date)
     {
         $this->longer_text = $longer_text;
         $this->title       = $title;
