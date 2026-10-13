@@ -88,10 +88,6 @@
             <nav aria-label="pagination" class="pagination">
                 <?php
                 
-
-
-
-
                 //  create pagination backward arrow
 
                     if ( $current_page > 1)

@@ -108,3 +108,16 @@ window.addEventListener("resize", function () {
 
     moveSliderItem();
 });
+
+/**
+ * JQUERY AJAX part
+ */
+let recentPostsList = $(".post-main").find(".grid-list");
+let paginationArrow = $(".pagination-btn");
+paginationArrow.on('click', function(event) {
+    // get the url from the clicked pagination link
+    const url = $(this).attr("href");
+    console.log(url)
+    // event.preventDefault();
+    // recentPostsList.load(url);
+})

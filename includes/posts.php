@@ -14,7 +14,7 @@ $longer_texts = [
 ];
 
 $posts = [
-    // done
+    
     [
         "title" => "Helpful Tips for Working from Home as a Freelancer",
         "image" => "./assets/images/recent-post-1.jpg",
@@ -24,7 +24,7 @@ $posts = [
         "author" => "Elena",
         "date" => "2024-01-15"
     ],
-    //done
+   
     [
         "title" => "Self-observation is the first step of inner unfolding",
         "image" => "./assets/images/recent-post-2.jpg",
@@ -34,7 +34,7 @@ $posts = [
         "author" => "Marcus",
         "date" => "2024-02-03",
     ],
-    // done
+    
     [
         "title" => "How to play chess",
         "image" => "./assets/images/recent-post-3.jpg",
@@ -44,7 +44,7 @@ $posts = [
         "author" => "Nadia",
         "date" => "2024-02-20",
     ],
-    // done
+    
     [
         "title" => "Simple Ways to Improve Your Daily Productivity and Stay Focused",
         "image" => "./assets/images/recent-post-4.jpg",
@@ -54,7 +54,7 @@ $posts = [
         "author" => "Elena",
         "date" => "2024-03-05",
     ],
-    // done
+    
     [
         "title" => "How Traveling Can Change the Way You See the World",
         "image" => "./assets/images/recent-post-3.jpg",
@@ -64,7 +64,7 @@ $posts = [
         "author" => "Tomas",
         "date" => "2024-03-22",
     ],
-    // done
+    
     [
         "title" => "The Benefits of Reading Books and Learning Something New",
         "image" => "./assets/images/recent-post-3.jpg",
@@ -74,7 +74,7 @@ $posts = [
         "author" => "Nadia",
         "date" => "2024-04-10",
     ],
-    // done
+    
     [
         "title" => "How to Build Better Habits and Make Positive Changes",
         "image" => "./assets/images/recent-post-3.jpg",
@@ -84,7 +84,7 @@ $posts = [
         "author" => "Marcus",
         "date" => "2024-04-28",
     ],
-    // done
+    
     [
         "title" => "Interesting Facts About Nature That Everyone Should Know",
         "image" => "./assets/images/recent-post-3.jpg",
@@ -94,7 +94,7 @@ $posts = [
         "author" => "Tomas",
         "date" => "2024-05-14",
     ],
-    // done
+    
     [
         "title" => "Why Learning a New Language Can Be Fun and Useful",
         "image" => "./assets/images/recent-post-3.jpg",

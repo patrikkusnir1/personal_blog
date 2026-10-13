@@ -582,7 +582,6 @@ body.nav-active {
 .btn-group {
   display: flex;
   align-items: center;
-  gap: 10px;
 }
 
 .btn-icon {
