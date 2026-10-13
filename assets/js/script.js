@@ -110,14 +110,35 @@ window.addEventListener("resize", function () {
 });
 
 /**
- * JQUERY AJAX part
+ * AJAX pagination
  */
-let recentPostsList = $(".post-main").find(".grid-list");
-let paginationArrow = $(".pagination-btn");
-paginationArrow.on('click', function(event) {
-    // get the url from the clicked pagination link
+// let recentPostsList = $(".post-main").find(".grid-list");
+// let paginationArrow = $(".pagination-btn");
+
+
+$(document).on('click',"#recent .pagination a.pagination-btn", function(event) {
+    // stop the browser from navigating to another page
+    event.preventDefault();
+
+    // get the url from pagination link
     const url = $(this).attr("href");
-    console.log(url)
-    // event.preventDefault();
-    // recentPostsList.load(url);
-})
+
+    // ignore placeholder links, such as the "..." link
+    if (!url || url === "#") {
+        return;
+    }
+
+    // load the new posts and pagination from the requested page
+    $(".post-main").load(
+
+        url + " #recent .post-main > *",
+        function(response, status, xhr) {
+            if (status === 'error') {
+                console.log( "Couldn't load posts:", xhr.status, xhr.statusText )
+            } else {
+                // Update the address bar without refreshing page
+                history.pushState({}, "", url);
+            }
+        }
+    );
+});
