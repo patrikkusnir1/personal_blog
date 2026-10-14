@@ -112,33 +112,45 @@ window.addEventListener("resize", function () {
 /**
  * AJAX pagination
  */
-// let recentPostsList = $(".post-main").find(".grid-list");
-// let paginationArrow = $(".pagination-btn");
-
-
-$(document).on('click',"#recent .pagination a.pagination-btn", function(event) {
-    // stop the browser from navigating to another page
-    event.preventDefault();
-
-    // get the url from pagination link
-    const url = $(this).attr("href");
-
-    // ignore placeholder links, such as the "..." link
-    if (!url || url === "#") {
-        return;
-    }
-
+function loadPosts(url) {
     // load the new posts and pagination from the requested page
     $(".post-main").load(
-
         url + " #recent .post-main > *",
         function(response, status, xhr) {
             if (status === 'error') {
-                console.log( "Couldn't load posts:", xhr.status, xhr.statusText )
-            } else {
-                // Update the address bar without refreshing page
-                history.pushState({}, "", url);
-            }
+                console.log( 
+                    "Couldn't load posts:", 
+                    xhr.status, 
+                    xhr.statusText 
+                );
+            } 
         }
     );
-});
+}
+
+$(document).on
+    ('click',
+    "#recent .pagination a.pagination-btn", 
+    function(event) {
+        // stop the browser from navigating to another page
+        event.preventDefault();
+
+        // get the url from pagination link
+        const url = $(this).attr("href");
+
+        // ignore placeholder links, such as the "..." link
+        if (!url || url === "#") {
+            return;
+        }
+
+        loadPosts(url);
+
+        // Add new browser history entry
+        history.pushState({}, "", url);
+    });
+
+
+
+ 
+
+
