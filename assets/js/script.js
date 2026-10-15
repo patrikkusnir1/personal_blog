@@ -116,42 +116,65 @@ window.addEventListener("resize", function () {
 // 1. Load posts from a URL
 function loadPosts(url, updateHistory = false) {
 
-    $(".post-main").load(
-        url + " #recent .post-main > *",
-        function(response, status, xhr) {
-            if (status === 'error') {
-                console.log( 
-                    "Couldn't load posts:", 
-                    xhr.status, 
-                    xhr.statusText 
-                );
-            } else  {
-                // add animation class to articles
-                $(".post-main .recent-post-card")
-                  .addClass("article-appear");
+    $.ajax({
+        url: url,
+        method: "GET",
+        dataType: "html"
+    }).done(function( response ) {
+        const mainPost = $("#recent .post-main");
+        const loadedPosts = $(response).find("#recent .post-main > *");
+        mainPost.html(loadedPosts);
 
-                // find the first article
-                const firstArticle = $(".post-main .recent-post-card").first();
+        mainPost.addClass("article-appear");
+        const firstArticle = mainPost.find(".recent-post-card").first();
 
-                if (firstArticle.length) {
-                    // calculate the scroll position
-                    const headerHeight = $(".header").outerHeight();
+        const headerHeight = $(".header").outerHeight();
+        const scrollPosition = firstArticle.offset().top - headerHeight - 20;
 
-                     const scrollPosition =
-                    firstArticle.offset().top - headerHeight - 50;
+        $('html, body').animate({
+            scrollTop: scrollPosition
+        }, 500);
 
-                    // scroll smoothly to first article
-                    $('html, body').animate({
-                    scrollTop: scrollPosition
-                    }, 500);
-                }
+        history.pushState({}, "", url);
+    })
 
-                if ( updateHistory ) {
-                   history.pushState({}, "", url); 
-                }
-            } 
-        }
-    )
+    // load function
+    // load(
+    //     url + " #recent .post-main > *",
+    //     function(response, status, xhr) {
+    //         if (status === 'error') {
+    //             console.log( 
+    //                 "Couldn't load posts:", 
+    //                 xhr.status, 
+    //                 xhr.statusText 
+    //             );
+    //         } else  {
+    //             // add animation class to articles
+    //             $(".post-main .recent-post-card")
+    //               .addClass("article-appear");
+
+    //             // find the first article
+    //             const firstArticle = $(".post-main .recent-post-card").first();
+
+    //             if (firstArticle.length) {
+    //                 // calculate the scroll position
+    //                 const headerHeight = $(".header").outerHeight();
+
+    //                  const scrollPosition =
+    //                 firstArticle.offset().top - headerHeight - 50;
+
+    //                 // scroll smoothly to first article
+    //                 $('html, body').animate({
+    //                 scrollTop: scrollPosition
+    //                 }, 500);
+    //             }
+
+    //             if ( updateHistory ) {
+    //                history.pushState({}, "", url); 
+    //             }
+    //         } 
+    //     }
+    // )
 }
 // 2. handle clicks on pagination links and arrows
 $(document).on
@@ -169,9 +192,19 @@ $(document).on
             return;
         }
 
-        // don't reload the same webpage
-        if (url === window.location.href) return;
+        // don't reload the same page
+        const clickedUrl = new URL(url, window.location.href);
+        const currentUrl = new URL(window.location.href);
 
+        if (
+            clickedUrl.pathname === currentUrl.pathname && 
+            clickedUrl.searchParams.get("page") === 
+                currentUrl.searchParams.get("page") && 
+            clickedUrl.searchParams.get("category") === 
+                currentUrl.searchParams.get("category")
+        ) {
+            return;
+        }
         loadPosts(url, true);
     }
 );
@@ -180,6 +213,8 @@ $(document).on
     $(window).on("popstate", function() {
         loadPosts(window.location.href);
     })
+
+
 
 
 
