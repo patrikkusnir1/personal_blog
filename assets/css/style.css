@@ -828,6 +828,29 @@ body.nav-active {
   --ionicon-stroke-width: 40px;
 }
 
+
+/* Animation for articles loaded through pagination */
+.recent-post-card.article-appear {
+  animation: articleAppear 0.4s ease-out both;
+}
+
+@keyframes articleAppear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .recent-post-card.article-appear {
+  animation: none;
+}
+}
+
 .pagination-btn {
   background-color: var(--bg-prussian-blue);
   color: var(--text-white);
@@ -852,6 +875,7 @@ a.active {
   gap: 5px;
   margin-block-start: 60px;
 }
+
 
 .aside-card {
   padding: 25px;

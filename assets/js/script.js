@@ -112,8 +112,10 @@ window.addEventListener("resize", function () {
 /**
  * AJAX pagination
  */
-function loadPosts(url) {
-    // load the new posts and pagination from the requested page
+
+// 1. Load posts from a URL
+function loadPosts(url, updateHistory = false) {
+
     $(".post-main").load(
         url + " #recent .post-main > *",
         function(response, status, xhr) {
@@ -123,11 +125,35 @@ function loadPosts(url) {
                     xhr.status, 
                     xhr.statusText 
                 );
+            } else  {
+                // add animation class to articles
+                $(".post-main .recent-post-card")
+                  .addClass("article-appear");
+
+                // find the first article
+                const firstArticle = $(".post-main .recent-post-card").first();
+
+                if (firstArticle.length) {
+                    // calculate the scroll position
+                    const headerHeight = $(".header").outerHeight();
+
+                     const scrollPosition =
+                    firstArticle.offset().top - headerHeight - 50;
+
+                    // scroll smoothly to first article
+                    $('html, body').animate({
+                    scrollTop: scrollPosition
+                    }, 500);
+                }
+
+                if ( updateHistory ) {
+                   history.pushState({}, "", url); 
+                }
             } 
         }
-    );
+    )
 }
-
+// 2. handle clicks on pagination links and arrows
 $(document).on
     ('click',
     "#recent .pagination a.pagination-btn", 
@@ -143,11 +169,17 @@ $(document).on
             return;
         }
 
-        loadPosts(url);
+        // don't reload the same webpage
+        if (url === window.location.href) return;
 
-        // Add new browser history entry
-        history.pushState({}, "", url);
-    });
+        loadPosts(url, true);
+    }
+);
+
+// 3. Handle browser back and forward button
+    $(window).on("popstate", function() {
+        loadPosts(window.location.href);
+    })
 
 
 
