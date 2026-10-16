@@ -123,59 +123,36 @@ function loadPosts(url, updateHistory = false) {
     }).done(function( response ) {
         const mainPost = $("#recent .post-main");
         const loadedPosts = $(response).find("#recent .post-main > *");
-        mainPost.html(loadedPosts);
+        mainPost.empty();
+        mainPost.append(loadedPosts);
 
-        mainPost.addClass("article-appear");
+        $(".recent-post-card").addClass("article-appear");
         const firstArticle = mainPost.find(".recent-post-card").first();
 
-        const headerHeight = $(".header").outerHeight();
-        const scrollPosition = firstArticle.offset().top - headerHeight - 20;
+        if (firstArticle.length) {
+            const headerHeight = $(".header").outerHeight();
+            const scrollPosition = firstArticle.offset().top - headerHeight - 20;
 
-        $('html, body').animate({
-            scrollTop: scrollPosition
-        }, 500);
+            $('html, body').animate({
+                scrollTop: scrollPosition
+            }, 500);
+        }
 
-        history.pushState({}, "", url);
-    })
+        if (updateHistory) {
+            history.pushState({}, "", url);   
+        }
 
-    // load function
-    // load(
-    //     url + " #recent .post-main > *",
-    //     function(response, status, xhr) {
-    //         if (status === 'error') {
-    //             console.log( 
-    //                 "Couldn't load posts:", 
-    //                 xhr.status, 
-    //                 xhr.statusText 
-    //             );
-    //         } else  {
-    //             // add animation class to articles
-    //             $(".post-main .recent-post-card")
-    //               .addClass("article-appear");
-
-    //             // find the first article
-    //             const firstArticle = $(".post-main .recent-post-card").first();
-
-    //             if (firstArticle.length) {
-    //                 // calculate the scroll position
-    //                 const headerHeight = $(".header").outerHeight();
-
-    //                  const scrollPosition =
-    //                 firstArticle.offset().top - headerHeight - 50;
-
-    //                 // scroll smoothly to first article
-    //                 $('html, body').animate({
-    //                 scrollTop: scrollPosition
-    //                 }, 500);
-    //             }
-
-    //             if ( updateHistory ) {
-    //                history.pushState({}, "", url); 
-    //             }
-    //         } 
-    //     }
-    // )
+    }).fail(function(xhr, status, error) {
+            console.log(
+                "Couldn't load posts",
+                xhr.status,
+                xhr.statusText
+            );
+        }
+    );
 }
+    
+
 // 2. handle clicks on pagination links and arrows
 $(document).on
     ('click',
@@ -214,6 +191,45 @@ $(document).on
         loadPosts(window.location.href);
     })
 
+
+
+// load function
+    // load(
+    //     url + " #recent .post-main > *",
+    //     function(response, status, xhr) {
+    //         if (status === 'error') {
+    //             console.log( 
+    //                 "Couldn't load posts:", 
+    //                 xhr.status, 
+    //                 xhr.statusText 
+    //             );
+    //         } else  {
+    //             // add animation class to articles
+    //             $(".post-main .recent-post-card")
+    //               .addClass("article-appear");
+
+    //             // find the first article
+    //             const firstArticle = $(".post-main .recent-post-card").first();
+
+    //             if (firstArticle.length) {
+    //                 // calculate the scroll position
+    //                 const headerHeight = $(".header").outerHeight();
+
+    //                  const scrollPosition =
+    //                 firstArticle.offset().top - headerHeight - 50;
+
+    //                 // scroll smoothly to first article
+    //                 $('html, body').animate({
+    //                 scrollTop: scrollPosition
+    //                 }, 500);
+    //             }
+
+    //             if ( updateHistory ) {
+    //                history.pushState({}, "", url); 
+    //             }
+    //         } 
+    //     }
+    // )
 
 
 
