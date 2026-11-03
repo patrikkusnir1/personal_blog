@@ -669,10 +669,21 @@ body.nav-active {
 }
 
 .feature-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   border-radius: var(--radius-16);
   transition: var(--transition-1);
 }
+
+.feature-card .card-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+
 
 .feature-card:is(:hover, :focus-within) {
   transform: translateY(-5px);
@@ -701,6 +712,8 @@ body.nav-active {
 
 .feature-card .card-wrapper:last-child {
   font-size: var(--fontSize-4);
+  margin-block-start: auto; /* push author & Read more to the bottom */
+  padding-block-start: 20px;
   margin-block-end: 0;
 }
 
@@ -726,6 +739,13 @@ body.nav-active {
   margin-inline: auto;
   margin-block-start: 30px;
 }
+
+.feature .btn-secondary.btn-hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  pointer-events: none;
+} 
 
 
 /*-----------------------------------*\
@@ -830,7 +850,8 @@ body.nav-active {
 
 
 /* Animation for articles loaded through pagination */
-.recent-post-card.article-appear {
+.recent-post-card.article-appear,
+.feature-card.article-appear {
   animation: articleAppear 0.4s ease-out both;
 }
 
@@ -846,7 +867,8 @@ body.nav-active {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .recent-post-card.article-appear {
+  .recent-post-card.article-appear,
+  .feature-card.article-appear {
   animation: none;
 }
 }

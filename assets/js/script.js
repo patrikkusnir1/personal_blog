@@ -152,7 +152,63 @@ function loadPosts(url, updateHistory = false) {
         }
     );
 }
-    
+
+// load featured posts with ajax
+
+function loadFeatured(url, updateHistory = false) {
+    const previousCount = $("#featured .feature-list li").length;
+    const featuredContainer = $("#featured .container")
+
+    $.ajax({
+        url: url,
+        method: "GET",
+        dataType: "html"
+    }).done(function( response ) {
+        const currentContent = $(response).find("#featured .container > *");
+
+        // empty container and add new content
+        featuredContainer.empty();
+        featuredContainer.append(currentContent);
+        
+        // animate new added articles
+        $("#featured .feature-card").slice(previousCount).addClass("article-appear");
+
+        // wait a moment
+        setTimeout(function() {
+            // scroll to first new article
+            const firstNewArticle = $("#featured .feature-card").eq(previousCount);
+            const headerHeight = $(".header").outerHeight() || 0;
+
+            if (firstNewArticle.length) {
+                const scrollPosition = firstNewArticle.offset().top - headerHeight - 20;
+                
+                $("html, body").animate({
+                    scrollTop: scrollPosition
+                }, 600);
+            }
+        }, 200);
+
+        // update history
+        if (updateHistory) {
+            history.pushState({}, "", url);
+            lastSearchQuery = window.location.search;
+        }
+    }).fail(function(xhr, status, error) {
+        console.log("Couldn't load articles",
+                    xhr.status,
+                    xhr.statusText);
+    })
+}
+
+$(document).on("click", "#featured  a.btn-secondary", function( event ) {
+    event.preventDefault();
+
+    const url = $(this).attr("href");
+
+    loadFeatured(url, true);
+});
+
+
 const ajaxSelectors = "#recent .pagination a.pagination-btn, .card-tag a, #topics .slider-list a, .footer .footer-link, .tags .tag-btn"
 // 2. handle clicks on pagination links and arrows
 $(document).on
