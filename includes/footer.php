@@ -27,12 +27,13 @@
                     <ul>
                         <?php
                             $tags_array = $collection->get_tags();
-                            foreach ($tags_array as $tag)
-                            {
-                                echo
-                                "<li>
-                                    <a href='#' class='footer-link hover-2'>
-                                        $tag
+                            foreach ($tags_array as $tag) {
+                                $category_url = Article::build_category_url($tag);
+                            
+                                echo"
+                                <li>
+                                    <a href='?$category_url#recent' class='footer-link hover-2'>
+                                        " . htmlspecialchars($tag) . "
                                     </a>
                                 </li>";
                             }

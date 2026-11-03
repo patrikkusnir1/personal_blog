@@ -139,7 +139,8 @@ function loadPosts(url, updateHistory = false) {
         }
 
         if (updateHistory) {
-            history.pushState({}, "", url);   
+            history.pushState({}, "", url);
+            lastSearchQuery = window.location.search;   
         }
 
     }).fail(function(xhr, status, error) {
@@ -152,12 +153,10 @@ function loadPosts(url, updateHistory = false) {
     );
 }
     
-
+const ajaxSelectors = "#recent .pagination a.pagination-btn, .card-tag a, #topics .slider-list a, .footer .footer-link, .tags .tag-btn"
 // 2. handle clicks on pagination links and arrows
 $(document).on
-    ('click',
-    "#recent .pagination a.pagination-btn", 
-    function(event) {
+    ('click', ajaxSelectors, function(event) {
         // stop the browser from navigating to another page
         event.preventDefault();
 
@@ -173,23 +172,60 @@ $(document).on
         const clickedUrl = new URL(url, window.location.href);
         const currentUrl = new URL(window.location.href);
 
-        if (
-            clickedUrl.pathname === currentUrl.pathname && 
-            clickedUrl.searchParams.get("page") === 
-                currentUrl.searchParams.get("page") && 
-            clickedUrl.searchParams.get("category") === 
-                currentUrl.searchParams.get("category")
-        ) {
+        const clickedPage = clickedUrl.searchParams.get("page") || "1";
+        const currentPage = currentUrl.searchParams.get("page") || "1";
+
+        const clickedCategory = clickedUrl.searchParams.get("category") || "";
+        const currentCategory = currentUrl.searchParams.get("category") || "";
+
+
+        if ( clickedUrl.pathname === currentUrl.pathname && 
+             clickedPage === currentPage && 
+             clickedCategory === currentCategory ) {
             return;
         }
+        
         loadPosts(url, true);
     }
 );
 
-// 3. Handle browser back and forward button
+// track the last loaded query string (?page=...&category)
+    let lastSearchQuery = window.location.search;
+
+// update lastSearchQuery inside loadPosts when history is updated:
+// (or update it right before calling loadPosts in the click handler)
+
+// 3. Handle browser back and forward button - ignore hash-only changes
     $(window).on("popstate", function() {
-        loadPosts(window.location.href);
+    if (window.location.search !== lastSearchQuery) {
+        lastSearchQuery = window.location.search;
+        loadPosts(window.location.href, false);
+    }    
+});
+
+// 4. Smooth scroll for navbar links (fixed header height)
+    $(".navbar-link").on("click", function(event) {
+        const targetHash = this.hash; // e.g. #topics
+        const targetSection = $(targetHash);
+        
+        if (targetSection.length) {
+            event.preventDefault();
+
+            const headerHeight = $(".header").outerHeight() || 0;
+            const scrollPosition = targetSection.offset().top - headerHeight;
+
+            $("html, body").stop().animate({
+                scrollTop: scrollPosition
+            }, 500);
+
+            // update the hash in the url without triggering popstate
+            history.pushstate(null, "", window.location.pathname + window.location.search + targetHash)
+        }
+
     })
+
+
+
 
 
 
