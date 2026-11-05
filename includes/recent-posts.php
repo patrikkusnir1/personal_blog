@@ -29,11 +29,12 @@
                     $articles_total_count / $articles_per_page );
 
                 // validate page
-                $options = array('options' => array(
+                $options = [
+                    'options' => [
                     "min_range" => 1, 
-                    "max_range" => $pagination_count,
-                    )
-                );
+                    "max_range" => $pagination_count
+                    ]
+                ];
                 $current_page = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT, $options) ?: 1;
 
                 // slice posts
@@ -61,7 +62,7 @@
                             </a>
 
                             <h3 class="headline headline-3 card-title">
-                                <a href="#" class="link hover-2">
+                                <a href="article.php?id=999" class="link hover-2">
                                     <?= htmlspecialchars($article->title) ?></a>
                             </h3>
                             <p class="card-text">

@@ -7,6 +7,6 @@ $sql = file_get_contents(__DIR__ . '/database/schema.sql');
 $pdo->exec($sql);
 
 // check if exists
-$stmt = $pdo->query('DESCRIBE comments');
+$stmt = $pdo->query('SELECT id, title FROM articles');
 $columns = $stmt->fetchAll();
 print_r($columns);
