@@ -26,13 +26,14 @@
                     </p>
                     <ul>
                         <?php
-                            $tags_array = $collection->get_tags();
-                            foreach ($tags_array as $tag) {
-                                $category_url = Article::build_category_url($tag);
+                            $categories = isset($collection) ? $collection->get_tags() : ($tags_array ?? []);
                             
-                                echo"
+                            foreach ($categories as $tag) {
+                                $encoded_tag = urlencode($tag);
+                                  
+                                echo "
                                 <li>
-                                    <a href='?$category_url#recent' class='footer-link hover-2'>
+                                    <a href='index.php?category={$encoded_tag}#recent' class='footer-link hover-2'>
                                         " . htmlspecialchars($tag) . "
                                     </a>
                                 </li>";
