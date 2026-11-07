@@ -142,14 +142,16 @@ img {
 }
 
 input,
-button {
+button,
+textarea {
   background: none;
   border: none;
   font: inherit;
   color: inherit;
 }
 
-input {
+input,
+textarea {
   width: 100%;
   outline: none;
 }
@@ -877,6 +879,116 @@ body.nav-active {
 
 .article-text p {
   margin-block-end: 20px;
+}
+
+/*------------------------------------*\
+#COMMENTS SECTION
+\*-------------------------------------*/
+
+.comments-section {
+  max-width: 820px;
+  margin-inline: auto;
+  margin-block-end: 80px;
+}
+
+.comments-section .section-title {
+  margin-block-end: 25px;
+}
+
+.comment-list {
+  margin-block-end: 40px;
+}
+
+.comment-card,
+.no-comments {
+  padding: 24px;
+  border-radius: var(--radius-16);
+  margin-block-end: 20px;
+}
+
+.no-comments .card-text {
+  color: var(--text-wild-blue-yonder);
+  font-size: var(--fontSize-6);
+}
+
+.comment-card .card-text {
+  color: var(--text-columbia-blue);
+  font-size: var(--fontSize-5);
+  line-height: var(--lineHeight-2);
+  margin-block-end: 16px;
+}
+
+.comment-card .card-title {
+  color: var(--text-alice-blue);
+  font-weight: var(--weight-bold);
+  font-size: var(--fontSize-6);
+}
+
+.comment-card .card-date {
+  color: var(--text-slate-gray);
+  font-size: var(--fontSize-7);
+}
+
+/*------------------------------------*\
+  #COMMENT FORM
+\*-------------------------------------*/
+
+.comment-form {
+  padding: 30px;
+  border-radius: var(--radius-16);
+}
+
+.comment-form .form-title {
+  margin-block-end: 20px;
+}
+
+.comment-form .input-wrapper {
+  position: relative;
+  background-color: var(--bg-prussian-blue);
+  border: 1px solid var(--border-prussian-blue);
+  border-radius: var(--radius-8);
+  margin-block-end: 18px;
+  transition: var(--transition-1);
+}
+
+.comment-form .input-wrapper:focus-within {
+  border-color: var(--bg-carolina-blue);
+}
+
+.comment-form .input-field {
+  padding: 14px 18px;
+  color: var(--text-alice-blue);
+  font-size: var(--fontSize-6);
+}
+
+.comment-form textarea.input-field {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: vertical;
+  min-height: 120px;
+  color: var(--text-alice-blue);
+  font-family: inherit;
+  font-size: var(--fontSize-6);
+  line-height: var(--lineHeight-2);
+}
+
+.comment-form .input-field::placeholder {
+  color: var(--text-slate-gray);
+}
+
+.comment-form .input-wrapper ion-icon {
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  transform: translateY(-50%);
+  color: var(--text-wild-blue-yonder);
+  font-size: 2rem;
+}
+
+.comment-form .btn {
+  gap: 8px;
 }
 
 

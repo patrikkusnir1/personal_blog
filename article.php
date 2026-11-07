@@ -93,46 +93,66 @@ if (!$article) {
 	        	<?= nl2br(htmlspecialchars($article["full_text"])) ?>
 	        </div>
 		</section>
-	</div>
-	<div class="comments-section" id="comments">
-		<h2 class="headline headline-2 section-title">Comments</h2>
+		<div class="comments-section" id="comments">
+			<h2 class="headline headline-2 section-title">Comments</h2>
 
-		<ul class="comment-list">
-			<?php 
-				$comment_stmt = $pdo->prepare("SELECT * FROM comments WHERE article_id = :article_id ORDER BY created_at DESC");
-				$comment_stmt->execute([':article_id' => $article_id]);
-				$comments = $comment_stmt->fetchAll();
+			<ul class="comment-list">
+				<?php 
+					$comment_stmt = $pdo->prepare("SELECT * FROM comments WHERE article_id = :article_id ORDER BY created_at DESC");
+					$comment_stmt->execute([':article_id' => $article_id]);
+					$comments = $comment_stmt->fetchAll();
 
-				if (empty($comments)): 					
-			?>
-				<li class="no-comments">
-					<p class="card-text">No comments yet. Be the first to share your thoughts!</p>
-				</li>
-			<?php else: ?>
-				<?php foreach($comments as $comment): ?>
-					<li>
-						<div class="card comment-card">
-							<p class="card-text">
-								<?= nl2br(htmlspecialchars($comment['comment_text'])) ?>
-							</p>
+					if (empty($comments)): 					
+				?>
+					<li class="no-comments card">
+						<p class="card-text">No comments yet. Be the first to share your thoughts!</p>
+					</li>
+				<?php else: ?>
+					<?php foreach($comments as $comment): ?>
+						<li>
+							<div class="card comment-card">
+								<p class="card-text">
+									<?= nl2br(htmlspecialchars($comment['comment_text'])) ?>
+								</p>
 
-							<div class="profile-card">
-								<div>
-									<p class="card-title">
-										<?= htmlspecialchars($comment['author_name']) ?>
-									</p>
-									<time class="card-date" datetime="<?= htmlspecialchars($comment['created_at']) ?>">
-								         <?= htmlspecialchars($comment['created_at']) ?>
-									</time>
+								<div class="profile-card">
+									<div>
+										<p class="card-title">
+											<?= htmlspecialchars($comment['author_name']) ?>
+										</p>
+										<time class="card-date" datetime="<?= htmlspecialchars($comment['created_at']) ?>">
+									         <?= htmlspecialchars($comment['created_at']) ?>
+										</time>
+									</div>
 								</div>
 							</div>
-						</div>
-					</li>
-				<?php endforeach; ?>
-			<?php endif; ?>
-		</ul>
-	</div>
+						</li>
+					<?php endforeach; ?>
+				<?php endif; ?>
+			</ul>
 
+			<form action="" id="comment-form" class="comment-form card">
+				<input type="hidden" name="article_id" 
+				value="<?= htmlspecialchars($article["id"]) ?>">
+
+				<h3 class="headline headline-3 form-title">Leave a reply</h3>
+
+				<div class="input-wrapper">
+					<input type="text" name="author_name" placeholder="Your name" required class="input-field">
+					<ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+				</div>
+
+				<div class="input-wrapper" style="margin-block: 15px">
+					<textarea name="comment_text" placeholder="Write your comment..." required class="input-field" rows="4"></textarea>
+				</div>
+
+				<button type="submit" class="btn btn-primary">
+					<span class="span">Post comment</span>
+					<ion-icon name="paper-plane-outline" aria-hidden="true"></ion-icon>
+				</button>
+			</form>
+		</div>
+	</div> <!-- end of container -->
 </main>
 
 <?php 
