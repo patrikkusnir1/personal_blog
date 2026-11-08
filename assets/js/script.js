@@ -52,62 +52,62 @@ const sliderContainer = document.querySelector("[data-slider-container]");
 const sliderPrevBtn = document.querySelector("[data-slider-prev]");
 const sliderNextBtn = document.querySelector("[data-slider-next]");
 
-let totalSliderVisibleItems = Number(getComputedStyle(slider).getPropertyValue("--slider-items"));
+if (slider && sliderContainer && sliderPrevBtn && sliderNextBtn) {
+    let totalSliderVisibleItems = Number(getComputedStyle(slider).getPropertyValue("--slider-items"));
+    let totalSlidableItems = sliderContainer.childElementCount - totalSliderVisibleItems;
+    let currentSlidePos = 0;
 
-let totalSlidableItems = sliderContainer.childElementCount - totalSliderVisibleItems;
-
-let currentSlidePos = 0;
-
-const moveSliderItem = function () {
-    sliderContainer.style.transform = `translateX(-${sliderContainer.children[currentSlidePos].offsetLeft}px)`;
-}
-
-/** 
-* NEXT SLIDE
-*/
-
-const slideNext = function () {
-    const slideEnd = currentSlidePos >= totalSlidableItems
-
-    if (slideEnd) {
-        currentSlidePos = 0;
-    } else {
-        currentSlidePos++
+    const moveSliderItem = function () {
+        sliderContainer.style.transform = `translateX(-${sliderContainer.children[currentSlidePos].offsetLeft}px)`;
     }
 
-    moveSliderItem();
-}
+    /** 
+    * NEXT SLIDE
+    */
 
-sliderNextBtn.addEventListener("click", slideNext)
+    const slideNext = function () {
+        const slideEnd = currentSlidePos >= totalSlidableItems
 
+        if (slideEnd) {
+            currentSlidePos = 0;
+        } else {
+            currentSlidePos++
+        }
 
-/** 
-* PREVIOUS SLIDE
-*/
-
-const slidePrev = function () {
-    if (currentSlidePos <= 0) {
-        currentSlidePos = totalSlidableItems
-    } else {
-        currentSlidePos--
+        moveSliderItem();
     }
-    moveSliderItem();
+
+    sliderNextBtn.addEventListener("click", slideNext);
+
+
+    /** 
+    * PREVIOUS SLIDE
+    */
+
+    const slidePrev = function () {
+        if (currentSlidePos <= 0) {
+            currentSlidePos = totalSlidableItems
+        } else {
+            currentSlidePos--
+        }
+        moveSliderItem();
+    }
+
+    /**
+     * RESPONSIVE
+     */
+
+    sliderPrevBtn.addEventListener("click", slidePrev);
+
+    window.addEventListener("resize", function () {
+        totalSliderVisibleItems = Number(getComputedStyle(slider).getPropertyValue("--slider-items"));
+
+        totalSlidableItems = sliderContainer.childElementCount - totalSliderVisibleItems;
+
+        moveSliderItem();
+    });
 }
 
-sliderPrevBtn.addEventListener("click", slidePrev)
-
-
-/**
- * RESPONSIVE
- */
-
-window.addEventListener("resize", function () {
-    totalSliderVisibleItems = Number(getComputedStyle(slider).getPropertyValue("--slider-items"));
-
-    totalSlidableItems = sliderContainer.childElementCount - totalSliderVisibleItems;
-
-    moveSliderItem();
-});
 
 /**
  * AJAX pagination
@@ -275,10 +275,98 @@ $(document).on
             }, 500);
 
             // update the hash in the url without triggering popstate
-            history.pushstate(null, "", window.location.pathname + window.location.search + targetHash)
+            history.pushState(null, "", window.location.pathname + window.location.search + targetHash)
         }
 
     })
+
+
+// adding comments with ajax
+    jQuery(document).ready(function ($) {
+        const $commentsSection = $('#comments');
+        const commentForm = $('#comment-form');
+        const $nameInput = commentForm.find('input[name="author_name"]');
+        const commentList = $('#comment-list');
+        
+        if (!commentForm.length) return;
+
+        commentForm.on("submit", function (event) {
+            event.preventDefault();
+
+            const submitBtn = commentForm.find('button[type="submit"]');
+            // disable button after clicking
+            submitBtn.prop("disabled", true);
+
+            let req = $.ajax({
+                url: commentForm.attr("action"),
+                type: "POST", 
+                data: commentForm.serialize(),
+                dataType: "json" // parse JSON automatically
+            });
+
+            req.done(function (data) {
+                if (data.status === "success") {
+                    // remove no comments 
+                    $('.no-comments').remove();
+
+                    // build html for comment
+                    let newComment = $(`
+                        <li>
+                            <div class="card comment-card">
+                                <p class="card-text">${data.comment.comment_text}</p>
+                                <div class="profile-card">
+                                    <div>
+                                        <p class="card-title">${data.comment.author_name}</p>
+                                        <time class="card-date">${data.comment.created_at}</time>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    `).hide();
+
+                    // add new comment and animate it
+                    newComment.appendTo(commentList).slideDown(300);
+
+                    // reset form inputs
+                    commentForm[0].reset()
+                }
+            });
+
+            req.fail(function (xhr) {
+                let message = xhr.responseJSON && xhr.responseJSON.message
+                    ? xhr.responseJSON.message
+                    : "Failed to post comment."
+                alert(message)
+            });
+
+            req.always(function () {
+                submitBtn.prop("disabled", false);
+            });
+        });
+
+        commentForm.find('textarea[name="comment_text"]').on('keydown', function(event) {
+            if ( (event.ctrlKey || event.metaKey) && (event.key === "Enter") || (event.keyCode === 13)) {
+                event.preventDefault();
+                commentForm.trigger("submit");
+            }
+        });
+
+        if ($commentsSection.length && $nameInput.length) {
+            let hasFocused = false;
+
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting && !hasFocused) {
+                        $nameInput[0].focus({ preventScroll: true });
+                        hasFocused = true;
+                        observer.disconnect();
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            observer.observe($commentsSection[0]);
+        }
+    });
 
 
 

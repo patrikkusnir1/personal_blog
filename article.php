@@ -1,9 +1,6 @@
 <?php 
 require "includes/db.php";
 
-// get article id via $_GET
-$article_id = $_GET["id"] ?? null;
-
 // validate id
 $options = [
 			"options" => [
@@ -50,7 +47,7 @@ if (!$article) {
 }?>
 
 <?php include "includes/header.php"; ?>
-<main>
+<main data-article-id="<?= (int)$article["id"] ?>">
 	<div class="container">
 		<section class="section article-single">
 			<figure class="card-banner img-holder article-hero" style="--width: 1602; --height: 903;">
@@ -96,7 +93,7 @@ if (!$article) {
 		<div class="comments-section" id="comments">
 			<h2 class="headline headline-2 section-title">Comments</h2>
 
-			<ul class="comment-list">
+			<ul class="comment-list" id="comment-list">
 				<?php 
 					$comment_stmt = $pdo->prepare("SELECT * FROM comments WHERE article_id = :article_id ORDER BY created_at DESC");
 					$comment_stmt->execute([':article_id' => $article_id]);
@@ -131,19 +128,24 @@ if (!$article) {
 				<?php endif; ?>
 			</ul>
 
-			<form action="" id="comment-form" class="comment-form card">
+			<form action="includes/add-comment.php" method="post" id="comment-form" class="comment-form card" 	data-article-id="<?= (int)($article["id"]) ?>">
 				<input type="hidden" name="article_id" 
-				value="<?= htmlspecialchars($article["id"]) ?>">
+					   value="<?= (int)($article["id"]) ?>">
 
 				<h3 class="headline headline-3 form-title">Leave a reply</h3>
 
 				<div class="input-wrapper">
-					<input type="text" name="author_name" placeholder="Your name" required class="input-field">
+					<input type="text" name="author_name" placeholder="Your name" 
+						required maxlength="100" class="input-field" id="name-input">
 					<ion-icon name="person-outline" aria-hidden="true"></ion-icon>
 				</div>
 
 				<div class="input-wrapper" style="margin-block: 15px">
-					<textarea name="comment_text" placeholder="Write your comment..." required class="input-field" rows="4"></textarea>
+					<textarea name="comment_text" placeholder="Write your comment..." 
+							  required class="input-field" rows="4" id="text-input">
+					</textarea>
+					<span style="font-size: var(--fontSize-8); color: var(--text-slate-gray);">Press <kbd>Ctrl</kbd>+<kbd>Enter</kbd> to submit.
+					</span>
 				</div>
 
 				<button type="submit" class="btn btn-primary">

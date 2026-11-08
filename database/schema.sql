@@ -3,10 +3,10 @@ CREATE TABLE IF NOT EXISTS articles (
     full_text TEXT NOT NULL,
     title VARCHAR(255) NOT NULL,
     image VARCHAR(255) NOT NULL DEFAULT '',
-    badge VARCHAR(255) NOT NULL,
-    author VARCHAR(255) NOT NULL,
+    badge VARCHAR(64) NOT NULL,
+    author VARCHAR(100) NOT NULL,
     word_count INT NOT NULL,
-    published_at DATE NOT NULL
+    published_at DATETIME NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS tags (
@@ -23,10 +23,12 @@ CREATE TABLE IF NOT EXISTS article_tag (
 );
 
 CREATE TABLE IF NOT EXISTS comments (
-    comment_id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     article_id INT NOT NULL,
-    author_name VARCHAR(255) NOT NULL,
+    author_name VARCHAR(100) NOT NULL,
     comment_text TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE
+    created_at DATETIME NOT NULL,
+    CONSTRAINT fk_comments_article
+        FOREIGN KEY (article_id) REFERENCES articles(id) 
+        ON DELETE CASCADE
 );
