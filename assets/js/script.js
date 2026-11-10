@@ -368,6 +368,22 @@ $(document).on
         }
     });
 
+    // Editing comments
+    $(".comment-list").on("click", ".edit-comment", function() {
+        let commentCard = $(this).closest(".comment-card");
+        let commentText = commentCard.find(".card-text").text().trim();
+
+        let textarea = $("<textarea>", {
+            class: "edit-comment-field",
+            name: "comment_text",
+            rows: 3
+        }).val(commentText);
+
+        commentCard.find(".card-text").replaceWith(textarea);
+
+        textarea.focus();
+    })
+
 
 
 

@@ -95,8 +95,15 @@ if (!$article) {
 
 			<ul class="comment-list" id="comment-list">
 				<?php 
-					$comment_stmt = $pdo->prepare("SELECT * FROM comments WHERE article_id = :article_id ORDER BY created_at DESC");
+					$comment_stmt = $pdo->prepare("
+						SELECT * 
+						FROM comments 
+						WHERE article_id = :article_id 
+						ORDER BY created_at DESC
+					");
+
 					$comment_stmt->execute([':article_id' => $article_id]);
+					
 					$comments = $comment_stmt->fetchAll();
 
 					if (empty($comments)): 					
@@ -107,10 +114,14 @@ if (!$article) {
 				<?php else: ?>
 					<?php foreach($comments as $comment): ?>
 						<li>
-							<div class="card comment-card">
+							<div class="card comment-card" data-comment-id="<?= (int) $comment["comment_id"] ?>">
 								<p class="card-text">
 									<?= nl2br(htmlspecialchars($comment['comment_text'])) ?>
 								</p>
+
+								<button type="button" class="edit-comment">
+									Edit
+								</button>
 
 								<div class="profile-card">
 									<div>

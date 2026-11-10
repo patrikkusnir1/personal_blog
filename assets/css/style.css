@@ -929,6 +929,58 @@ body.nav-active {
   font-size: var(--fontSize-7);
 }
 
+/* comment edit button */
+
+.edit-comment {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 0;
+  margin-block-end: 16px;
+  background: transparent;
+  color: var(--text-carolina-blue);
+  font-size: var(--fontSize-7);
+  font-weight: var(--weight-semiBold);
+  transition: var(--transition-1);
+}
+
+.edit-comment:hover {
+  color: var(--text-columbia-blue);
+  text-decoration: underline;
+}
+
+.edit-comment:focus-visible {
+  outline: 2px solid var(--text-carolina-blue);
+  outline-offset: 4px;
+  border-radius: var(--radius-6);
+}
+
+/* edit comment textarea */
+.edit-comment-field {
+  display: block;
+  width: 100%;
+  min-height: 100px;
+  padding: 12px 15px;
+  margin-block-end: 16px;
+
+  background-color: var(--bg-prussian-blue);
+  border: 1px solid var(--border-prussian-blue);
+  border-radius: var(--radius-8);
+
+  color: var(--text-alice-blue);
+  font-family: inherit;
+  font-size: var(--fontSize-6);
+  line-height: var(--lineHeight-2);
+
+  resize: vertical;
+  outline: none;
+  transition: var(--transition-1);
+}
+
+.edit-comment-field:focus {
+  border-color: var(--bg-carolina-blue);
+  box-shadow: var(--shadow-2);
+}
+
 /*------------------------------------*\
   #COMMENT FORM
 \*-------------------------------------*/
