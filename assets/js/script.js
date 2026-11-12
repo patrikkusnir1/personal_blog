@@ -434,14 +434,57 @@ $(".comment-list").on("click", ".edit-comment", function() {
 
     // Save editing
     saveButton.on("click", function() {
-        let updatedText = textarea.val().trim();
+
+        let updatedText = textarea.val().trim(),
+            commentId   = commentCard.data("comment-id"),
+            articleId   = $("main").data("article-id");
 
         if (!updatedText) {
             textarea.focus();
             return;
         }
 
-        console.log("Updated comment:", updatedText);
+        // disable button while saving
+        saveButton.prop("disabled", true);
+
+        $.ajax({
+            url: "../includes/edit-comment.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+                comment_id: commentId,
+                article_id: articleId,
+                comment_text: updatedText
+            }
+        })
+        .done(function(data) {
+            if (data.status === "success") {
+                
+                // create updated paragraph
+                let updatedParagraph = $("<p>", {
+                    class: "card-text"
+                }).text(data.comment_text);
+                
+                // replace textarea with updated text
+                textarea.replaceWith(updatedParagraph);
+
+                // remove Save and Edit button
+                buttonGroup.remove();
+
+                // Enable Edit button again
+                saveButton.prop("disabled", false);
+            }
+
+
+        })
+        .fail(function(xhr) {
+
+            let message = xhr.responseJSON && xhr.responseJSON.message
+                ? xhr.responseJSON.message
+                : "Failed to update comment.";
+
+            alert(message);
+        })
     })
 })
 

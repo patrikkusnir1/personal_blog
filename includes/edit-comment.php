@@ -29,7 +29,12 @@ $article_id = filter_var($_POST['article_id'] ?? null, FILTER_VALIDATE_INT, [
 $comment_text = trim((string)($_POST['comment_text'] ?? ""));
 
 // validate input
-if ($comment_id === "" || mb_strlen($comment_text) > 2000) {
+if (
+	$comment_id === false || $comment_id === null ||
+	$article_id === false || $article_id === null ||
+	$comment_text === "" ||
+	mb_strlen($comment_text) > 2000
+){
 	http_response_code(422);
 	echo json_encode([
 		"status" => "error",
