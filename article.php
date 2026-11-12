@@ -1,4 +1,6 @@
 <?php 
+session_start();
+
 require "includes/db.php";
 
 // validate id
@@ -46,7 +48,9 @@ if (!$article) {
 	exit; 
 }?>
 
-<?php include "includes/header.php"; ?>
+<?php include "includes/header.php"; 
+?>
+
 <main data-article-id="<?= (int)$article["id"] ?>">
 	<div class="container">
 		<section class="section article-single">
@@ -112,24 +116,36 @@ if (!$article) {
 						<p class="card-text">No comments yet. Be the first to share your thoughts!</p>
 					</li>
 				<?php else: ?>
-					<?php foreach($comments as $comment): ?>
+					  <?php $editable_comments = $_SESSION['editable_comments'] ?? []; 	if (!is_array($editable_comments)) {
+					  			$editable_comments = [];
+					  		}
+
+						foreach($comments as $comment): ?>
 						<li>
-							<div class="card comment-card" data-comment-id="<?= (int) $comment["comment_id"] ?>">
+							<div class="card comment-card" 
+							data-comment-id="<?= (int)$comment["comment_id"] ?>">
 								<p class="card-text">
 									<?= nl2br(htmlspecialchars($comment['comment_text'])) ?>
 								</p>
 
-								<button type="button" class="edit-comment">
-									Edit
-								</button>
+								<?php 
+									if (in_array((int)$comment["comment_id"], $editable_comments, true)):
+								?>
+									<button type="button" class="edit-comment">
+										Edit
+									</button>
+								<?php endif; ?>
 
 								<div class="profile-card">
 									<div>
 										<p class="card-title">
 											<?= htmlspecialchars($comment['author_name']) ?>
 										</p>
-										<time class="card-date" datetime="<?= htmlspecialchars($comment['created_at']) ?>">
-									         <?= htmlspecialchars($comment['created_at']) ?>
+
+										<time class="card-date" 
+											  datetime=
+											"<?= htmlspecialchars($comment['created_at']) ?>">
+											 <?= htmlspecialchars($comment['created_at']) ?>
 										</time>
 									</div>
 								</div>

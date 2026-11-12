@@ -1,7 +1,12 @@
 <?php
 declare(strict_types=1);
+
 ini_set('display_errors', '1');
-error_reporting(E_ALL); 
+error_reporting(E_ALL);
+
+if (session_status() === PHP_SESSION_NONE) {
+	session_start();
+}
 
 
 header("Content-Type: application/json; charset=utf-8");
@@ -71,6 +76,14 @@ try {
 	]);
 
 	$new_id = (int)$pdo->lastInsertId();
+
+	// store comment ID so visitor can edit it later.
+	if ( !isset($_SESSION['editable_comments'] ) || 
+		 !is_array($_SESSION['editable_comments'])) {
+		 $_SESSION['editable_comments'] = [];
+	}
+
+	$_SESSION['editable_comments'][] = $new_id;
 
 	echo json_encode([
 		'status' => 'success',

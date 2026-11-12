@@ -312,8 +312,14 @@ $(document).on
                     // build html for comment
                     let newComment = $(`
                         <li>
-                            <div class="card comment-card">
+                            <div class="card comment-card" data-comment-id="${data.comment.id}">
                                 <p class="card-text">${data.comment.comment_text}</p>
+                                
+                                <button type="button" class="edit-comment">
+                                    Edit
+                                </button>
+
+
                                 <div class="profile-card">
                                     <div>
                                         <p class="card-title">${data.comment.author_name}</p>
@@ -368,21 +374,76 @@ $(document).on
         }
     });
 
-    // Editing comments
-    $(".comment-list").on("click", ".edit-comment", function() {
-        let commentCard = $(this).closest(".comment-card");
-        let commentText = commentCard.find(".card-text").text().trim();
+// Editing comments
+$(".comment-list").on("click", ".edit-comment", function() {
+    let editButton = $(this),
+        commentCard = editButton.closest(".comment-card"),
+        commentParagraph = commentCard.find(".card-text"),
+        commentText = commentParagraph.text().trim();
 
-        let textarea = $("<textarea>", {
-            class: "edit-comment-field",
-            name: "comment_text",
-            rows: 3
-        }).val(commentText);
+    // disable Edit button
+    editButton.prop("disabled", true);
 
-        commentCard.find(".card-text").replaceWith(textarea);
+    // create textarea
+    let textarea = $("<textarea>", {
+        class: "edit-comment-field",
+        name: "comment_text",
+        rows: 3
+    }).val(commentText);
 
-        textarea.focus();
+    // create save button
+    let saveButton = $("<button>", {
+        type: "button",
+        class: "btn btn-primary save-comment",
+        text: "Save"
     })
+
+    // create cancel button
+    let cancelButton = $("<button>", {
+        type: "button",
+        class: "btn cancel-comment",
+        text: "Cancel"
+    })
+
+    // create button container
+    let buttonGroup = $("<div>", {
+        class: "edit-button-group"
+    })
+
+    buttonGroup.append(saveButton, cancelButton);
+
+    // replace paragraph with textarea
+    commentCard.find(".card-text").replaceWith(textarea);
+
+    // add buttons
+    textarea.after(buttonGroup);
+
+    textarea.focus();
+
+    // Cancel editing
+    cancelButton.on("click", function() {
+        let originalParagraph = $("<p>", {
+            class: "card-text"
+        }).text(commentText);
+
+        textarea.replaceWith(originalParagraph);
+        buttonGroup.remove();
+
+        editButton.prop("disabled", false);
+    })
+
+    // Save editing
+    saveButton.on("click", function() {
+        let updatedText = textarea.val().trim();
+
+        if (!updatedText) {
+            textarea.focus();
+            return;
+        }
+
+        console.log("Updated comment:", updatedText);
+    })
+})
 
 
 
