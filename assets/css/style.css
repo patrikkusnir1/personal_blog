@@ -1069,6 +1069,45 @@ body.nav-active {
   gap: 8px;
 }
 
+/* Comment action buttons */
+
+.comment-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-block-end: 16px;
+}
+
+.comment-actions .edit-comment {
+  margin-block-end: 0;
+}
+
+.delete-comment-form {
+  display: flex;
+}
+
+.delete-comment {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-circle);
+  color: var(--text-slate-gray);
+  font-size: 2rem;
+  transition: var(--transition-1);
+}
+
+.delete-comment:hover,
+.delete-comment:focus-visible {
+  color: #ff6b6b;
+  background-color: hsla(0, 80%, 60%, 0.12);
+}
+
+.delete-comment:focus-visible {
+  outline: 2px solid #ff6b6b;
+  outline-offset: 3px;
+}
+
 
 /* Animation for articles loaded through pagination */
 .recent-post-card.article-appear,

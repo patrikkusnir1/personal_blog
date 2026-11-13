@@ -1,6 +1,11 @@
 <?php 
 session_start();
 
+// generate random csfr token
+if (empty($_SESSION['csrf_token'])) {
+	$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 require "includes/db.php";
 
 // validate id
@@ -131,9 +136,33 @@ if (!$article) {
 								<?php 
 									if (in_array((int)$comment["comment_id"], $editable_comments, true)):
 								?>
-									<button type="button" class="edit-comment">
-										Edit
-									</button>
+									<div class="comment-actions">
+										<button type="button" class="edit-comment">
+											Edit
+										</button>
+
+										<form action="includes/delete-comment.php" method="POST"
+											  class="delete-comment-form"
+											  onsubmit="return confirm('Are you sure you want to delete this comment?')">
+											
+											<input type="hidden" name="comment_id"
+												   value="<?= (int) $comment['comment_id'] ?>">
+
+											<input type="hidden" name="article_id"
+												   value="<?= (int) $article['id'] ?>">
+
+											<input type="hidden" name="csrf_token"
+												   value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
+
+											<button type="submit" class="delete-comment"
+													aria-label="Delete comment"
+													title="Delete comment">
+												<ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+											</button>
+
+										</form>
+
+									</div>
 								<?php endif; ?>
 
 								<div class="profile-card">
