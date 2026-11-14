@@ -2,13 +2,14 @@
 declare(strict_types=1);
 require 'classes/Article.php';
 require 'classes/ArticleCollection.php';
+require_once __DIR__ . "/includes/config.php";
 
 $longer_texts = [
     "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day.", 
-    "Learn how self-observation can help you understand your thoughts, emotions, habits, and behavior and become more aware of yourself in everyday life.", // done
+    "Learn how self-observation can help you understand your thoughts, emotions, habits, and behavior and become more aware of yourself in everyday life.", 
     "Learn the basic rules and useful tips that can help you understand chess, improve your decision-making, develop a better strategy, and enjoy the game more.", 
     "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day.", 
-    "Learn how self-observation can help you understand your thoughts, emotions, habits, and behavior and become more aware of yourself in everyday life.",//done
+    "Learn how self-observation can help you understand your thoughts, emotions, habits, and behavior and become more aware of yourself in everyday life.",
     "Learn the basic rules and useful tips that can help you understand chess, improve your decision-making, develop a better strategy, and enjoy the game more.", 
     "Discover simple and effective ways to improve your daily productivity, stay focused on important tasks, avoid distractions, and make better use of your time throughout the day." , 
     "Traveling can change the way you see the world by introducing you to new cultures, different traditions, interesting places, and people with completely different experiences and perspectives.", 
@@ -215,7 +216,7 @@ $topics = $collection->get_tags();
 
 // count articles
 $articles_total_count = count($collection->getArticles());
-$articles_per_page = 3;
+
 
 // TODO: add in the future guest count
 $visit_count = 5;

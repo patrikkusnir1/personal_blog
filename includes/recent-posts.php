@@ -26,7 +26,7 @@
 
                 // calculate pagination count
                 $pagination_count = ceil( 
-                    $articles_total_count / $articles_per_page );
+                    $articles_total_count / ARTICLES_PER_PAGE );
 
                 // validate page
                 $options = [
@@ -39,7 +39,7 @@
 
                 // slice posts
                 
-                $paginated_posts = array_slice( $filtered_posts, ( ($current_page - 1) * $articles_per_page), $articles_per_page  );
+                $paginated_posts = array_slice( $filtered_posts, ( ($current_page - 1) * ARTICLES_PER_PAGE), ARTICLES_PER_PAGE  );
                 
                 // show posts
                 foreach ($paginated_posts as $article):             

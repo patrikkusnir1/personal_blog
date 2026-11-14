@@ -134,6 +134,7 @@ if (!$article) {
 								</p>
 
 								<?php 
+									$editable_comments = array_map('intval', $editable_comments);
 									if (in_array((int)$comment["comment_id"], $editable_comments, true)):
 								?>
 									<div class="comment-actions">
@@ -198,8 +199,7 @@ if (!$article) {
 
 				<div class="input-wrapper" style="margin-block: 15px">
 					<textarea name="comment_text" placeholder="Write your comment..." 
-							  required class="input-field" rows="4" id="text-input">
-					</textarea>
+							  required class="input-field" rows="4" id="text-input"></textarea>
 					<span style="font-size: var(--fontSize-8); color: var(--text-slate-gray);">Press <kbd>Ctrl</kbd>+<kbd>Enter</kbd> to submit.
 					</span>
 				</div>

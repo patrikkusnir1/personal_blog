@@ -35,8 +35,8 @@ if ($article_id === false || $article_id === null) {
 
 
 // ---- validate text fields ----
-$author_name  = trim((string)$_POST['author_name'] ?? "");
-$comment_text = trim((string)$_POST['comment_text'] ?? "");
+$author_name  = trim((string)($_POST['author_name'] ?? ""));
+$comment_text = trim((string)($_POST['comment_text'] ?? ""));
 
 if ( $author_name === "" || $comment_text === "" ) {
 	http_response_code(422);
@@ -44,15 +44,15 @@ if ( $author_name === "" || $comment_text === "" ) {
 	exit;
 }
 
-if (mb_strlen($author_name) > 100) {
+if (mb_strlen($author_name) > MAX_AUTHOR_NAME_LENGTH) {
 	http_response_code(422);
-	echo json_encode(['status' => 'error', 'message' => 'Name is too long (max 100).']);
+	echo json_encode(['status' => 'error', 'message' => 'Name is too long (max '.MAX_AUTHOR_NAME_LENGTH.').']);
 	exit;
 }
 
-if (mb_strlen($comment_text) > 2000) {
+if (mb_strlen($comment_text) > MAX_COMMENT_LENGTH) {
 	http_response_code(422);
-	echo json_encode(['status' => 'error', 'message' => 'Comment is too long (max 2000).']);
+	echo json_encode(['status' => 'error', 'message' => 'Comment is too long (max '.MAX_COMMENT_LENGTH.').']);
 	exit;
 }
 

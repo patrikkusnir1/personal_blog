@@ -69,13 +69,13 @@ class Article
         return substr($this->longer_text, 0, $limit). "...";
     }
 
-    public function readtime_count( int $words_per_minute = 200 ) 
+    public function readtime_count(): string 
     {
-        $read_time = ceil($this->word_count / $words_per_minute);
-        if ( $read_time == 1 ) {
-            return $read_time . " min";
-        }
-        return $read_time . " mins";
+        $read_time = ceil($this->word_count / WORDS_PER_MINUTE);
+        // if ( $read_time == 1 ) {
+        //     return $read_time . " min";
+        // }
+        return $read_time . ($read_time == 1 ? " min" : " mins");
     }
 
     public function post_has_category() {
