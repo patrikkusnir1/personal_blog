@@ -193,7 +193,7 @@ if (!$article) {
 
 				<div class="input-wrapper">
 					<input type="text" name="author_name" placeholder="Your name" 
-						required maxlength="100" class="input-field" id="name-input">
+						required maxlength="<?= MAX_AUTHOR_NAME_LENGTH ?>" class="input-field" id="name-input">
 					<ion-icon name="person-outline" aria-hidden="true"></ion-icon>
 				</div>
 

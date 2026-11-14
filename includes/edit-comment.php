@@ -33,12 +33,12 @@ if (
 	$comment_id === false || $comment_id === null ||
 	$article_id === false || $article_id === null ||
 	$comment_text === "" ||
-	mb_strlen($comment_text) > 2000
+	mb_strlen($comment_text) > MAX_COMMENT_LENGTH
 ){
 	http_response_code(422);
 	echo json_encode([
 		"status" => "error",
-		"message" => "Comment must contain 1-2000 characters"
+		"message" => "Comment must contain 1-".MAX_COMMENT_LENGTH." characters"
 	]);
 	exit;
 }
