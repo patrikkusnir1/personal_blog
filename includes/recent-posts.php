@@ -49,7 +49,7 @@
                     <article class="recent-post-card">
                         <figure class="card-banner img-holder" style="--width: 271; --height: 258 ;">
                         
-                            <img src="<?= $article->image ?>" 
+                            <img src="<?= htmlspecialchars($article->image ?? './assets/images/recent-post-1.jpg')  ?>" 
                                 alt="<?= htmlspecialchars($article->title) ?>" 
                                 width="271" 
                                 height="258" 
@@ -57,12 +57,12 @@
                                 loading="lazy">
                         </figure>
                         <div class="card-content">
-                            <a href="" class="card-badge">
-                                <?= $article->badge ?>
-                            </a>
+                            <span class="card-badge">
+                                <?= htmlspecialchars($article->badge ?? '') ?>
+                            </span>
 
                             <h3 class="headline headline-3 card-title">
-                                <a href="article.php?id=999" class="link hover-2">
+                                <a href="article.php?id=<?= $article->id ?>" class="link hover-2">
                                     <?= htmlspecialchars($article->title) ?></a>
                             </h3>
                             <p class="card-text">
@@ -76,10 +76,13 @@
 
                                 <div class="wrapper">
                                     <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-                                    <span class="span">
-                                    <?= htmlspecialchars
-                                    ($article->getReadTime()) ?></span>
+                                    <span class="span"><?= htmlspecialchars($article->getReadTime()) ?></span>
                                 </div>
+
+                                <a href="article.php?id=<?= $article->id ?>#comments" class="wrapper hover-2">
+                                    <ion-icon name="chatbubble-outline" aria-hidden="true"></ion-icon>
+                                    <span class="span"><?= $article->comment_count ?></span>
+                                </a>
                             </div>
                         </div>
                     </article>

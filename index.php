@@ -1,10 +1,11 @@
 <?php 
 declare(strict_types=1);
+require_once __DIR__ . "/includes/config.php";
 require 'classes/Article.php';
 require 'classes/ArticleCollection.php';
-require_once __DIR__ . "/includes/config.php";
-
-$longer_texts = [
+require 'includes/db.php';
+require 'includes/functions.php';
+/*$longer_texts = [
     "Discover useful tips and practical strategies for working from home as a freelancer, staying focused, managing your time, and becoming more productive every day.", 
     "Learn how self-observation can help you understand your thoughts, emotions, habits, and behavior and become more aware of yourself in everyday life.", 
     "Learn the basic rules and useful tips that can help you understand chess, improve your decision-making, develop a better strategy, and enjoy the game more.", 
@@ -16,10 +17,10 @@ $longer_texts = [
     "Reading books is a great way to learn something new, improve your knowledge, develop your imagination, and discover interesting ideas that can help you understand the world better.", 
     "Building better habits takes time and consistency, but small positive changes in your daily routine can gradually improve your productivity, motivation, health, and overall quality of life." 
 ];
+*/
 
 
-
-$posts = [
+/*$posts = [
     
     [
         "title" => "Helpful Tips for Working from Home as a Freelancer",
@@ -120,96 +121,10 @@ $posts = [
         "author" => "Nadia",
         "date" => "2024-06-19",
     ],
-];
+];*/
 
 // create articles
-$collection = ArticleCollection::fromPostsData($posts, $longer_texts);
-
-require 'includes/functions.php';
-
-function show_categories( $topics ) {
-    $articles_to_show = 2;
-    $tags_array = $topics;
-
-
-    // define placeholder images - repeating list
-    $placeholder_images = [
-        "/assets/images/tag1.png",
-        "/assets/images/tag2.png",
-        "/assets/images/tag3.png",
-        "/assets/images/tag4.png",
-        "/assets/images/tag5.png",
-        "/assets/images/tag6.png",
-        "/assets/images/tag7.png",
-        "/assets/images/tag8.png",
-        "/assets/images/tag9.png",
-        "/assets/images/tag10.png",
-        "/assets/images/tag11.png",
-        "/assets/images/tag12.png",
-
-    ];
-    foreach ($tags_array as $index => $tag) {
-        // get the image based on index - repeating every 5
-        $image_path = pick_image($placeholder_images, $index);
-
-        $a_url = http_build_query([ 
-           "category" => $tag,
-           "show"     => $articles_to_show,
-        ]);
-
-        echo "
-        <li>
-            <a class='card tag-btn' href='?$a_url#recent'>
-                <img src='$image_path' width='32' height='32' loading='lazy' alt='$tag'>
-                <p class='btn-text'>$tag</p>
-            </a>
-        </li>";
-        }
-    }
-
-// show topics
-function show_topics($collection, $topics) {
-    
-    $tags_array = $topics;
-
-    // define placeholder images - repeating list
-    $placeholder_images = [
-        "./assets/images/topic-1.png",
-        "./assets/images/topic-2.png",
-        "./assets/images/topic-3.png",
-        "./assets/images/topic-4.png",
-        "./assets/images/topic-5.png",
-    ];
-
-    foreach ($tags_array as $index => $tag):
-        $tag_count = $collection->post_has_tags($tag);
-        $image_path = pick_image($placeholder_images, $index);
-
-?>
-        <li class="slider-item">
-            <?php $category_url = Article::build_category_url($tag) ?>
-
-            <a href="?<?= $category_url ?>#recent" class='slider-card'>
-                <figure class="slider-banner img-holder" style="--width: ; --height: ;">
-                    <img src="<?= $image_path ?>" width="507" height="608"
-                        loading="lazy" alt="<?= $tag ?>" class="img-cover">
-                </figure>
-                <div class="slider-content">
-                    <span class="slider-title"><?= $tag ?></span>
-                    <?php if ($tag_count == 1):?>
-                        <p class="slider-subtitle">
-                            <?= $tag_count ?> article
-                        </p>
-                    <?php else: ?>
-                        <p class="slider-subtitle">
-                            <?= $tag_count ?> articles
-                        </p>
-                    <?php endif ?>
-                </div>
-            </a>
-        </li>
-       <?php endforeach;
-    }
+$collection = ArticleCollection::fromDatabase($pdo);
 
 // get topics from collection and show them
 $topics = $collection->get_tags();
