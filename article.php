@@ -144,7 +144,7 @@ if (!$article) {
 
 										<form action="includes/delete-comment.php" method="POST"
 											  class="delete-comment-form"
-											  onsubmit="return confirm('Are you sure you want to delete this comment?')">
+											  >
 											
 											<input type="hidden" name="comment_id"
 												   value="<?= (int) $comment['comment_id'] ?>">
@@ -185,7 +185,13 @@ if (!$article) {
 				<?php endif; ?>
 			</ul>
 
-			<form action="includes/add-comment.php" method="post" id="comment-form" class="comment-form card" 	data-article-id="<?= (int)($article["id"]) ?>">
+			<form action="includes/add-comment.php" 
+				  method="post" 
+				  id="comment-form" 
+				  class="comment-form card" 	
+				  data-article-id="<?= (int)($article["id"]) ?>"
+				  data-csrf="<?= htmlspecialchars($_SESSION['csrf_token']) ?>"
+				  >
 				<input type="hidden" name="article_id" 
 					   value="<?= (int)($article["id"]) ?>">
 

@@ -1,6 +1,8 @@
 <?php 
-header("Content-Type: application/json; charset=utf8");
+
 session_start();
+
+header("Content-Type: application/json; charset=utf8");
 
 ini_set('display_errors', '1');
 error_reporting(E_ALL);
@@ -26,7 +28,7 @@ if (
 	http_response_code(403);
 	echo json_encode([
 		"status" => "error",
-		"message" => "Invalid csrf token"
+		"message" => "Invalid CSRF token"
 	]);
 	exit();
 }

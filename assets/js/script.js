@@ -306,20 +306,34 @@ $(document).on
 
             req.done(function (data) {
                 if (data.status === "success") {
-                    // remove no comments 
+                    // 1. Remove the "No comments yet" if present 
                     $('.no-comments').remove();
 
-                    // build html for comment
+                    // 2. Grab the article ID and CSRF token stored on the form 
+                    let articleId = commentForm.data("article-id");
+                    let csrfToken = commentForm.data("csrf");
+
+
+                    // 3. Build the HTML (matching PHP LOOP structure)
                     let newComment = $(`
                         <li>
                             <div class="card comment-card" data-comment-id="${data.comment.id}">
                                 <p class="card-text">${data.comment.comment_text}</p>
+
+                                <div class="comment-actions">
+                                    <button type="button" class="edit-comment">Edit</button>
+
+                                    <form action="includes/delete-comment.php" method="POST" class="delete-comment-form">
+                                        <input type="hidden" name="comment_id" value="${data.comment.id}">
+                                        <input type="hidden" name="article_id" value="${articleId}">
+                                        <input type="hidden" name="csrf_token" value="${csrfToken}">
+
+                                        <button type="submit" class="delete-comment" aria-label="Delete comment" title="Delete comment">
+                                            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+                                        </button>
+                                    </form>
+                                </div>
                                 
-                                <button type="button" class="edit-comment">
-                                    Edit
-                                </button>
-
-
                                 <div class="profile-card">
                                     <div>
                                         <p class="card-title">${data.comment.author_name}</p>
@@ -330,10 +344,8 @@ $(document).on
                         </li>
                     `).hide();
 
-                    // add new comment and animate it
-                    newComment.appendTo(commentList).slideDown(300);
-
-                    // reset form inputs
+                    // 4. Prepend to list and reset form
+                    newComment.prependTo(commentList).slideDown(300);
                     commentForm[0].reset()
                 }
             });
@@ -350,8 +362,8 @@ $(document).on
             });
         });
 
-        commentForm.find('textarea[name="comment_text"]').on('keydown', function(event) {
-            if ( (event.ctrlKey || event.metaKey) && (event.key === "Enter") || (event.keyCode === 13)) {
+        commentForm.on('keydown', function(event) {
+            if ((event.ctrlKey || event.metaKey) && (event.key === "Enter" || event.keyCode === 13)) {
                 event.preventDefault();
                 commentForm.trigger("submit");
             }
@@ -448,7 +460,7 @@ $(".comment-list").on("click", ".edit-comment", function() {
         saveButton.prop("disabled", true);
 
         $.ajax({
-            url: "../includes/edit-comment.php",
+            url: "includes/edit-comment.php",
             type: "POST",
             dataType: "json",
             data: {
@@ -472,7 +484,7 @@ $(".comment-list").on("click", ".edit-comment", function() {
                 buttonGroup.remove();
 
                 // Enable Edit button again
-                saveButton.prop("disabled", false);
+                editButton.prop("disabled", false);
             }
 
 
@@ -484,10 +496,55 @@ $(".comment-list").on("click", ".edit-comment", function() {
                 : "Failed to update comment.";
 
             alert(message);
+            saveButton.prop("disabled", false);
         })
     })
 })
 
+// Deleting comments
+$(document).on("submit", ".delete-comment-form", function(event) {
+    event.preventDefault();
+    
+    if (!confirm("Are you sure to delete comment?")) {
+        return;
+    }
+
+    const form = $(this);
+    const deleteBtn = form.find('button[type=submit]');
+    const commentItem = form.closest("li");
+
+    deleteBtn.prop("disabled", true);
+
+    $.ajax({
+        url: form.attr("action"),
+        type: "POST",
+        data: form.serialize(),
+        dataType: "json"
+    })
+    .done(function(data) {
+        if (data.status === "success") {
+            commentItem.slideUp(300, function() {
+                $(this).remove();
+
+                // Restore empty-state message if no comments remain
+                if ($("#comment-list li").length === 0) {
+                    $("#comment-list").append(`
+                        <li class="no-comments card">
+                            <p class="card-text">No comments yet. Be the first to share your thoughts!</p>
+                        </li>
+                    `);
+                }
+            });
+        }
+    })
+    .fail(function(xhr) {
+        let message = xhr.responseJSON && xhr.responseJSON.message
+                      ? xhr.responseJSON.message
+                      : "Failed to delete comment.";
+        alert(message);
+        deleteBtn.prop("disabled", false);
+    });
+});
 
 
 
