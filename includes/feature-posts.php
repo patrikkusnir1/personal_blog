@@ -25,8 +25,8 @@
             <li>
                 <article class="card feature-card">
                     <figure class="card-banner img-holder" style="--width: 1602; --height: 903;">
-                        <img src="./assets/images/featured-1.png"
-                            alt="<?= htmlspecialchars($article->title)?>" 
+                        <img src="<?= htmlspecialchars($article->image ?? './assets/images/featured-1.png') ?>"
+                            alt="<?= htmlspecialchars($article->title) ?>" 
                             class="img-cover"
                             width="1602" loading="lazy" height="903">
                     </figure>
@@ -42,23 +42,23 @@
                             </div>
                         </div>
                         <h3 class="headline headline-3">
-                            <a href="#" class="card-title hover-2">
-                                <?php echo htmlspecialchars($article->title); ?>
+                            <a href="article.php?id=<?= $article->id ?>" class="card-title hover-2">
+                                <?= htmlspecialchars($article->title); ?>
                             </a>
                         </h3>
                         <div class="card-wrapper">
                             <div class="profile-card">
-                                <img src="./assets/images/author-1.png" width="48" height="48"
+                                <img src="<?= htmlspecialchars($article->image ?? './assets/images/featured-1.png') ?>" width="48" height="48"
                                     loading="lazy" alt="Joseph" class="profile-banner">
                                 <div>
                                     <p class="card-title"><?= 
-                                    htmlspecialchars($article->author) ?> 
+                                    htmlspecialchars($article->author ?? 'Unknown') ?> 
                                     </p>
                                     <p class="card-subtitle"><?= htmlspecialchars($date->format("d F Y"))?>
                                     </p>
                                 </div>
                             </div>
-                            <a href="#" class="card-btn">Read more</a>
+                            <a href="article.php?id=<?= $article->id ?>" class="card-btn">Read more</a>
                         </div>
                     </div>
                 </article>
