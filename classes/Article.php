@@ -1,29 +1,33 @@
 <?php 
 class Article 
 {
+    public int $id;
     public string $longer_text;
     public string $title;
-    public string $image;
-    public string $badge;
+    public ?string $image;
+    public ?string $badge;
     public array $tags;
     private int $word_count;
-    public string $author;
+    public ?string $author;
     public string $date;
     private string $read_time;
     private string $excerpt;
+    public int $comment_count;
 
-    public function __construct(string $longer_text, string $title, ?string $image, ?string $badge, array $tags, int $word_count, ?string $author, string $date)
+    public function __construct(int $id, string $longer_text, string $title, ?string $image, ?string $badge, array $tags, int $word_count, ?string $author, string $date, int $comment_count)
     {
-        $this->longer_text = $longer_text;
-        $this->title       = $title;
-        $this->image       = $image;
-        $this->badge       = $badge;
-        $this->tags        = $tags;
-        $this->word_count  = $word_count;
-        $this->author      = $author;
-        $this->date        = $date;
-        $this->read_time   = $this->readtime_count();
-        $this->excerpt     = $this->make_excerpt();
+        $this->id            = $id; 
+        $this->longer_text   = $longer_text;
+        $this->title         = $title;
+        $this->image         = $image;
+        $this->badge         = $badge;
+        $this->tags          = $tags;
+        $this->word_count    = $word_count;
+        $this->author        = $author;
+        $this->date          = $date;
+        $this->read_time     = $this->readtime_count();
+        $this->excerpt       = $this->make_excerpt();
+        $this->comment_count = $comment_count;
     }
 
     public function getReadTime():string {
@@ -95,18 +99,23 @@ class Article
     }
 
     // factory function
-    public static function fromPostData
-    (string $longerText, array $postData ): self
+    public static function fromDatabaseRow ( array $row ): self
     {
+        $tags = !empty($row['tags_list']) 
+            ? explode(',', $row['tags_list']) 
+            : [];
+
         return new self(
-            longer_text: $longerText,
-            title: $postData["title"],
-            image: $postData["image"],
-            badge: $postData["badge"],
-            tags:  $postData["tags"],
-            word_count: $postData["word_count"],
-            author: $postData["author"],
-            date: $postData["date"],
+            id:            (int) $row['id'],
+            longer_text:   (string) ($row['full_text'] ?? ''),
+            title:         (string) $row["title"],
+            image:         $row["image"] ?? null,
+            badge:         $row["badge"] ?? null,
+            tags:          $tags,
+            word_count:    (int)($row["word_count"] ?? 0),
+            author:        $row["author"] ?? null,
+            date:          (string) $row["published_at"],
+            comment_count: (int) ($row['comment_count'] ?? 0)
         );
     }
 
