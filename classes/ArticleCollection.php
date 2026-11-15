@@ -52,24 +52,34 @@ class ArticleCollection {
         return $popular_posts;
     }
 
-    public static function fromPostsData(
-        array $posts, array $longerTexts
-    ): self 
-
+    public static function fromDatabase(PDO $pdo): self 
     {
-        
     // Start with an empty array 
-
         $articles = [];
 
-    // Loop through $longer_texts with $key => $text
-        foreach ($longerTexts as $key => $text) {
+    // database query
+    $stmt = $pdo->query("
+            SELECT
+                articles.*,
+                COUNT(DISTINCT comments.comment_id) AS comment_count,
+                GROUP_CONCAT(DISTINCT tags.name ORDER BY tags.name ASC SEPARATOR ',') AS tags_list
+            FROM articles
+            LEFT JOIN comments ON articles.id = comments.article_id
+            LEFT JOIN article_tag ON articles.id = article_tag.article_id
+            LEFT JOIN tags ON article_tag.tag_id = tags.id
+            GROUP BY articles.id
+            ORDER BY articles.published_at DESC
+        ");
+
+    $rows = $stmt->fetchAll();
+
+    // Loop through $rows 
+        foreach ($rows as $row) {
 
             // Create new Article using factory static function 
-            $article = Article::fromPostData($text, $posts[$key]);
-            
             // and push it onto $articles.
-            $articles[] = $article;
+            $articles[] = Article::fromDatabaseRow($row);
+
         }
         // After the loop, return $articles;
         return new self($articles);
