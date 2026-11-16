@@ -1,3 +1,4 @@
+    <!DOCTYPE html>
     <!-- 
         variables 
     -->
@@ -9,7 +10,7 @@
     ?>
 
 
-<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -59,14 +60,14 @@
 
     <header class="header" data-header>
         <div class="container">
-            <a href="#" class="logo">
+            <a href="index.php" class="logo">
                 <img src="./assets/images/patrik-high-resolution-logo-transparent.png" width="119" height="37"
                     alt="Patrik logo">
             </a>
 
             <nav class="navbar" data-navbar>
                 <div class="navbar-top">
-                    <a href="" class="logo">
+                    <a href="index.php" class="logo">
                         <img src="./assets/images/patrik-high-resolution-logo-transparent.png" width="119" height="37"
                             alt="Train travel logo">
                     </a>
@@ -77,19 +78,19 @@
                 <ul class="navbar-list">
 
                     <li>
-                        <a href="#home" class="navbar-link hover-1" data-nav-toggler>Home</a>
+                        <a href="index.php#home" class="navbar-link hover-1" data-nav-toggler>Home</a>
                     </li>
                     <li>
-                        <a href="#topics" class="navbar-link hover-1" data-nav-toggler>Topics</a>
+                        <a href="index.php#topics" class="navbar-link hover-1" data-nav-toggler>Topics</a>
                     </li>
                     <li>
-                        <a href="#featured" class="navbar-link hover-1" data-nav-toggler>Featured Post</a>
+                        <a href="index.php#featured" class="navbar-link hover-1" data-nav-toggler>Featured Post</a>
                     </li>
                     <li>
-                        <a href="#recent" class="navbar-link hover-1" data-nav-toggler>Recent Post</a>
+                        <a href="index.php#recent" class="navbar-link hover-1" data-nav-toggler>Recent Post</a>
                     </li>
                     <li>
-                        <a href="#contact" class="navbar-link hover-1" data-nav-toggler>Contact</a>
+                        <a href="index.php#contact" class="navbar-link hover-1" data-nav-toggler>Contact</a>
                     </li>
                 </ul>
                 <div class="navbar-bottom">
@@ -129,7 +130,7 @@
                     Copyright <?= date("Y") ?> © <?= $name ?> - Personal Blog.
                 </p>
             </nav>
-            <a href="" class="btn btn-primary">Subscribe</a>
+            <a href="#newsletter" class="btn btn-primary">Subscribe</a>
             <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
                 <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
             </button>

@@ -42,7 +42,7 @@
                     </ul>
                 </div>
 
-                <div class="footer-list">
+                <div class="footer-list" id="newsletter">
                     <p class="footer-list-title">
                         Newsletter
                     </p>

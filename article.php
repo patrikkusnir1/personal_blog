@@ -7,6 +7,11 @@ if (empty($_SESSION['csrf_token'])) {
 }
 
 require "includes/db.php";
+require "classes/Article.php";
+
+
+
+
 
 // validate id
 $options = [
@@ -17,15 +22,16 @@ $options = [
 
 $article_id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT, $options);
 
-$article = false;
 
-// missing or invalid current_id - redirect it
+
+$article = null;
+
+
 if ($article_id) {
-	$stmt = $pdo->prepare("SELECT * FROM articles WHERE id = :id");
-	$stmt->execute([":id" => $article_id]);
-	$article = $stmt->fetch();
+	$article = Article::findbyId($pdo, $article_id);
 }
 
+// missing or invalid current_id - redirect it
 // id is not valid number or wasn't found in the database
 if (!$article) {
 	// wait 3 seconds, then navigate to index.php
@@ -56,28 +62,28 @@ if (!$article) {
 <?php include "includes/header.php"; 
 ?>
 
-<main data-article-id="<?= (int)$article["id"] ?>">
+<main data-article-id="<?= (int)$article->id ?>">
 	<div class="container">
 		<section class="section article-single">
 			<figure class="card-banner img-holder article-hero" style="--width: 1602; --height: 903;">
-				<img src="<?= htmlspecialchars($article['image']) ?>" width="1602" height="903" alt="<?= htmlspecialchars($article['title']) ?>" class="img-cover">
+				<img src="<?= htmlspecialchars($article->image) ?>" width="1602" height="903" alt="<?= htmlspecialchars($article->title) ?>" class="img-cover">
 			</figure>
 
 	        <div class="card-wrapper">
 		        <div class="card-tag">
-		            <span class="card-badge"><?= htmlspecialchars($article['badge']) ?></span>
+		            <span class="card-badge"><?= htmlspecialchars($article->badge) ?></span>
 		        </div>
 
 		        <div class="wrapper">
 		            <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
 		            <span class="span">
-		            	<?= ceil($article['word_count'] / 200 ) ?> mins read
+		            	<?= htmlspecialchars($article->getReadTime()) ?> read
 		            </span>
 		        </div>
 	    	</div>
 
 			<h1 class="headline headline-2 card-title">
-	            <?= htmlspecialchars($article['title']) ?>
+	            <?= htmlspecialchars($article->title) ?>
 	        </h1>
 
 	        <!-- Author and published meta info -->
@@ -86,17 +92,17 @@ if (!$article) {
 	        		<img src="./assets/images/author-1.png" width="40" height="40" alt="Elena" class="profile-banner">
 	        		<div>
 	        			<p class="card-title">
-	        				<?= htmlspecialchars($article["author"]) ?>
+	        				<?= htmlspecialchars($article->author) ?>
 	        			</p>
-	        			<time class="card-date" datetime="<?= htmlspecialchars($article['published_at']) ?>">
-	        				<?= date("d F Y", strtotime($article["published_at"])) ?>
+	        			<time class="card-date" datetime="<?= htmlspecialchars($article->date) ?>">
+	        				<?= date("d F Y", strtotime($article->date)) ?>
 	        			</time>
 	        		</div>
 	        	</div>
 	        </div>
 	        <!-- Full article body -->
 	        <div class="article-text">
-	        	<?= nl2br(htmlspecialchars($article["full_text"])) ?>
+	        	<?= nl2br(htmlspecialchars($article->longer_text)) ?>
 	        </div>
 		</section>
 		<div class="comments-section" id="comments">
@@ -150,7 +156,7 @@ if (!$article) {
 												   value="<?= (int) $comment['comment_id'] ?>">
 
 											<input type="hidden" name="article_id"
-												   value="<?= (int) $article['id'] ?>">
+												   value="<?= (int) $article->id ?>">
 
 											<input type="hidden" name="csrf_token"
 												   value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
@@ -189,11 +195,11 @@ if (!$article) {
 				  method="post" 
 				  id="comment-form" 
 				  class="comment-form card" 	
-				  data-article-id="<?= (int)($article["id"]) ?>"
+				  data-article-id="<?= (int)$article->id ?>"
 				  data-csrf="<?= htmlspecialchars($_SESSION['csrf_token']) ?>"
 				  >
 				<input type="hidden" name="article_id" 
-					   value="<?= (int)($article["id"]) ?>">
+					   value="<?= (int)$article->id ?>">
 
 				<h3 class="headline headline-3 form-title">Leave a reply</h3>
 

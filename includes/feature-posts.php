@@ -11,12 +11,10 @@
         </p>
         <ul class="feature-list">
             <?php
-            // show only 2 articles here
-            
-            $articles_to_show = (int) ($_GET["show"] ?? "2");
-            
-            $feature_posts = array_slice( $collection->getArticles(), 0, $articles_to_show );
 
+            $articles_current_count = max(2, (int)($_GET['show'] ?? 2));
+            
+            $feature_posts = array_slice( $collection->getArticles(), 0, $articles_current_count );
 
             foreach ($feature_posts as $article): 
                 $date = new DateTime($article->date);
@@ -48,8 +46,8 @@
                         </h3>
                         <div class="card-wrapper">
                             <div class="profile-card">
-                                <img src="<?= htmlspecialchars($article->image ?? './assets/images/featured-1.png') ?>" width="48" height="48"
-                                    loading="lazy" alt="Joseph" class="profile-banner">
+                                <img src="./assets/images/author-1.png" width="48" height="48"
+                                    loading="lazy" alt="<?= htmlspecialchars($article->author ?? 'Author') ?>" class="profile-banner">
                                 <div>
                                     <p class="card-title"><?= 
                                     htmlspecialchars($article->author ?? 'Unknown') ?> 
@@ -68,18 +66,10 @@
         <?php
 
         // show max articles, don't exceed $articles_total_count
-        $articles_current_count = $_GET["show"] ?? "2"; 
-        $articles_to_show = min($articles_to_show + 2, $articles_total_count);
+        $articles_to_show = min($articles_current_count + 2, $articles_total_count);
         
-        ?>
-        
-        <?php 
-
-        // TODO: refactor the link
-
-        if ($articles_current_count < $articles_total_count):?>
-            <a href="<?php echo "./?show={$articles_to_show}#featured" ?>" class="btn btn-secondary">
-            
+        if ($articles_current_count < $articles_total_count): ?>
+            <a href="./?show=<?= $articles_to_show ?>#featured" class="btn btn-secondary">
                 <span class="span">Show more posts</span>
                 <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
             </a>

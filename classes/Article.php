@@ -135,6 +135,31 @@ class Article
 
         return $html;
     }
+
+    public static function findById(PDO $pdo, int $id): ?self 
+    {
+        $stmt = $pdo->prepare("
+            SELECT 
+                articles.*,
+                COUNT(DISTINCT comments.comment_id) AS comment_count,
+                GROUP_CONCAT(DISTINCT tags.name ORDER BY tags.name ASC SEPARATOR ',') AS tags_list
+            FROM articles 
+            LEFT JOIN comments ON articles.id = comments.article_id
+            LEFT JOIN article_tag ON articles.id = article_tag.article_id
+            LEFT JOIN tags ON article_tag.tag.id = tags_id
+            WHERE articles.id = :id
+            GROUP BY articles.id   
+        ");
+
+        $stmt->execute([":id" => $id]);
+        $row = $stmt->fetch();
+
+        if (!$row) {
+            return null; 
+        }
+
+        return self::fromDatabaseRow($row); 
+    }
 }
 
 ?>
