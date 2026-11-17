@@ -1616,10 +1616,26 @@ a.active {
   .topic-card {
     display: grid;
     grid-template-columns: 0.3fr 1fr;
+    grid-template-areas:
+    "title arrows"
+    "text text"
+    "slider slider";
     align-items: center;
     gap: 20px;
   }
 
+  .topic-card .card-content { grid-area: title;  }
+  .topic-card .btn-group    { 
+    grid-area: arrows; 
+    justify-self: end;
+    align-self: center; 
+  }
+  .topic-card .card-text    { grid-area: text; }
+  .topic-card .slider       { grid-area: slider }
+
+  .btn-icon {
+    border: 1px solid var(--bg-prussian-blue);
+  }
   /** 
     * FEATURE
     */

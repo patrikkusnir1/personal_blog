@@ -28,7 +28,7 @@ $article = null;
 
 
 if ($article_id) {
-	$article = Article::findbyId($pdo, $article_id);
+	$article = Article::findById($pdo, $article_id);
 }
 
 // missing or invalid current_id - redirect it
@@ -41,6 +41,7 @@ if (!$article) {
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
+		<meta http-equiv="refresh" content="3;url=index.php">
 		<title>Article not found</title>
 		<link rel="stylesheet" href="assets/css/style.css">
 	</head>
@@ -65,14 +66,18 @@ if (!$article) {
 <main data-article-id="<?= (int)$article->id ?>">
 	<div class="container">
 		<section class="section article-single">
-			<figure class="card-banner img-holder article-hero" style="--width: 1602; --height: 903;">
-				<img src="<?= htmlspecialchars($article->image) ?>" width="1602" height="903" alt="<?= htmlspecialchars($article->title) ?>" class="img-cover">
-			</figure>
+			<?php if ($article->image): ?>
+				<figure class="card-banner img-holder article-hero" style="--width: 1602; --height: 903;">
+					<img src="<?= htmlspecialchars($article->image) ?>" width="1602" height="903" alt="<?= htmlspecialchars($article->title) ?>" class="img-cover">
+				</figure>
+			<?php endif; ?>
 
 	        <div class="card-wrapper">
-		        <div class="card-tag">
-		            <span class="card-badge"><?= htmlspecialchars($article->badge) ?></span>
-		        </div>
+	        	<?php if ($article->badge): ?>
+			        <div class="card-tag">
+			            <span class="card-badge"><?= htmlspecialchars($article->badge) ?></span>
+			        </div>
+			    <?php endif; ?>
 
 		        <div class="wrapper">
 		            <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
@@ -92,7 +97,7 @@ if (!$article) {
 	        		<img src="./assets/images/author-1.png" width="40" height="40" alt="Elena" class="profile-banner">
 	        		<div>
 	        			<p class="card-title">
-	        				<?= htmlspecialchars($article->author) ?>
+	        				<?= htmlspecialchars($article->author ?? 'Unknown author') ?>
 	        			</p>
 	        			<time class="card-date" datetime="<?= htmlspecialchars($article->date) ?>">
 	        				<?= date("d F Y", strtotime($article->date)) ?>
@@ -201,6 +206,7 @@ if (!$article) {
 				<input type="hidden" name="article_id" 
 					   value="<?= (int)$article->id ?>">
 
+				<input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION["csrf_token"]) ?>">
 				<h3 class="headline headline-3 form-title">Leave a reply</h3>
 
 				<div class="input-wrapper">

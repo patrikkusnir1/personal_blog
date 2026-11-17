@@ -64,14 +64,14 @@ function show_topics($collection, $topics) {
 ?>
         <li class="slider-item">
             <a href="?<?= $category_url ?>#recent" class='slider-card'>
-                <figure class="slider-banner img-holder" style="--width: ; --height: ;">
+                <figure class="slider-banner img-holder" style="--width: 507; --height: 608;">
                     <img src="<?= $image_path ?>" width="507" height="608"
                         loading="lazy" alt="<?= $safe_tag ?>" class="img-cover">
                 </figure>
                 <div class="slider-content">
                     <span class="slider-title"><?= $safe_tag ?></span>
                     <p class="slider-subtitle">
-                        <?= $tag_count ?><? $tag_count === 1 ? 'article' : 'articles' ?>
+                        <?= $tag_count ?> <?= $tag_count === 1 ? 'article' : 'articles' ?>
                     </p>
                 </div>
             </a>

@@ -146,7 +146,7 @@ class Article
             FROM articles 
             LEFT JOIN comments ON articles.id = comments.article_id
             LEFT JOIN article_tag ON articles.id = article_tag.article_id
-            LEFT JOIN tags ON article_tag.tag.id = tags_id
+            LEFT JOIN tags ON article_tag.tag_id = tags.id
             WHERE articles.id = :id
             GROUP BY articles.id   
         ");
