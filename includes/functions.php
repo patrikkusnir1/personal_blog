@@ -118,6 +118,18 @@ function show_categories( $topics ) {
         </li>";
     }
 }
-
+/**
+ * Can edit
+ * 
+ * simple login for now - based on query string
+ * 
+ * @return bool
+ */ 
+function can_edit(): bool
+{
+    if (session_status() === PHP_SESSION_NONE){
+        session_start();
+    }
+}
 
 ?>
