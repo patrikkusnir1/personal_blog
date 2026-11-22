@@ -185,8 +185,8 @@ if (!$article) {
 
 										<time class="card-date" 
 											  datetime=
-											"<?= htmlspecialchars($comment['created_at']) ?>">
-											 <?= htmlspecialchars($comment['created_at']) ?>
+											"<?= date('d F Y, H:i', strtotime($comment['created_at']) )?>">
+											 <?= date('d F Y, H:i', strtotime($comment['created_at']) )?>
 										</time>
 									</div>
 								</div>
