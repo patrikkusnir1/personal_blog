@@ -9,10 +9,6 @@ if (empty($_SESSION['csrf_token'])) {
 require "includes/db.php";
 require "classes/Article.php";
 
-
-
-
-
 // validate id
 $options = [
 			"options" => [
@@ -60,8 +56,7 @@ if (!$article) {
 	exit; 
 }?>
 
-<?php include "includes/header.php"; 
-?>
+<?php include "includes/header.php" ?>
 
 <main data-article-id="<?= (int)$article->id ?>">
 	<div class="container">
@@ -184,8 +179,7 @@ if (!$article) {
 										</p>
 
 										<time class="card-date" 
-											  datetime=
-											"<?= date('d F Y, H:i', strtotime($comment['created_at']) )?>">
+											  datetime="<?= $comment['created_at'] ?>">
 											 <?= date('d F Y, H:i', strtotime($comment['created_at']) )?>
 										</time>
 									</div>

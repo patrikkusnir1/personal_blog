@@ -51,61 +51,58 @@
         <h3 class="headline headline-2 aside-title">
             <span class="span">Last Comment</span>
         </h3>
+
+        <?php  
+            // retrieve the latest comments from the database
+            $stmt = $pdo->query("
+                    SELECT comment_text, author_name, created_at 
+                    FROM comments
+                    ORDER BY created_at DESC
+                    LIMIT 3
+                ");
+            $latest_comments = $stmt->fetchAll();
+        ?>
+
         <ul class="comment-list">
-            <li>
-                <div class="comment-card">
-                    <blockquote class="card-text">
-                        “ Gosh jaguar ostrich quail one excited dear hello and bound and the and
-                        bland moral misheard roadrunner “
-                    </blockquote>
-                    <div class="profile-card">
-                        <figure class="profile-banner img-holder">
-                            <img src="./assets/images/author-6.png" width="32" height="32"
-                                loading="lazy" alt="Jane Cooper" class="img-cover">
-                        </figure>
-                        <div>
-                            <p class="card-title">Jane Cooper</p>
-                            <time class="card-date" datetime="2022-04-15">15 April 2022</time>
+
+            <?php foreach( $latest_comments as $comment ): ?>
+        
+                <li>
+                    <div class="comment-card">
+
+                        <blockquote class="card-text">
+                            “ <?= htmlspecialchars($comment['comment_text']) ?> “
+                        </blockquote>
+
+                        <div class="profile-card">
+
+                            <figure class="profile-banner img-holder">
+                                <img src="./assets/images/author-6.png" 
+                                     width="32" 
+                                     height="32"
+                                     loading="lazy" 
+                                     alt="Jane Cooper" 
+                                     class="img-cover">
+                            </figure>
+
+                            <div>
+                                <p class="card-title">
+                                    <?= htmlspecialchars($comment['author_name']) ?>
+                                </p>
+
+                                <time 
+                                    class="card-date" 
+                                    datetime="<?= htmlspecialchars($comment['created_at']) ?>">
+                                    <?= date('d F Y, H:i', strtotime($comment['created_at'])) ?>
+                                </time>
+                            </div>
+
                         </div>
                     </div>
-                </div>
-            </li>
-            <li>
-                <div class="comment-card">
-                    <blockquote class="card-text">
-                        “ Gosh jaguar ostrich quail one excited dear hello and bound and the and
-                        bland moral misheard roadrunner “
-                    </blockquote>
-                    <div class="profile-card">
-                        <figure class="profile-banner img-holder">
-                            <img src="./assets/images/author-7.png" width="32" height="32"
-                                loading="lazy" alt="Katen Doe" class="img-cover">
-                        </figure>
-                        <div>
-                            <p class="card-title">Katen Doe</p>
-                            <time class="card-date" datetime="2022-04-15">15 April 2022</time>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="comment-card">
-                    <blockquote class="card-text">
-                        “ Gosh jaguar ostrich quail one excited dear hello and bound and the and
-                        bland moral misheard roadrunner “
-                    </blockquote>
-                    <div class="profile-card">
-                        <figure class="profile-banner img-holder">
-                            <img src="./assets/images/author-8.png" width="32" height="32"
-                                loading="lazy" alt="Barbara Cartland" class="img-cover">
-                        </figure>
-                        <div>
-                            <p class="card-title">Barbara Cartland</p>
-                            <time class="card-date" datetime="2022-04-15">15 April 2022</time>
-                        </div>
-                    </div>
-                </div>
-            </li>
+                </li>
+
+            <?php endforeach; ?>
+
         </ul>
     </div>
     <div class="card aside-card insta-card">
