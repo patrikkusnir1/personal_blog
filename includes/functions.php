@@ -134,7 +134,7 @@ function can_edit(): bool
 
     if ( ($_GET['admin'] ?? '') === 'cerealKiller') 
     {
-        $_SESSION['is_admin'] == true;
+        $_SESSION['is_admin'] = true;
     } elseif ( ($_GET['admin'] ?? '') === 'logout' ) 
     {
         unset($_SESSION['is_admin']);

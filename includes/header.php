@@ -93,6 +93,7 @@
                         <a href="index.php#contact" class="navbar-link hover-1" data-nav-toggler>Contact</a>
                     </li>
                 </ul>
+                <?php if (can_edit()): ?>
                 <div class="navbar-bottom">
                     <div class="profile-card">
                         <img src="./assets/images/author.jpg" alt="Patrik" class="profile-banner" width="48"
@@ -112,7 +113,11 @@
                                 <a class="navbar-bottom-link hover-1">Articles Saved</a>
                             </li>
                             <li>
-                                <a class="navbar-bottom-link hover-1">Add New Post</a>
+                                <a href="includes/create-post.php" 
+                                   class="navbar-bottom-link hover-1"
+                                >
+                                   Add New Post
+                                </a>
                             </li>
                             <li>
                                 <a class="navbar-bottom-link hover-1">My likes</a>
@@ -121,11 +126,15 @@
                                 <a class="navbar-bottom-link hover-1">Account setting</a>
                             </li>
                             <li>
-                                <a class="navbar-bottom-link hover-1">Signout</a>
+                                <a href="signout.php" 
+                                   class="navbar-bottom-link hover-1">
+                                   Signout
+                                </a>
                             </li>
                         </ul>
                     </div>
                 </div>
+                <?php endif; ?>
                 <p class="copyright-text">
                     Copyright <?= date("Y") ?> © <?= $name ?> - Personal Blog.
                 </p>
