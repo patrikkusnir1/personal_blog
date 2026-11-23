@@ -121,7 +121,8 @@ function show_categories( $topics ) {
 /**
  * Can edit
  * 
- * simple login for now - based on query string
+ * simple login for now - based on sessions and query string, without loggging in
+ * returns true if in query will be ?admin=cerealKiller or ?admin=logout
  * 
  * @return bool
  */ 
@@ -130,6 +131,16 @@ function can_edit(): bool
     if (session_status() === PHP_SESSION_NONE){
         session_start();
     }
+
+    if ( ($_GET['admin'] ?? '') === 'cerealKiller') 
+    {
+        $_SESSION['is_admin'] == true;
+    } elseif ( ($_GET['admin'] ?? '') === 'logout' ) 
+    {
+        unset($_SESSION['is_admin']);
+    }
+
+    return !empty($_SESSION['is_admin']);
 }
 
 ?>
