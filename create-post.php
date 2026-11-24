@@ -51,71 +51,78 @@
 
 <main>
 	<div class="container">
-		<form action="create-post.php" method="POST" class="section article-single">
-				<input type="hidden" name="csrf_token" 
-	       			   value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>"
-				>
-				<div class="input-wrapper" style="margin-bottom: 15px">
-					<label for="image">Cover Image Path</label>
-					<input type="text" id="image" name="image" class="input-field"       value="../assets/images/recent-post-1.jpg">		
-				</div>
-
-				<div class="card-wrapper" style="margin-bottom: 15px;">
-					<!-- choose badge -->
-					<div class="input-wrapper">
-						<input type="text" id="badge" name="badge" class="input-field" placeholder="e.g Working Tips">
-					</div>
-
-
-					<div class="card-tag" style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px">
-					
-						<?php foreach ($tags as $tag): ?>
-							<input type="checkbox" 
-							       value="<?= (int)$tag['id'] ?>"
-							       name="<?= (int)$tag['name'] ?>">
-
-						<?php endforeach ?>
-					</form>
-					
-				</div>
-			
-			</div>
-
-
-		</form>
-
-
-
-
-			<h1 class="headline headline-2 card-title">
-                 <!-- add article title -->
-                 <input type="text" required>
+		<section class="section article-single">
+			<h1 class="headline headline-2 section-title">
+				<span class="span">Create new post</span>
 			</h1>
-			<!-- Author and published meta info -->
-			<div class="card-wrapper" style="margin-block: 20px 30px">
-				<div class="profile-card">
-					<!-- add image -->
-                    
-					<div>
-						<!-- add author name -->
-						<p class="card-title">
-							<input type="text" value="Patrik">
-						</p>
-						<time class="card-date"
-						      datetime="<?= htmlspecialchars(date("d F Y, H:i")) ?>">
-						</time>
-					</div>
-				</div>
-			</div>
-			<!-- full article body -->
-			<div class="article-text">
-			    <textarea rows="10" required></textarea>
-			</div>
 
+			<form action="create-post.php" method="POST" class="post-form card">
+					<input type="hidden" name="csrf_token" 
+		       			   value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>"
+					>
+
+					<div class="form-group">
+						<label for="title" class="form-label">Article title</label>
+						<input type="text" id="title" name="title" class="input-field"       placeholder="Enter title...">		
+					</div>
+
+					<div class="form-row">
+						<div class="form-group">
+							<label for="badge" class="form-label">Badge</label>
+							<input type="text" id="badge" name="badge" class="input-field" placeholder="e.g Working Tips">
+						</div>
+
+						<div class="form-group">
+							<label for="author" class="form-label">Author</label>
+							<input type="text" id="author" name="author" class="input-field" value="Patrik">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="image" class="form-label">Cover Image path</label>
+						<input type="text" id="image" name="image" class="input-field" value="./assets/images/recent-post-1.jpg">
+					</div>
+
+					<div class="form-group">
+						<span class="form-label">Topics / Tags</span>
+						<div class="tag-selector">
+							<?php foreach ($tags as $tag): ?>
+							<label class="tag-checkbox" >
+								<input type="checkbox" 
+								       value="<?= (int)$tag['id'] ?>"
+								       name="tags[]">
+								<span> <?= htmlspecialchars($tag['name']) ?> </span>
+							</label>
+							<?php endforeach; ?>	
+						</div>
+					</div>
+
+
+					<!-- Author and published meta info -->
+					<div class="card-wrapper" style="margin-block: 20px 30px;">
+						<div class="profile-card">
+							<div>
+								<label for="author">Author</label>
+								<input type="text" id="author" name="author" class="input-field" value="Patrik">
+								<time class="card-date"
+							      datetime="<?= htmlspecialchars(date("Y-m-d\TH:i")) ?>">
+							      <?= htmlspecialchars(date('d F Y, H:i')) ?>
+								</time>
+							</div>
+						</div>
+					</div>
+					<!-- full article body -->
+					<div class="article-text" style="margin-bottom: 20px">
+						<label for="full_text">Content</label>
+				    	<textarea id="full_text" name="full_text" class="input-field" rows="10" placeholder="Write your article..."  required></textarea>
+					</div>
+
+					<button type="submit" class="btn btn-primary">
+						<span class="span">Publish Article</span>
+					</button>
+			</form>
 		</section>
 	</div>
-
-
 </main>
 
 <?php include_once __DIR__ . '/includes/footer.php' ?>

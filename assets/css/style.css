@@ -1246,6 +1246,94 @@ a.active {
   border-radius: var(--radius-8);
 }
 
+/*------------------------------------*\
+#POST FORM CREATE & EDIT
+\*-------------------------------------*/
+
+.post-form {
+  padding: 30px;
+  border-radius: var(--radius-16);
+  margin-block-start: 25px;
+}
+
+.post-form .form-group {
+  margin-block-end: 22px;
+}
+
+.post-form .form-label {
+  display: block;
+  color: var(--text-columbia-blue);
+  font-size: var(--fontSize-6);
+  font-weight: var(--weight-semiBold);
+  margin-block-end: 8px;
+}
+
+.post-form .input-field {
+  background-color: var(--bg-prussian-blue);
+  border: 1px solid var(--border-prussian-blue);
+  border-radius: var(--radius-8);
+  padding: 14px 18px;
+  color: var(--text-alice-blue);
+  font-size: var(--fontSize-6);
+  transition: var(--transition-1);
+}
+
+.post-form .input-field::placeholder {
+  color: var(--text-slate-gray);
+}
+
+.post-form .input-field:focus {
+  border-color: var(--bg-carolina-blue);
+  box-shadow: var(--shadow-2);
+}
+
+.post-form textarea.input-field {
+  resize: vertical;
+  min-height: 220px;
+  line-height: var(--lineHeight-2);
+}
+
+/* Tag checkboxes as clickable pills */
+.tag-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background-color: var(--bg-prussian-blue);
+  border: 1px solid var(--border-prussian-blue);
+  border-radius: var(--radius-pill);
+  color: var(--text-wild-blue-yonder);
+  font-size: var(--fontSize-7);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  user-select: none;
+  transition: var(--transition-1);
+}
+
+.tag-checkbox:hover {
+  border-color: var(--bg-carolina-blue);
+  color: var(--text-alice-blue);
+}
+
+.tag-checkbox input[type='checkbox'] {
+  width: auto;
+  display: inline-block;
+  accent-color: var(--bg-carolina-blue);
+  cursor: pointer;
+}
+
+.tag-checkbox:has(input:checked) {
+  background-color: hsla(199, 89%, 49%, 0.16);
+  border-color: var(--bg-carolina-blue);
+  color: var(--text-white);
+}
+
 /*-----------------------------------*\
   #FOOTER
 \*-----------------------------------*/
